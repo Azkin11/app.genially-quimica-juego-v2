@@ -5,59 +5,37 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
-<title>Escape Room CYTE | Carga Nuclear Efectiva</title>
+<title>Escape Room CYTE | Sesión de Clase</title>
 <style>
-  *{margin:0;padding:0;box-sizing:border-box;
-    -webkit-tap-highlight-color:transparent;
-    user-select:none;-webkit-user-select:none;
-    -webkit-touch-callout:none}
-  :root{
-    --cyan:#00f0ff;--magenta:#ff00aa;--green:#00ff88;
-    --red:#ff3355;--yellow:#ffdd00;--bg:#0a0a12;--panel:#12121f;--border:#1f1f35;
-    --hud-h:44px;
-  }
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;
+    user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
+  :root{--cyan:#00f0ff;--magenta:#ff00aa;--green:#00ff88;--red:#ff3355;
+    --yellow:#ffdd00;--bg:#0a0a12;--panel:#12121f;--border:#1f1f35;--hud-h:44px}
   html,body{height:100%;overflow:hidden;position:fixed;width:100%}
-  body{
-    font-family:'Courier New',monospace;background:var(--bg);color:#e0e0ff;
+  body{font-family:'Courier New',monospace;background:var(--bg);color:#e0e0ff;
     background-image:linear-gradient(rgba(0,240,255,.03) 1px,transparent 1px),
       linear-gradient(90deg,rgba(0,240,255,.03) 1px,transparent 1px);
-    background-size:40px 40px;
-    touch-action:none;
-  }
-  .overlay{
-    position:fixed;inset:0;background:rgba(5,5,15,.97);z-index:100;
+    background-size:40px 40px;touch-action:none}
+  .overlay{position:fixed;inset:0;background:rgba(5,5,15,.97);z-index:100;
     display:none;flex-direction:column;align-items:center;justify-content:center;
-    padding:20px 16px;text-align:center;overflow-y:auto;
-    -webkit-overflow-scrolling:touch
-  }
+    padding:20px 16px;text-align:center;overflow-y:auto;-webkit-overflow-scrolling:touch}
   .overlay.show{display:flex;animation:fadeIn .4s ease}
   @keyframes fadeIn{from{opacity:0}to{opacity:1}}
-  h1.title{
-    font-size:clamp(1.5rem,7vw,3rem);color:var(--cyan);
-    text-shadow:0 0 10px var(--cyan),0 0 40px var(--cyan);
-    letter-spacing:3px;margin-bottom:8px
-  }
-  h2.subtitle{
-    font-size:clamp(.75rem,3vw,1.1rem);color:var(--magenta);
-    text-shadow:0 0 10px var(--magenta);letter-spacing:2px;margin-bottom:20px
-  }
-  .story{
-    max-width:600px;width:100%;background:rgba(18,18,31,.92);
+  h1.title{font-size:clamp(1.5rem,7vw,3rem);color:var(--cyan);
+    text-shadow:0 0 10px var(--cyan),0 0 40px var(--cyan);letter-spacing:3px;margin-bottom:8px}
+  h2.subtitle{font-size:clamp(.75rem,3vw,1.1rem);color:var(--magenta);
+    text-shadow:0 0 10px var(--magenta);letter-spacing:2px;margin-bottom:20px}
+  .story{max-width:620px;width:100%;background:rgba(18,18,31,.92);
     border:1px solid var(--border);border-left:4px solid var(--cyan);
-    padding:18px;margin-bottom:20px;text-align:left;
-    line-height:1.65;font-size:clamp(.8rem,3.5vw,.95rem);border-radius:6px
-  }
+    padding:18px;margin-bottom:20px;text-align:left;line-height:1.65;
+    font-size:clamp(.8rem,3.5vw,.95rem);border-radius:6px;max-height:55vh;overflow-y:auto}
   .story p{margin-bottom:10px}
   .story .hl{color:var(--cyan);font-weight:bold}
   .story .warn{color:var(--yellow);font-weight:bold}
-  .btn{
-    font-family:'Courier New',monospace;background:transparent;color:var(--cyan);
-    border:2px solid var(--cyan);padding:14px 28px;
-    font-size:clamp(.8rem,3.5vw,1rem);letter-spacing:2px;
-    cursor:pointer;transition:all .25s;text-transform:uppercase;
-    font-weight:bold;border-radius:6px;margin:5px;
-    min-height:48px;touch-action:manipulation
-  }
+  .btn{font-family:'Courier New',monospace;background:transparent;color:var(--cyan);
+    border:2px solid var(--cyan);padding:14px 28px;font-size:clamp(.8rem,3.5vw,1rem);
+    letter-spacing:2px;cursor:pointer;transition:all .25s;text-transform:uppercase;
+    font-weight:bold;border-radius:6px;margin:5px;min-height:48px;touch-action:manipulation}
   .btn:active{background:var(--cyan);color:var(--bg);box-shadow:0 0 20px var(--cyan)}
   .btn.green{color:var(--green);border-color:var(--green)}
   .btn.green:active{background:var(--green);box-shadow:0 0 20px var(--green)}
@@ -66,292 +44,223 @@
   .btn.red{color:var(--red);border-color:var(--red)}
   .btn.red:active{background:var(--red);box-shadow:0 0 20px var(--red)}
   .btn.small{padding:8px 14px;font-size:.75rem;min-height:40px;margin:3px}
-  #dialogOverlay{
-    position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:150;
-    display:none;align-items:flex-end;justify-content:center;padding:20px
-  }
+
+  .form-group{margin-bottom:14px;text-align:left;width:100%;max-width:400px}
+  .form-group label{display:block;color:var(--cyan);font-size:.8rem;
+    letter-spacing:2px;margin-bottom:6px}
+  .form-group input,.form-group select{
+    width:100%;padding:12px;background:var(--panel);border:2px solid var(--border);
+    color:var(--cyan);font-family:'Courier New',monospace;font-size:.95rem;
+    border-radius:6px;outline:none}
+  .form-group input:focus,.form-group select:focus{border-color:var(--cyan);box-shadow:0 0 15px rgba(0,240,255,.3)}
+  .radio-row{display:flex;gap:8px;flex-wrap:wrap}
+  .radio-row label{flex:1;min-width:100px;padding:12px;background:var(--panel);
+    border:2px solid var(--border);border-radius:6px;cursor:pointer;
+    text-align:center;color:#a0a0d0;font-size:.8rem;transition:all .2s}
+  .radio-row input{display:none}
+  .radio-row input:checked+span{color:var(--cyan)}
+  .radio-row label:has(input:checked){border-color:var(--cyan);background:rgba(0,240,255,.1);
+    box-shadow:0 0 15px rgba(0,240,255,.25)}
+
+  #dialogOverlay{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:150;
+    display:none;align-items:flex-end;justify-content:center;padding:20px}
   #dialogOverlay.show{display:flex}
-  .dialog-box{
-    max-width:720px;width:100%;background:#0d0d1a;
+  .dialog-box{max-width:720px;width:100%;background:#0d0d1a;
     border:2px solid var(--cyan);border-radius:10px;padding:20px;
     box-shadow:0 0 40px rgba(0,240,255,.3);
     font-size:clamp(.85rem,3.5vw,1rem);line-height:1.6;
-    min-height:120px;position:relative
-  }
-  .dialog-box .name{
-    position:absolute;top:-14px;left:20px;background:var(--bg);
+    min-height:120px;position:relative}
+  .dialog-box .name{position:absolute;top:-14px;left:20px;background:var(--bg);
     color:var(--cyan);padding:2px 12px;border:1px solid var(--cyan);
-    border-radius:4px;font-size:.75rem;letter-spacing:2px
-  }
+    border-radius:4px;font-size:.75rem;letter-spacing:2px}
   .dialog-box .text{color:#c8e0ff;min-height:60px}
-  .dialog-box .cursor{
-    display:inline-block;width:10px;background:var(--cyan);
-    animation:blink .7s infinite;margin-left:2px
-  }
+  .dialog-box .cursor{display:inline-block;width:10px;background:var(--cyan);
+    animation:blink .7s infinite;margin-left:2px}
   @keyframes blink{0%,50%{opacity:1}51%,100%{opacity:0}}
-  .dialog-box .continue{
-    text-align:right;color:var(--cyan);font-size:.75rem;
-    letter-spacing:2px;margin-top:12px;cursor:pointer;
-    animation:pulse 1s infinite
-  }
-  @keyframes pulse{0%,100%{opacity:.6}50%{opacity:1}}
-  #gameWrap{
-    display:none;position:fixed;inset:0;
-    flex-direction:column;background:var(--bg)
-  }
+
+  #gameWrap{display:none;position:fixed;inset:0;flex-direction:column;background:var(--bg)}
   #gameWrap.show{display:flex}
-  #hud{
-    height:var(--hud-h);flex-shrink:0;
-    display:flex;justify-content:space-between;align-items:center;
-    padding:0 8px;background:var(--panel);
-    border-bottom:1px solid var(--border);
-    font-size:clamp(.62rem,2.6vw,.85rem);
-    gap:4px;overflow:hidden
-  }
+  #hud{height:var(--hud-h);flex-shrink:0;display:flex;justify-content:space-between;
+    align-items:center;padding:0 8px;background:var(--panel);
+    border-bottom:1px solid var(--border);font-size:clamp(.6rem,2.5vw,.8rem);
+    gap:4px;overflow:hidden}
   #hud .item{color:var(--cyan);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   #hud .item b{color:var(--yellow)}
-  #hud button{
-    background:transparent;border:1px solid var(--border);color:var(--cyan);
+  #hud button{background:transparent;border:1px solid var(--border);color:var(--cyan);
     padding:4px 8px;border-radius:4px;font-family:'Courier New',monospace;
-    font-size:inherit;cursor:pointer;min-height:32px
-  }
-  #canvasWrap{
-    flex:1;position:relative;display:flex;
-    align-items:center;justify-content:center;
-    background:#050510;overflow:hidden;
-    min-height:0
-  }
-  #gameCanvas{
-    display:block;
-    max-width:100%;max-height:100%;
-    width:auto;height:auto;
-    object-fit:contain;
-    touch-action:none
-  }
-  #fragHud{
-    position:absolute;top:10px;left:10px;z-index:5;
-    display:flex;gap:5px;pointer-events:none
-  }
-  #fragHud .f{
-    width:26px;height:32px;background:rgba(18,18,31,.85);
-    border:2px dashed #333;border-radius:5px;
-    display:flex;align-items:center;justify-content:center;
-    font-weight:bold;color:#444;font-size:.85rem;
-    transition:all .4s
-  }
-  #fragHud .f.unlocked{
-    border-style:solid;border-color:var(--green);color:var(--green);
-    background:rgba(0,255,136,.15);box-shadow:0 0 10px var(--green)
-  }
-  #miniMap{
-    position:absolute;top:10px;right:10px;z-index:5;
-    width:110px;height:90px;background:rgba(18,18,31,.85);
-    border:1px solid var(--border);border-radius:6px;
-    pointer-events:none;font-size:.5rem;padding:4px
-  }
-  #miniMap .mm-room{
-    display:inline-block;width:14px;height:14px;margin:2px;
-    background:#1f1f35;border:1px solid #333;border-radius:2px;
-    transition:all .3s
-  }
+    font-size:inherit;cursor:pointer;min-height:32px}
+
+  #canvasWrap{flex:1;position:relative;display:flex;align-items:center;justify-content:center;
+    background:#050510;overflow:hidden;min-height:0}
+  #gameCanvas{display:block;max-width:100%;max-height:100%;width:auto;height:auto;
+    object-fit:contain;touch-action:none}
+  #fragHud{position:absolute;top:10px;left:10px;z-index:5;display:flex;gap:5px;pointer-events:none}
+  #fragHud .f{width:26px;height:32px;background:rgba(18,18,31,.85);
+    border:2px dashed #333;border-radius:5px;display:flex;align-items:center;
+    justify-content:center;font-weight:bold;color:#444;font-size:.85rem;transition:all .4s}
+  #fragHud .f.unlocked{border-style:solid;border-color:var(--green);color:var(--green);
+    background:rgba(0,255,136,.15);box-shadow:0 0 10px var(--green)}
+  #miniMap{position:absolute;top:10px;right:10px;z-index:5;
+    width:118px;height:96px;background:rgba(18,18,31,.85);
+    border:1px solid var(--border);border-radius:6px;pointer-events:none;
+    font-size:.5rem;padding:4px}
+  #miniMap .mm-room{display:inline-block;width:14px;height:14px;margin:2px;
+    background:#1f1f35;border:1px solid #333;border-radius:2px;transition:all .3s}
   #miniMap .mm-room.cur{border-color:var(--cyan);background:rgba(0,240,255,.3);box-shadow:0 0 8px var(--cyan)}
   #miniMap .mm-room.done{border-color:var(--green);background:rgba(0,255,136,.2)}
   #miniMap .mm-room.trap{border-color:#ff8800;background:rgba(255,136,0,.2)}
-  #prompt{
-    position:absolute;left:50%;bottom:12px;transform:translateX(-50%);
+  #roleBadge{position:absolute;bottom:10px;left:10px;z-index:5;
+    padding:4px 12px;border-radius:4px;font-size:.7rem;letter-spacing:1px;
+    background:rgba(255,0,170,.2);border:1px solid var(--magenta);color:#ff66cc}
+  #roleBadge.host{background:rgba(0,255,136,.15);border-color:var(--green);color:var(--green)}
+  #prompt{position:absolute;left:50%;bottom:12px;transform:translateX(-50%);
     padding:8px 16px;background:rgba(0,240,255,.18);
-    border:2px solid var(--cyan);color:var(--cyan);
-    font-weight:bold;border-radius:6px;letter-spacing:1px;
-    font-size:clamp(.7rem,3vw,.9rem);display:none;
-    animation:pulse 1s infinite;pointer-events:none;
-    white-space:nowrap
-  }
+    border:2px solid var(--cyan);color:var(--cyan);font-weight:bold;
+    border-radius:6px;letter-spacing:1px;font-size:clamp(.7rem,3vw,.9rem);
+    display:none;animation:pulse 1s infinite;pointer-events:none;white-space:nowrap}
   #prompt.show{display:block}
-  #controls{
-    flex-shrink:0;height:clamp(150px,26vh,200px);
+  @keyframes pulse{0%,100%{opacity:.6}50%{opacity:1}}
+
+  #controls{flex-shrink:0;height:clamp(150px,26vh,200px);
     background:linear-gradient(180deg,#0d0d1a,#0a0a12);
-    border-top:1px solid var(--border);
-    display:flex;justify-content:space-between;align-items:center;
-    padding:8px 14px;gap:10px;
-    padding-bottom:calc(8px + env(safe-area-inset-bottom,0px))
-  }
-  #dpad{
-    position:relative;width:clamp(130px,34vw,170px);
-    aspect-ratio:1;flex-shrink:0
-  }
-  #dpad button{
-    position:absolute;width:44%;height:44%;
-    background:rgba(0,240,255,.1);
+    border-top:1px solid var(--border);display:flex;justify-content:space-between;
+    align-items:center;padding:8px 14px;gap:10px;
+    padding-bottom:calc(8px + env(safe-area-inset-bottom,0px))}
+  #dpad{position:relative;width:clamp(130px,34vw,170px);aspect-ratio:1;flex-shrink:0}
+  #dpad button{position:absolute;width:44%;height:44%;background:rgba(0,240,255,.1);
     border:2px solid var(--cyan);color:var(--cyan);
-    font-size:clamp(1.1rem,4.5vw,1.6rem);
-    border-radius:10px;cursor:pointer;
-    display:flex;align-items:center;justify-content:center;
-    transition:background .1s;touch-action:none;
-    font-family:'Courier New',monospace;font-weight:bold;
-    padding:0
-  }
+    font-size:clamp(1.1rem,4.5vw,1.6rem);border-radius:10px;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;transition:background .1s;
+    touch-action:none;font-family:'Courier New',monospace;font-weight:bold;padding:0}
   #dpad button.pressed{background:var(--cyan);color:var(--bg);box-shadow:0 0 20px var(--cyan)}
   #dpad .up{top:0;left:28%}
   #dpad .down{bottom:0;left:28%}
   #dpad .left{top:28%;left:0}
   #dpad .right{top:28%;right:0}
-  #actionBtn{
-    width:clamp(80px,22vw,110px);height:clamp(80px,22vw,110px);
+  #actionBtn{width:clamp(80px,22vw,110px);height:clamp(80px,22vw,110px);
     background:radial-gradient(circle,rgba(255,0,170,.2),rgba(255,0,170,.05));
     border:3px solid var(--magenta);color:var(--magenta);
     border-radius:50%;font-size:clamp(.9rem,3.5vw,1.1rem);
-    font-family:'Courier New',monospace;font-weight:bold;
-    letter-spacing:1px;cursor:pointer;flex-shrink:0;
-    display:flex;align-items:center;justify-content:center;
-    text-transform:uppercase;touch-action:none;
-    transition:transform .1s;padding:0
-  }
-  #actionBtn:active,#actionBtn.pressed{
-    background:var(--magenta);color:#fff;
-    box-shadow:0 0 25px var(--magenta);transform:scale(.94)
-  }
-  #modal{
-    position:fixed;inset:0;background:rgba(5,5,15,.94);z-index:200;
-    display:none;align-items:center;justify-content:center;
-    padding:12px;overflow-y:auto;-webkit-overflow-scrolling:touch
-  }
+    font-family:'Courier New',monospace;font-weight:bold;letter-spacing:1px;
+    cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;
+    text-transform:uppercase;touch-action:none;transition:transform .1s;padding:0}
+  #actionBtn:active,#actionBtn.pressed{background:var(--magenta);color:#fff;
+    box-shadow:0 0 25px var(--magenta);transform:scale(.94)}
+
+  #modal{position:fixed;inset:0;background:rgba(5,5,15,.94);z-index:200;
+    display:none;align-items:center;justify-content:center;padding:12px;
+    overflow-y:auto;-webkit-overflow-scrolling:touch}
   #modal.show{display:flex}
-  .modal-box{
-    max-width:640px;width:100%;background:#12121f;
-    border:1px solid var(--border);border-radius:10px;
-    padding:clamp(16px,4vw,26px);position:relative;
-    box-shadow:0 0 40px rgba(0,240,255,.2);
-    max-height:calc(100vh - 24px);overflow-y:auto;
-    -webkit-overflow-scrolling:touch
-  }
-  .modal-box::before{
-    content:"";position:absolute;top:0;left:0;right:0;height:3px;
-    background:linear-gradient(90deg,var(--cyan),var(--magenta));
-    border-radius:10px 10px 0 0
-  }
-  .tag{
-    display:inline-block;font-size:clamp(.6rem,2.4vw,.7rem);
-    letter-spacing:1.5px;background:rgba(0,240,255,.12);
-    color:var(--cyan);padding:3px 10px;border-radius:20px;
-    border:1px solid var(--cyan);margin-bottom:12px
-  }
-  .modal-box h3{
-    color:var(--cyan);font-size:clamp(.95rem,4vw,1.15rem);
-    margin-bottom:12px;letter-spacing:1px
-  }
-  .question{
-    background:rgba(0,0,0,.35);border-left:3px solid var(--magenta);
-    padding:12px 14px;margin-bottom:14px;border-radius:4px;
-    line-height:1.55;font-size:clamp(.8rem,3.4vw,.92rem)
-  }
+  .modal-box{max-width:640px;width:100%;background:#12121f;
+    border:1px solid var(--border);border-radius:10px;padding:clamp(16px,4vw,26px);
+    position:relative;box-shadow:0 0 40px rgba(0,240,255,.2);
+    max-height:calc(100vh - 24px);overflow-y:auto}
+  .modal-box::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;
+    background:linear-gradient(90deg,var(--cyan),var(--magenta));border-radius:10px 10px 0 0}
+  .tag{display:inline-block;font-size:clamp(.6rem,2.4vw,.7rem);letter-spacing:1.5px;
+    background:rgba(0,240,255,.12);color:var(--cyan);padding:3px 10px;
+    border-radius:20px;border:1px solid var(--cyan);margin-bottom:12px}
+  .progress-q{display:flex;gap:5px;margin-bottom:12px;justify-content:center}
+  .progress-q .q{width:28px;height:6px;background:#1f1f35;border-radius:3px;transition:all .3s}
+  .progress-q .q.done{background:var(--green);box-shadow:0 0 8px var(--green)}
+  .progress-q .q.cur{background:var(--cyan);box-shadow:0 0 8px var(--cyan)}
+  .modal-box h3{color:var(--cyan);font-size:clamp(.95rem,4vw,1.15rem);
+    margin-bottom:12px;letter-spacing:1px}
+  .question{background:rgba(0,0,0,.35);border-left:3px solid var(--magenta);
+    padding:12px 14px;margin-bottom:14px;border-radius:4px;line-height:1.55;
+    font-size:clamp(.8rem,3.4vw,.92rem)}
   .question b{color:var(--yellow)}
   .options{display:flex;flex-direction:column;gap:8px;margin-bottom:14px}
-  .option{
-    background:var(--panel);border:1px solid var(--border);color:#e0e0ff;
+  .option{background:var(--panel);border:1px solid var(--border);color:#e0e0ff;
     padding:12px 14px;text-align:left;cursor:pointer;
-    font-family:'Courier New',monospace;
-    font-size:clamp(.75rem,3.2vw,.88rem);
-    border-radius:6px;transition:all .15s;
-    min-height:48px;touch-action:manipulation;
-    line-height:1.4
-  }
-  .option:active:not(.disabled){
-    border-color:var(--cyan);background:rgba(0,240,255,.08)
-  }
+    font-family:'Courier New',monospace;font-size:clamp(.75rem,3.2vw,.88rem);
+    border-radius:6px;transition:all .15s;min-height:48px;
+    touch-action:manipulation;line-height:1.4}
+  .option:active:not(.disabled){border-color:var(--cyan);background:rgba(0,240,255,.08)}
   .option.correct{border-color:var(--green);background:rgba(0,255,136,.15);color:var(--green)}
   .option.wrong{border-color:var(--red);background:rgba(255,51,85,.15);color:var(--red)}
   .option.disabled{cursor:not-allowed;opacity:.55}
-  .feedback{
-    margin-top:10px;padding:12px;border-radius:6px;
-    font-size:clamp(.75rem,3.2vw,.88rem);
-    line-height:1.5;display:none
-  }
+  .option .test-mark{float:right;color:var(--green);font-weight:bold;margin-left:8px}
+  .feedback{margin-top:10px;padding:12px;border-radius:6px;
+    font-size:clamp(.75rem,3.2vw,.88rem);line-height:1.5;display:none}
   .feedback.show{display:block;animation:fadeIn .3s}
   .feedback.ok{background:rgba(0,255,136,.1);border-left:3px solid var(--green);color:var(--green)}
   .feedback.err{background:rgba(255,51,85,.1);border-left:3px solid var(--red);color:var(--red)}
-  .feedback .frag{
-    margin-top:6px;font-size:clamp(.95rem,4vw,1.05rem);
-    color:var(--yellow);font-weight:bold;letter-spacing:2px
-  }
-  .hint-box{
-    margin-top:10px;padding:10px 12px;background:rgba(255,221,0,.08);
+  .feedback .frag{margin-top:6px;font-size:clamp(.95rem,4vw,1.05rem);
+    color:var(--yellow);font-weight:bold;letter-spacing:2px}
+  .hint-box{margin-top:10px;padding:10px 12px;background:rgba(255,221,0,.08);
     border-left:3px solid var(--yellow);border-radius:4px;
-    font-size:clamp(.72rem,3vw,.85rem);
-    line-height:1.5;display:none;color:#ffe680
-  }
+    font-size:clamp(.72rem,3vw,.85rem);line-height:1.5;display:none;color:#ffe680}
   .hint-box.show{display:block}
-  .modal-actions{
-    display:flex;justify-content:space-between;gap:8px;
-    margin-top:14px;flex-wrap:wrap
-  }
+  .modal-actions{display:flex;justify-content:space-between;gap:8px;
+    margin-top:14px;flex-wrap:wrap}
   .modal-actions .btn{flex:1;min-width:100px}
-  .trap-box{
-    max-width:600px;width:100%;background:#1a0a0f;
-    border:2px solid var(--red);border-radius:10px;
-    padding:clamp(18px,4vw,28px);text-align:center;
-    box-shadow:0 0 40px rgba(255,51,85,.3);
-    max-height:calc(100vh - 24px);overflow-y:auto;
-    animation:shake .4s
-  }
-  @keyframes shake{
-    0%,100%{transform:translateX(0)}
-    25%{transform:translateX(-8px)}
-    75%{transform:translateX(8px)}
-  }
-  .trap-box h1{
-    color:var(--red);text-shadow:0 0 15px var(--red);
-    letter-spacing:2px;margin-bottom:8px;
-    font-size:clamp(1.1rem,5vw,1.8rem)
-  }
-  .trap-box .warn{
-    background:rgba(255,51,85,.15);border:1px solid var(--red);
-    padding:12px;border-radius:6px;margin:12px 0;
-    color:#ff8888;line-height:1.55;
-    font-size:clamp(.78rem,3.4vw,.92rem)
-  }
-  .trap-box .fake{
-    background:rgba(255,221,0,.08);border-left:3px solid var(--yellow);
+
+  .trap-box{max-width:600px;width:100%;background:#1a0a0f;
+    border:2px solid var(--red);border-radius:10px;padding:clamp(18px,4vw,28px);
+    text-align:center;box-shadow:0 0 40px rgba(255,51,85,.3);
+    max-height:calc(100vh - 24px);overflow-y:auto;animation:shake .4s}
+  @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+  .trap-box h1{color:var(--red);text-shadow:0 0 15px var(--red);
+    letter-spacing:2px;margin-bottom:8px;font-size:clamp(1.1rem,5vw,1.8rem)}
+  .trap-box .warn{background:rgba(255,51,85,.15);border:1px solid var(--red);
+    padding:12px;border-radius:6px;margin:12px 0;color:#ff8888;
+    line-height:1.55;font-size:clamp(.78rem,3.4vw,.92rem)}
+  .trap-box .fake{background:rgba(255,221,0,.08);border-left:3px solid var(--yellow);
     padding:12px;border-radius:4px;color:#ffe680;
-    line-height:1.55;font-size:clamp(.75rem,3.2vw,.9rem);
-    text-align:left
-  }
-  .key-input{
-    font-family:'Courier New',monospace;
-    font-size:clamp(1.1rem,5vw,1.4rem);text-align:center;
-    letter-spacing:6px;padding:12px;
-    background:var(--panel);border:2px solid var(--cyan);
-    color:var(--cyan);border-radius:6px;
-    width:min(280px,80vw);margin:12px 0;
-    text-transform:uppercase
-  }
+    line-height:1.55;font-size:clamp(.75rem,3.2vw,.9rem);text-align:left}
+
+  .bitacora-box{max-width:720px;width:100%;background:#12121f;
+    border:1px solid var(--border);border-radius:10px;
+    padding:clamp(16px,4vw,26px);max-height:calc(100vh - 30px);
+    overflow-y:auto;text-align:left}
+  .bitacora-box h2{color:var(--cyan);letter-spacing:2px;margin-bottom:14px;
+    font-size:clamp(1rem,4vw,1.3rem);text-align:center}
+  .bitacora-box h3{color:var(--magenta);font-size:.9rem;letter-spacing:1.5px;
+    margin:16px 0 8px;border-bottom:1px dashed var(--border);padding-bottom:4px}
+  .bit-row{display:flex;justify-content:space-between;padding:6px 0;
+    border-bottom:1px solid #1a1a2a;font-size:.82rem;line-height:1.5}
+  .bit-row .lbl{color:#8a8ac0}
+  .bit-row .val{color:var(--cyan);font-weight:bold;text-align:right;margin-left:10px}
+  .bit-row .val.green{color:var(--green)}
+  .bit-row .val.red{color:var(--red)}
+  .bit-row .val.yellow{color:var(--yellow)}
+  .bit-tag{display:inline-block;padding:2px 8px;background:rgba(0,240,255,.12);
+    border-radius:10px;font-size:.7rem;margin:2px;color:var(--cyan)}
+  .bit-tag.trap{background:rgba(255,136,0,.15);color:#ff8800}
+  .bitacora-box .actions{display:flex;gap:8px;flex-wrap:wrap;
+    justify-content:center;margin-top:20px}
+  .feedback-q{background:rgba(0,0,0,.3);padding:10px 14px;border-radius:6px;
+    border-left:3px solid var(--yellow);margin:8px 0;font-size:.8rem;
+    line-height:1.5;color:#ffe680}
+  .key-input{font-family:'Courier New',monospace;
+    font-size:clamp(1.1rem,5vw,1.4rem);text-align:center;letter-spacing:6px;
+    padding:12px;background:var(--panel);border:2px solid var(--cyan);
+    color:var(--cyan);border-radius:6px;width:min(280px,80vw);
+    margin:12px 0;text-transform:uppercase}
   .key-input:focus{outline:none;box-shadow:0 0 20px var(--cyan)}
-  .confetti{
-    position:fixed;width:9px;height:9px;top:-10px;z-index:9999;
-    animation:fall linear forwards;pointer-events:none
-  }
+  .confetti{position:fixed;width:9px;height:9px;top:-10px;z-index:9999;
+    animation:fall linear forwards;pointer-events:none}
   @keyframes fall{to{transform:translateY(105vh) rotate(720deg);opacity:0}}
+  #testBadge{position:fixed;top:8px;left:50%;transform:translateX(-50%);
+    background:var(--red);color:#fff;padding:4px 14px;border-radius:20px;
+    font-size:.7rem;letter-spacing:2px;z-index:999;font-weight:bold;
+    box-shadow:0 0 15px var(--red);display:none}
+  #testBadge.show{display:block}
   @media (orientation:landscape) and (max-height:520px){
-    #controls{
-      position:absolute;inset:0;height:100%;
-      background:transparent;border:none;
-      pointer-events:none;padding:0
-    }
+    #controls{position:absolute;inset:0;height:100%;background:transparent;
+      border:none;pointer-events:none;padding:0}
     #controls > *{pointer-events:auto}
-    #dpad{
-      position:absolute;left:12px;bottom:12px;
-      width:clamp(120px,22vh,160px);
-      height:clamp(120px,22vh,160px);
-      aspect-ratio:1
-    }
-    #actionBtn{
-      position:absolute;right:16px;bottom:20px;
-      width:clamp(76px,16vh,100px);
-      height:clamp(76px,16vh,100px)
-    }
+    #dpad{position:absolute;left:12px;bottom:12px;
+      width:clamp(120px,22vh,160px);height:clamp(120px,22vh,160px);aspect-ratio:1}
+    #actionBtn{position:absolute;right:16px;bottom:20px;
+      width:clamp(76px,16vh,100px);height:clamp(76px,16vh,100px)}
   }
 </style>
 </head>
 <body>
+
+<div id="testBadge">🧪 MODO TEST ACTIVO</div>
 
 <!-- INTRO -->
 <div id="intro" class="overlay show">
@@ -360,10 +269,49 @@
   <div class="story">
     <p>🔬 <span class="hl">AÑO 2087.</span> El laboratorio orbital <b>CYTE</b> quedó sellado. Su IA entró en <span class="warn">bucle infinito</span>.</p>
     <p>Debes <span class="hl">caminar</span> por las instalaciones y resolver los acertijos de las <b>5 cámaras reales</b>. Hay <span class="warn">3 cámaras trampa</span> con datos falsos.</p>
-    <p>⏱️ <b>15 minutos.</b> Cada error resta <b>10 s</b>. Cada trampa resta <b>10 s</b>.</p>
-    <p>📱 <b>Controles:</b> D-pad para moverte, botón <b>E</b> para interactuar.</p>
+    <p>🎓 <b>SESIÓN DE CLASE:</b> antes de jugar, configura el equipo, el rol (anfitrión/jugador) y la ronda.</p>
+    <p>🎯 <b>Subtema:</b> Carga Nuclear Efectiva (Equipo 2). <b>10 preguntas</b>, 2 por cámara.</p>
   </div>
-  <button class="btn" onclick="startGame()">▶ INICIAR MISIÓN</button>
+  <button class="btn" onclick="showSessionSetup()">▶ CONFIGURAR SESIÓN</button>
+  <button class="btn small" onclick="toggleTestMode()">🧪 MODO TEST</button>
+</div>
+
+<!-- CONFIGURACIÓN DE SESIÓN -->
+<div id="sessionOverlay" class="overlay">
+  <h1 class="title">🎓 SESIÓN DE CLASE</h1>
+  <h2 class="subtitle">CONFIGURACIÓN DEL EQUIPO</h2>
+  <div class="form-group">
+    <label>NOMBRE DEL EQUIPO</label>
+    <input type="text" id="cfgTeam" placeholder="Equipo 3" maxlength="30">
+  </div>
+  <div class="form-group">
+    <label>ROL EN ESTA RONDA</label>
+    <div class="radio-row">
+      <label><input type="radio" name="cfgRole" value="host"><span>🎤 ANFITRIÓN</span></label>
+      <label><input type="radio" name="cfgRole" value="player" checked><span>🎮 JUGADOR</span></label>
+    </div>
+  </div>
+  <div class="form-group">
+    <label>RONDA</label>
+    <div class="radio-row">
+      <label><input type="radio" name="cfgRound" value="1" checked><span>RONDA 1</span></label>
+      <label><input type="radio" name="cfgRound" value="2"><span>RONDA 2</span></label>
+    </div>
+  </div>
+  <div class="form-group">
+    <label>EQUIPO PAR (con quien comparte estación)</label>
+    <input type="text" id="cfgPair" placeholder="Equipo 4" maxlength="30">
+  </div>
+  <div class="form-group">
+    <label>DURACIÓN (minutos) — 10 a 15</label>
+    <select id="cfgDuration">
+      <option value="10">10 minutos</option>
+      <option value="12">12 minutos</option>
+      <option value="15" selected>15 minutos</option>
+    </select>
+  </div>
+  <button class="btn green" onclick="startGame()">▶ COMENZAR JUEGO</button>
+  <button class="btn small" onclick="backToIntro()">← VOLVER</button>
 </div>
 
 <!-- DIALOG -->
@@ -371,7 +319,6 @@
   <div class="dialog-box">
     <span class="name" id="dlgName">C.Y.T.E.</span>
     <div class="text" id="dlgText"></div>
-    <div class="continue" id="dlgContinue">▶ TOCA PARA CONTINUAR</div>
   </div>
 </div>
 
@@ -388,6 +335,7 @@
     <canvas id="gameCanvas" width="960" height="600"></canvas>
     <div id="fragHud"></div>
     <div id="miniMap"></div>
+    <div id="roleBadge"></div>
     <div id="prompt">Presiona E para interactuar</div>
   </div>
   <div id="controls">
@@ -405,13 +353,14 @@
 <div id="modal">
   <div class="modal-box">
     <span class="tag" id="mTag">CÁMARA 1</span>
+    <div class="progress-q" id="mProgress"></div>
     <h3 id="mTitle">Título</h3>
     <div class="question" id="mQuestion"></div>
     <div class="options" id="mOptions"></div>
     <div class="feedback" id="mFeedback"></div>
     <div class="hint-box" id="mHint"></div>
     <div class="modal-actions">
-      <button class="btn magenta small" onclick="showHint()">💡 PISTA</button>
+      <button class="btn magenta small" onclick="showHint()" id="hintBtn">💡 PISTA</button>
       <button class="btn small" onclick="closeModal()">CERRAR</button>
     </div>
   </div>
@@ -433,7 +382,8 @@
   <h1 class="title">⏸ PAUSA</h1>
   <h2 class="subtitle">SISTEMA EN ESPERA</h2>
   <button class="btn green" onclick="resumeGame()">▶ CONTINUAR</button>
-  <button class="btn red" onclick="if(confirm('¿Reiniciar la partida?')){clearProgress();location.reload()}">↻ REINICIAR</button>
+  <button class="btn cyan small" onclick="showBitacora()">📋 VER BITÁCORA ACTUAL</button>
+  <button class="btn red small" onclick="if(confirm('¿Reiniciar la partida?')){clearProgress();location.reload()}">↻ REINICIAR</button>
 </div>
 
 <!-- FINAL -->
@@ -448,17 +398,36 @@
   <br>
   <button class="btn green" onclick="checkFinal()">🔐 DESBLOQUEAR</button>
   <p id="finalMsg" style="margin-top:14px;font-size:.95rem;min-height:26px"></p>
+  <button class="btn magenta" id="viewBitacoraBtn" style="display:none;margin-top:16px" onclick="showBitacora()">📋 VER BITÁCORA</button>
+</div>
+
+<!-- BITÁCORA -->
+<div id="bitacoraOverlay" class="overlay">
+  <div class="bitacora-box" id="bitacoraContent"></div>
 </div>
 
 <script>
+/* ================================================================
+   ESCAPE ROOM C.Y.T.E. v7.0 — Sin referencias académicas
+   ================================================================ */
 const W = 960, H = 600;
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 
+/* ============ MODO TEST ============ */
+let testMode = false;
+function toggleTestMode(){
+  testMode = !testMode;
+  document.getElementById('testBadge').classList.toggle('show', testMode);
+  alert(testMode
+    ? '🧪 MODO TEST ACTIVADO\n\n- Las respuestas correctas se marcarán con ✓\n- Útil para validación del juego\n- Desactívalo para jugar normalmente'
+    : '🎮 MODO TEST DESACTIVADO');
+}
+
 /* ============ AUDIO ============ */
-let audioCtx = null, soundEnabled = true;
+let audioCtx=null, soundEnabled=true;
 function ensureAudio(){
-  if(!audioCtx){ try{ audioCtx = new (window.AudioContext||window.webkitAudioContext)(); }catch(e){ soundEnabled=false; } }
+  if(!audioCtx){ try{ audioCtx=new (window.AudioContext||window.webkitAudioContext)(); }catch(e){ soundEnabled=false; } }
   if(audioCtx && audioCtx.state==='suspended') audioCtx.resume();
 }
 function beep(freq,dur,type='sine',vol=0.15){
@@ -498,42 +467,118 @@ window.addEventListener('orientationchange',()=>setTimeout(resizeCanvas,250));
 
 /* ============ PUZZLES ============ */
 const puzzles = {
-  cam1:{tag:'CÁMARA 1 · ACTIVACIÓN', title:'Reconocer conceptos esenciales',
-    question:'¿Cuál afirmación sobre la <b>carga nuclear efectiva (Z<sub>eff</sub>)</b> es <b>FALSA</b>?',
-    options:['Es la carga positiva neta que siente un electrón tras el apantallamiento.',
-      'Se calcula como Z<sub>eff</sub> = Z − S.',
-      'Es siempre igual al número atómico Z.',
-      'Aumenta de izquierda a derecha en un período.'],
-    correct:2, frag:'Z',
-    hint:'Los electrones internos "bloquean" parte de la carga. ¿El electrón de valencia siente TODA la carga?',
-    explanation:'Z<sub>eff</sub> NUNCA es igual a Z porque el apantallamiento (S) siempre reduce la carga efectiva. Como S > 0, entonces Z<sub>eff</sub> < Z.'},
-  cam2:{tag:'CÁMARA 2 · DIAGNÓSTICO', title:'Detectar el dato incorrecto',
-    question:'Según las <b>reglas de Slater</b>, ¿qué valor de apantallamiento es <b>INCORRECTO</b>?',
-    options:['Mismo grupo (ns, np): 0.35','Capa n−1: 0.85','Capas n−2 o menores: 0.85','1s apantallando a otro 1s: 0.30'],
-    correct:2, frag:'E',
-    hint:'Los electrones de capas muy internas están cerca del núcleo. ¿Apantallan poco o mucho?',
-    explanation:'Los electrones de capas n−2 o menores apantallan <b>1.00</b> (total), no 0.85.'},
-  cam3:{tag:'CÁMARA 3 · ANÁLISIS', title:'Interpretar tendencias periódicas',
-    question:'Ordena de <b>MENOR a MAYOR</b> Z<sub>eff</sub>: <b>Na, Mg, Al, Si</b>',
-    options:['Si < Al < Mg < Na','Na < Mg < Al < Si','Mg < Na < Si < Al','Al < Si < Na < Mg'],
-    correct:1, frag:'F',
-    hint:'Mismo período. Al ir a la derecha, Z crece pero el apantallamiento entre electrones del mismo nivel es mínimo.',
-    explanation:'En un mismo período, Z<sub>eff</sub> aumenta de izquierda a derecha: Na < Mg < Al < Si.'},
-  cam4:{tag:'CÁMARA 4 · APLICACIÓN', title:'Caso de ingeniería',
-    question:'¿Qué elemento elegirías para el <b>filamento de una bombilla incandescente</b>?',
-    options:['Aluminio (Al)','Plomo (Pb)','Wolframio (W)','Mercurio (Hg)'],
-    correct:2, frag:'F',
-    hint:'Busca el metal con el punto de fusión más alto de la tabla periódica (3422 °C).',
-    explanation:'El <b>wolframio (W)</b> tiene el punto de fusión más alto (3422 °C). Se usa en filamentos de bombillas.'},
-  cam5:{tag:'CÁMARA 5 · VERIFICACIÓN', title:'Integrar y justificar',
-    question:'¿Por qué el <b>K</b> tiene menor energía de ionización que el <b>Na</b>?',
-    options:['El K tiene mayor Z<sub>eff</sub> que el Na.',
-      'El electrón de valencia del K está más lejos y siente menor Z<sub>eff</sub>.',
-      'El K tiene menos electrones internos.',
-      'El K no tiene apantallamiento.'],
-    correct:1, frag:'!',
-    hint:'Aunque el K tiene más protones, tiene más capas internas. Su electrón 4s está más lejos que el 3s del Na.',
-    explanation:'El K tiene más capas internas que apantallan y su electrón de valencia está más alejado del núcleo → menor Z<sub>eff</sub> efectiva.'}
+  cam1:{
+    tag:'CÁMARA 1 · ACTIVACIÓN',
+    questions:[
+      { title:'Definición de Z<sub>eff</sub>',
+        question:'¿Cuál afirmación sobre la <b>carga nuclear efectiva (Z<sub>eff</sub>)</b> es <b>FALSA</b>?',
+        options:['Es la carga positiva neta que siente un electrón tras el apantallamiento.',
+          'Se calcula como Z<sub>eff</sub> = Z − S.',
+          'Es siempre igual al número atómico Z.',
+          'Aumenta de izquierda a derecha en un período.'],
+        correct:2,
+        hint:'Los electrones internos "bloquean" parte de la carga. ¿El electrón de valencia siente TODA la carga?',
+        explanation:'Z<sub>eff</sub> NUNCA es igual a Z. El apantallamiento (S) siempre reduce la carga efectiva: Z<sub>eff</sub> = Z − S, y S > 0 → Z<sub>eff</sub> < Z.'
+      },
+      { title:'Notación correcta',
+        question:'Si un átomo tiene Z = 11 y su electrón de valencia experimenta una carga efectiva de ≈ 2.20, ¿cuánto vale la constante de apantallamiento S?',
+        options:['S = 11.00','S = 2.20','S = 8.80','S = 13.20'],
+        correct:2,
+        hint:'Despeja S de la fórmula Z<sub>eff</sub> = Z − S.',
+        explanation:'De Z<sub>eff</sub> = Z − S → S = Z − Z<sub>eff</sub> = 11 − 2.20 = <b>8.80</b>. Coincide con las reglas de Slater para el Na.'
+      }
+    ],
+    frag:'Z'
+  },
+  cam2:{
+    tag:'CÁMARA 2 · DIAGNÓSTICO',
+    questions:[
+      { title:'Reglas de Slater',
+        question:'Según las <b>reglas de Slater</b>, ¿qué valor de apantallamiento es <b>INCORRECTO</b>?',
+        options:['Mismo grupo (ns, np): 0.35','Capa n−1: 0.85','Capas n−2 o menores: 0.85','1s apantallando a otro 1s: 0.30'],
+        correct:2,
+        hint:'Los electrones de capas muy internas están cerca del núcleo. ¿Apantallan poco o mucho?',
+        explanation:'Los electrones de capas n−2 o menores apantallan <b>1.00</b> (total), no 0.85. Ese valor 0.85 corresponde solo a la capa inmediatamente inferior (n−1).'
+      },
+      { title:'Cálculo aplicado',
+        question:'¿Cuál es la Z<sub>eff</sub> aproximada del electrón 2p del flúor (Z = 9)?',
+        options:['Z<sub>eff</sub> = 9.00','Z<sub>eff</sub> = 5.20','Z<sub>eff</sub> = 2.20','Z<sub>eff</sub> = 7.00'],
+        correct:1,
+        hint:'Configuración: 1s² 2s² 2p⁵. Aplica Slater: 6 electrones × 0.35 + 2 electrones × 0.85.',
+        explanation:'Para un electrón 2p: S = (6 × 0.35) + (2 × 0.85) = 2.10 + 1.70 = 3.80. Z<sub>eff</sub> = 9 − 3.80 = <b>5.20</b>.'
+      }
+    ],
+    frag:'E'
+  },
+  cam3:{
+    tag:'CÁMARA 3 · ANÁLISIS',
+    questions:[
+      { title:'Tendencia horizontal',
+        question:'Ordena de <b>MENOR a MAYOR</b> Z<sub>eff</sub> sobre el electrón externo: <b>Na, Mg, Al, Si</b>',
+        options:['Si < Al < Mg < Na','Na < Mg < Al < Si','Mg < Na < Si < Al','Al < Si < Na < Mg'],
+        correct:1,
+        hint:'Mismo período. Al ir a la derecha, Z crece pero el apantallamiento entre electrones del mismo nivel es mínimo.',
+        explanation:'En un mismo período, Z<sub>eff</sub> aumenta de izquierda a derecha: <b>Na < Mg < Al < Si</b>.'
+      },
+      { title:'Interpretación de gráfica',
+        question:'Si el radio atómico disminuye de Li a F en un período, ¿qué explica mejor esta tendencia?',
+        options:['El aumento del número de neutrones.',
+          'El aumento de Z<sub>eff</sub> a lo largo del período, que atrae más fuertemente al electrón externo.',
+          'La disminución del apantallamiento total.',
+          'El aumento del número de capas electrónicas.'],
+        correct:1,
+        hint:'El radio y Z<sub>eff</sub> están inversamente relacionados dentro de un mismo período.',
+        explanation:'Al crecer Z<sub>eff</sub>, el núcleo atrae más fuertemente a los electrones de valencia, contrayendo el radio atómico.'
+      }
+    ],
+    frag:'F'
+  },
+  cam4:{
+    tag:'CÁMARA 4 · APLICACIÓN',
+    questions:[
+      { title:'Caso de ingeniería',
+        question:'¿Qué elemento elegirías para el <b>filamento de una bombilla incandescente</b>, considerando su altísimo punto de fusión?',
+        options:['Aluminio (Al)','Plomo (Pb)','Wolframio (W)','Mercurio (Hg)'],
+        correct:2,
+        hint:'Busca el metal con el punto de fusión más alto de la tabla periódica (3422 °C).',
+        explanation:'El <b>wolframio (W)</b> tiene el punto de fusión más alto (3422 °C). Se usa en filamentos de bombillas.'
+      },
+      { title:'Materiales informáticos',
+        question:'En una placa base se necesita un material que sea <b>excelente conductor eléctrico</b> y <b>resistente a la corrosión</b>. ¿Cuál elegirías?',
+        options:['Hierro (Fe)','Cobre (Cu)','Azufre (S)','Carbono (C)'],
+        correct:1,
+        hint:'Es un metal de transición de color rojizo que se usa en cables eléctricos.',
+        explanation:'El <b>cobre (Cu)</b> combina alta conductividad eléctrica con buena resistencia a la corrosión. El hierro se oxida; el azufre y el carbono no conducen.'
+      }
+    ],
+    frag:'F'
+  },
+  cam5:{
+    tag:'CÁMARA 5 · VERIFICACIÓN',
+    questions:[
+      { title:'Comparación de elementos',
+        question:'¿Por qué el <b>potasio (K)</b> tiene menor energía de ionización que el <b>sodio (Na)</b>, a pesar de tener más protones?',
+        options:['El K tiene mayor Z<sub>eff</sub> que el Na.',
+          'El electrón de valencia del K está más lejos del núcleo y siente menor Z<sub>eff</sub>.',
+          'El K tiene menos electrones internos que el Na.',
+          'El K no tiene apantallamiento.'],
+        correct:1,
+        hint:'Aunque el K tiene más protones, tiene más capas internas. Su electrón 4s está más lejos que el 3s del Na.',
+        explanation:'El K tiene más capas internas que apantallan y su electrón de valencia está más alejado del núcleo. Aunque Z es mayor, Z<sub>eff</sub> sobre el electrón externo es menor → se necesita menos energía para ionizarlo.'
+      },
+      { title:'Integración final',
+        question:'¿Qué relación correcta existe entre <b>Z<sub>eff</sub></b> y la <b>electronegatividad</b>?',
+        options:['Mayor Z<sub>eff</sub> → menor electronegatividad.',
+          'Mayor Z<sub>eff</sub> → mayor electronegatividad.',
+          'No existe relación entre ambas.',
+          'La electronegatividad depende solo de los neutrones.'],
+        correct:1,
+        hint:'La electronegatividad mide la tendencia a atraer electrones en un enlace. ¿Qué pasa si el núcleo "tira" más fuerte?',
+        explanation:'Mayor Z<sub>eff</sub> significa mayor atracción por los electrones, lo que se traduce en <b>mayor electronegatividad</b>. Por eso el F es el elemento más electronegativo.'
+      }
+    ],
+    frag:'!'
+  }
 };
 
 /* ============ TRAPS ============ */
@@ -609,12 +654,40 @@ const rooms = {
     spawn:{x:450,y:420}}
 };
 
+/* ============ SESSION CONFIG ============ */
+const session = {
+  team:'Equipo sin nombre',
+  role:'player',
+  round:1,
+  pair:'',
+  duration:15,
+  startedAt:null,
+  endedAt:null
+};
+
+/* ============ METRICS ============ */
+const metrics = {
+  attemptsTotal:0,
+  attemptsCorrect:0,
+  attemptsWrong:0,
+  hintsUsed:0,
+  hintsPerCamera:{cam1:0,cam2:0,cam3:0,cam4:0,cam5:0},
+  trapsVisited:{trap1:false,trap2:false,trap3:false},
+  wrongByCam:{cam1:0,cam2:0,cam3:0,cam4:0,cam5:0},
+  startTimer:null,
+  finalKey:'',
+  finalKeyCorrect:false,
+  difficulties:[]
+};
+
 /* ============ STATE ============ */
 let currentRoom='hub';
 const player={x:450,y:280,w:34,h:34,speed:4.2,dir:'down'};
 const keys={up:false,down:false,left:false,right:false};
 let nearObject=null, transitionCooldown=0, gameActive=false, paused=false;
-let secondsLeft=15*60, timerInterval=null, currentPuzzle=null, currentObject=null, lastFootstep=0;
+let secondsLeft=15*60, timerInterval=null;
+let currentPuzzle=null, currentObject=null, currentQuestionIndex=0;
+let answeredCorrect=[], lastFootstep=0;
 
 const fragments={cam1:false,cam2:false,cam3:false,cam4:false,cam5:false};
 const trapsVisited={trap1:false,trap2:false,trap3:false};
@@ -625,7 +698,7 @@ function spawnParticle(x,y,color,vx,vy,life){
 
 /* ============ SAVE/LOAD ============ */
 function saveProgress(){
-  try{ localStorage.setItem('cyte_save',JSON.stringify({fragments,trapsVisited,secondsLeft,currentRoom})); }catch(e){}
+  try{ localStorage.setItem('cyte_save',JSON.stringify({fragments,trapsVisited,secondsLeft,currentRoom,session,metrics})); }catch(e){}
 }
 function loadProgress(){
   try{
@@ -633,6 +706,8 @@ function loadProgress(){
     const d=JSON.parse(s);
     Object.assign(fragments,d.fragments||{});
     Object.assign(trapsVisited,d.trapsVisited||{});
+    if(d.session) Object.assign(session,d.session);
+    if(d.metrics) Object.assign(metrics,d.metrics);
     secondsLeft=d.secondsLeft||15*60;
     if(d.currentRoom) currentRoom=d.currentRoom;
     return true;
@@ -640,16 +715,48 @@ function loadProgress(){
 }
 function clearProgress(){ try{ localStorage.removeItem('cyte_save'); }catch(e){} }
 
+/* ============ SESSION SETUP ============ */
+function showSessionSetup(){
+  document.getElementById('intro').classList.remove('show');
+  document.getElementById('sessionOverlay').classList.add('show');
+  sfxClick();
+}
+function backToIntro(){
+  document.getElementById('sessionOverlay').classList.remove('show');
+  document.getElementById('intro').classList.add('show');
+  sfxClick();
+}
+
 /* ============ START ============ */
 async function startGame(){
   ensureAudio();
-  document.getElementById('intro').classList.remove('show');
+  session.team=document.getElementById('cfgTeam').value.trim()||'Equipo sin nombre';
+  session.pair=document.getElementById('cfgPair').value.trim()||'—';
+  session.duration=parseInt(document.getElementById('cfgDuration').value);
+  const roleEl=document.querySelector('input[name="cfgRole"]:checked');
+  session.role=roleEl?roleEl.value:'player';
+  const roundEl=document.querySelector('input[name="cfgRound"]:checked');
+  session.round=roundEl?parseInt(roundEl.value):1;
+  session.startedAt=new Date();
+  metrics.startTimer=performance.now();
+  secondsLeft=session.duration*60;
+
+  document.getElementById('sessionOverlay').classList.remove('show');
   document.getElementById('gameWrap').classList.add('show');
   resizeCanvas();
 
-  await showDialog('C.Y.T.E.','Bienvenido, operador. Soy C.Y.T.E., la inteligencia artificial del laboratorio. He detectado intrusos en mis sistemas. Solo tú puedes ayudarme a restaurar mi núcleo.');
-  await showDialog('C.Y.T.E.','Debes atravesar 5 cámaras reales y responder correctamente cada acertijo sobre CARGA NUCLEAR EFECTIVA. Pero cuidado: hay 3 cámaras trampa con datos falsos que confundirán tus decisiones.');
-  await showDialog('C.Y.T.E.','Cada respuesta incorrecta te costará 10 segundos. Cada trampa, otros 10 segundos. Tienes 15 minutos. ¡Comienza tu misión!');
+  const rb=document.getElementById('roleBadge');
+  if(session.role==='host'){
+    rb.textContent=`🎤 ANFITRIÓN · ${session.team}`;
+    rb.classList.add('host');
+  } else {
+    rb.textContent=`🎮 ${session.team} · Ronda ${session.round}`;
+    rb.classList.remove('host');
+  }
+
+  await showDialog('C.Y.T.E.',`Bienvenido, ${session.team}. ${session.role==='host'?'Como ANFITRIÓN, recuerda: solo das la introducción de 2 min y las pistas programadas.':'Como JUGADOR, debes resolver las 5 cámaras. Cada error cuesta 10 s.'}`);
+  await showDialog('C.Y.T.E.','Cada cámara tiene 2 preguntas. Debes acertar AMBAS para obtener el fragmento. Hay 3 cámaras trampa con datos falsos.');
+  await showDialog('C.Y.T.E.',`Duración: ${session.duration} minutos. ¡Comienza!`);
 
   gameActive=true;
   loadRoom('hub');
@@ -664,8 +771,11 @@ function startTimer(){
     secondsLeft--;
     if(secondsLeft<=0){
       clearInterval(timerInterval);
-      alert('⏱️ ¡TIEMPO AGOTADO! Reiniciando el sistema...');
-      clearProgress(); location.reload();
+      metrics.difficulties.push('Se agotó el tiempo antes de terminar.');
+      alert('⏱️ ¡TIEMPO AGOTADO! Mostrando bitácora...');
+      showBitacora();
+      gameActive=false;
+      return;
     }
     if(secondsLeft<=60 && secondsLeft>0 && secondsLeft%10===0){ beep(440,.15,'sine',.1); }
     updateHUD();
@@ -763,6 +873,7 @@ document.addEventListener('keydown',e=>{
   if(['arrowup','arrowdown','arrowleft','arrowright',' '].includes(k)) e.preventDefault();
   if(k==='e'&&gameActive&&!paused&&!document.getElementById('modal').classList.contains('show')) interact();
   if(k==='escape'&&gameActive){ paused?resumeGame():pauseGame(); }
+  if(k==='t'&&!gameActive){ toggleTestMode(); }
 });
 document.addEventListener('keyup',e=>{
   const k=e.key.toLowerCase();
@@ -896,54 +1007,97 @@ function interact(){
 function openPuzzle(obj){
   currentObject=obj;
   currentPuzzle=puzzles[obj.puzzle];
+  currentQuestionIndex=0;
+  answeredCorrect=[false,false];
   gameActive=false; sfxClick();
-  document.getElementById('mTag').textContent=currentPuzzle.tag;
-  document.getElementById('mTitle').textContent=currentPuzzle.title;
-  document.getElementById('mQuestion').innerHTML=currentPuzzle.question;
+  const hb=document.getElementById('hintBtn');
+  if(session.role==='host'){ hb.disabled=true; hb.textContent='🔒 PISTA (ANFITRIÓN)'; }
+  else { hb.disabled=false; hb.textContent='💡 PISTA'; }
+  renderQuestion();
+  document.getElementById('modal').classList.add('show');
+}
+
+function renderQuestion(){
+  const p=currentPuzzle;
+  const q=p.questions[currentQuestionIndex];
+  document.getElementById('mTag').textContent=p.tag;
+  document.getElementById('mTitle').textContent=q.title;
+
+  const prog=document.getElementById('mProgress');
+  prog.innerHTML='';
+  p.questions.forEach((_,i)=>{
+    const d=document.createElement('div');
+    d.className='q';
+    if(answeredCorrect[i]) d.classList.add('done');
+    else if(i===currentQuestionIndex) d.classList.add('cur');
+    prog.appendChild(d);
+  });
+
+  document.getElementById('mQuestion').innerHTML=q.question;
+
   const opts=document.getElementById('mOptions');
   opts.innerHTML='';
-  currentPuzzle.options.forEach((o,i)=>{
+  q.options.forEach((o,i)=>{
     const b=document.createElement('button');
-    b.className='option'; b.innerHTML=o;
+    b.className='option';
+    b.innerHTML=o + (testMode && i===q.correct ? '<span class="test-mark">✓ CORRECTA</span>' : '');
     b.onclick=()=>selectOption(i,b);
     opts.appendChild(b);
   });
+
   const fb=document.getElementById('mFeedback');
   fb.className='feedback'; fb.innerHTML='';
   document.getElementById('mHint').className='hint-box';
-  document.getElementById('mHint').innerHTML='💡 <b>PISTA:</b> '+currentPuzzle.hint;
-  document.getElementById('modal').classList.add('show');
+  document.getElementById('mHint').innerHTML='💡 <b>PISTA PROGRAMADA:</b> '+q.hint;
 }
 
 function selectOption(i,btn){
   if(btn.classList.contains('disabled')) return;
   const p=currentPuzzle;
+  const q=p.questions[currentQuestionIndex];
   const fb=document.getElementById('mFeedback');
   const opts=document.querySelectorAll('#mOptions .option');
 
-  if(i===p.correct){
+  metrics.attemptsTotal++;
+
+  if(i===q.correct){
     opts.forEach(o=>o.classList.add('disabled'));
     btn.classList.add('correct');
-    fb.className='feedback ok show';
-    fb.innerHTML=`✅ <b>¡ACCESO CONCEDIDO!</b><br>${p.explanation}
-      <div class="frag">🔑 Fragmento obtenido: <b>${p.frag}</b></div>`;
-    fragments[currentObject.puzzle]=true;
+    answeredCorrect[currentQuestionIndex]=true;
+    metrics.attemptsCorrect++;
     sfxSuccess();
     if(navigator.vibrate) navigator.vibrate([60,40,60]);
-    for(let k=0;k<20;k++){
+    for(let k=0;k<15;k++){
       spawnParticle(currentObject.x+currentObject.w/2,currentObject.y+currentObject.h/2,'#00ff88',(Math.random()-.5)*200,(Math.random()-.5)*200,1.2);
     }
-    updateHUD(); saveProgress(); checkWin();
+
+    if(currentQuestionIndex < p.questions.length - 1){
+      fb.className='feedback ok show';
+      fb.innerHTML=`✅ <b>¡CORRECTO!</b><br>${q.explanation}<br><br><i>Pregunta ${currentQuestionIndex+1}/${p.questions.length} superada. Continúa.</i>`;
+      currentQuestionIndex++;
+      setTimeout(()=>{
+        renderQuestion();
+      },1500);
+    } else {
+      fb.className='feedback ok show';
+      fb.innerHTML=`✅ <b>¡CORRECTO!</b><br>${q.explanation}
+        <div class="frag">🔑 Fragmento obtenido: <b>${p.frag}</b></div>
+        <div style="margin-top:8px;color:#88ffbb;font-size:.85rem">✔ Cámara resuelta por completo.</div>`;
+      fragments[currentObject.puzzle]=true;
+      updateHUD(); saveProgress(); checkWin();
+    }
   } else {
     btn.classList.add('wrong','disabled');
-    secondsLeft=Math.max(0,secondsLeft-10);  // ← 10 s
+    secondsLeft=Math.max(0,secondsLeft-10);
+    metrics.attemptsWrong++;
+    metrics.wrongByCam[currentObject.puzzle]++;
     updateHUD();
     sfxError();
     if(navigator.vibrate) navigator.vibrate(200);
     fb.className='feedback err show';
     fb.innerHTML=`❌ <b>ACCESO DENEGADO.</b><br>
       La opción seleccionada es incorrecta. <b>NO se revelará la correcta.</b><br>
-      Vuelve a intentarlo con otra opción o pide una pista.<br>
+      Vuelve a intentarlo con otra opción o pide una pista al anfitrión.<br>
       <i style="color:#ff8888">Penalización: −10 segundos.</i>`;
     const wrap=document.getElementById('canvasWrap');
     wrap.style.animation='shake .4s';
@@ -951,20 +1105,27 @@ function selectOption(i,btn){
   }
 }
 
-function showHint(){ document.getElementById('mHint').classList.add('show'); beep(880,.08,'sine',.1); }
+function showHint(){
+  if(session.role==='host'){ alert('Los anfitriones solo dan pistas oralmente, no desde el juego.'); return; }
+  document.getElementById('mHint').classList.add('show');
+  metrics.hintsUsed++;
+  metrics.hintsPerCamera[currentObject.puzzle]++;
+  beep(880,.08,'sine',.1);
+}
 
 function closeModal(){
   document.getElementById('modal').classList.remove('show');
   gameActive=true;
   if(currentObject && fragments[currentObject.puzzle]) currentObject.done=true;
-  currentObject=null; currentPuzzle=null;
+  currentObject=null; currentPuzzle=null; currentQuestionIndex=0;
 }
 
 /* ============ TRAP ============ */
 function showTrap(id){
   if(!trapsVisited[id]){
     trapsVisited[id]=true;
-    secondsLeft=Math.max(0,secondsLeft-10);  // ← 10 s
+    metrics.trapsVisited[id]=true;
+    secondsLeft=Math.max(0,secondsLeft-10);
     updateHUD(); saveProgress();
   }
   const t=trapsData[id];
@@ -998,8 +1159,9 @@ function checkWin(){
   if(Object.values(fragments).every(Boolean)){
     setTimeout(async ()=>{
       gameActive=false; clearInterval(timerInterval); sfxUnlock();
-      await showDialog('C.Y.T.E.','¡Lo lograste, operador! Has reunido los 5 fragmentos. Introduce la clave final en el panel central para restaurar mi núcleo.');
+      await showDialog('C.Y.T.E.','¡Lo lograste, operador! Introduce la clave final para restaurar mi núcleo.');
       document.getElementById('finalScreen').classList.add('show');
+      document.getElementById('viewBitacoraBtn').style.display='inline-block';
     },900);
   }
 }
@@ -1007,10 +1169,15 @@ function checkWin(){
 function checkFinal(){
   const v=document.getElementById('finalKey').value.trim().toUpperCase();
   const msg=document.getElementById('finalMsg');
+  metrics.finalKey=v;
   if(v==='ZEFF!'){
+    metrics.finalKeyCorrect=true;
+    metrics.endedAt=new Date();
+    if(metrics.startTimer) metrics.totalSeconds=(performance.now()-metrics.startTimer)/1000;
     msg.style.color='#00ff88';
-    msg.innerHTML='🎉 <b>¡CLAVE CORRECTA!</b> C.Y.T.E. ha sido liberado. ¡Felicidades, operador!';
-    sfxUnlock(); confetti(); clearProgress();
+    msg.innerHTML='🎉 <b>¡CLAVE CORRECTA!</b> C.Y.T.E. ha sido liberado. ¡Felicidades!';
+    sfxUnlock(); confetti();
+    document.getElementById('viewBitacoraBtn').style.display='inline-block';
   } else {
     msg.style.color='#ff3355';
     msg.innerHTML='❌ Clave incorrecta. Revisa tus fragmentos: un concepto químico de 4 letras + un signo.';
@@ -1030,6 +1197,153 @@ function confetti(){
     document.body.appendChild(c);
     setTimeout(()=>c.remove(),6000);
   }
+}
+
+/* ============ BITÁCORA ============ */
+function showBitacora(){
+  const dur = metrics.startTimer ? Math.round((performance.now()-metrics.startTimer)/1000) : 0;
+  const mm = String(Math.floor(dur/60)).padStart(2,'0');
+  const ss = String(dur%60).padStart(2,'0');
+  const frags = Object.values(fragments).filter(Boolean).length;
+  const trapsHit = Object.values(metrics.trapsVisited).filter(Boolean).length;
+
+  const cameras = [
+    {id:'cam1', name:'Cámara 1 · Activación'},
+    {id:'cam2', name:'Cámara 2 · Diagnóstico'},
+    {id:'cam3', name:'Cámara 3 · Análisis'},
+    {id:'cam4', name:'Cámara 4 · Aplicación'},
+    {id:'cam5', name:'Cámara 5 · Verificación'}
+  ];
+
+  let camerasHTML='';
+  cameras.forEach(c=>{
+    const solved = fragments[c.id];
+    const hints = metrics.hintsPerCamera[c.id]||0;
+    const wrong = metrics.wrongByCam[c.id]||0;
+    camerasHTML += `
+      <div class="bit-row">
+        <span class="lbl">${c.name}</span>
+        <span class="val ${solved?'green':'red'}">
+          ${solved?'✔ RESUELTA':'✘ NO RESUELTA'}
+          ${hints?` · <span style="color:#ffdd00">💡 ${hints}</span>`:''}
+          ${wrong?` · <span style="color:#ff8888">✘ ${wrong}</span>`:''}
+        </span>
+      </div>`;
+  });
+
+  let trapsHTML='';
+  ['trap1','trap2','trap3'].forEach(t=>{
+    const v=metrics.trapsVisited[t];
+    trapsHTML+=`<span class="bit-tag ${v?'trap':''}">${t.toUpperCase()} ${v?'(visitada)':'(no visitada)'}</span>`;
+  });
+
+  const html=`
+    <h2>📋 BITÁCORA DEL ESCAPE ROOM</h2>
+    <h3>Datos de la sesión</h3>
+    <div class="bit-row"><span class="lbl">Equipo</span><span class="val">${session.team}</span></div>
+    <div class="bit-row"><span class="lbl">Rol</span><span class="val">${session.role==='host'?'🎤 Anfitrión':'🎮 Jugador'}</span></div>
+    <div class="bit-row"><span class="lbl">Ronda</span><span class="val">${session.round}</span></div>
+    <div class="bit-row"><span class="lbl">Equipo par</span><span class="val">${session.pair}</span></div>
+    <div class="bit-row"><span class="lbl">Inicio</span><span class="val">${session.startedAt?session.startedAt.toLocaleTimeString():'—'}</span></div>
+    <div class="bit-row"><span class="lbl">Término</span><span class="val">${metrics.endedAt?metrics.endedAt.toLocaleTimeString():'—'}</span></div>
+    <div class="bit-row"><span class="lbl">Duración total</span><span class="val yellow">${mm}:${ss}</span></div>
+
+    <h3>Resultado del juego</h3>
+    <div class="bit-row"><span class="lbl">Fragmentos obtenidos</span><span class="val ${frags===5?'green':'yellow'}">${frags}/5</span></div>
+    <div class="bit-row"><span class="lbl">Clave final ingresada</span><span class="val ${metrics.finalKeyCorrect?'green':'red'}">${metrics.finalKey||'(no ingresada)'}</span></div>
+    <div class="bit-row"><span class="lbl">¿Clave correcta?</span><span class="val ${metrics.finalKeyCorrect?'green':'red'}">${metrics.finalKeyCorrect?'SÍ ✔':'NO ✘'}</span></div>
+    <div class="bit-row"><span class="lbl">Intentos totales</span><span class="val">${metrics.attemptsTotal}</span></div>
+    <div class="bit-row"><span class="lbl">Aciertos / Errores</span><span class="val"><span style="color:#00ff88">${metrics.attemptsCorrect}</span> / <span style="color:#ff3355">${metrics.attemptsWrong}</span></span></div>
+    <div class="bit-row"><span class="lbl">Pistas utilizadas</span><span class="val yellow">${metrics.hintsUsed}</span></div>
+    <div class="bit-row"><span class="lbl">Cámaras trampa visitadas</span><span class="val yellow">${trapsHit}/3</span></div>
+
+    <h3>Detalle por cámara</h3>
+    ${camerasHTML}
+
+    <h3>Trampas visitadas</h3>
+    <div style="padding:6px 0">${trapsHTML}</div>
+
+    <h3>Preguntas de retroalimentación oral (3 min)</h3>
+    <div class="feedback-q">💬 ¿Qué concepto químico te costó más y por qué?</div>
+    <div class="feedback-q">💬 ¿Las pistas fueron suficientes o ambiguas?</div>
+    <div class="feedback-q">💬 ¿La navegación y los controles fueron claros?</div>
+    <div class="feedback-q">💬 ¿Qué mejorarías del escape room que jugaste?</div>
+
+    <h3>Dificultades observadas (anfitrión)</h3>
+    <div class="feedback-q" style="border-color:#8a8ac0;color:#a0a0d0">
+      ${metrics.difficulties.length? metrics.difficulties.join('<br>') : 'Sin dificultades registradas.'}
+    </div>
+
+    <h3>Mejora aplicada a nuestro producto</h3>
+    <div class="feedback-q" style="border-color:var(--green);color:#88ffbb">
+      Escribe aquí la mejora que aplicarán a su propio escape room después de la retroalimentación:
+    </div>
+    <textarea id="bitImprovement" placeholder="Ejemplo: agregar temporizador visual más claro..." style="width:100%;min-height:70px;padding:10px;background:var(--panel);border:2px solid var(--border);color:var(--cyan);font-family:'Courier New',monospace;font-size:.85rem;border-radius:6px;resize:vertical"></textarea>
+
+    <div class="actions">
+      <button class="btn green small" onclick="copyBitacora()">📋 COPIAR TEXTO</button>
+      <button class="btn magenta small" onclick="downloadBitacora()">💾 DESCARGAR</button>
+      <button class="btn small" onclick="closeBitacora()">← CERRAR</button>
+    </div>
+  `;
+
+  document.getElementById('bitacoraContent').innerHTML=html;
+  document.getElementById('bitacoraOverlay').classList.add('show');
+  sfxClick();
+}
+
+function closeBitacora(){
+  document.getElementById('bitacoraOverlay').classList.remove('show');
+  sfxClick();
+}
+
+function bitacoraAsText(){
+  const dur = metrics.startTimer ? Math.round((performance.now()-metrics.startTimer)/1000) : 0;
+  const mm = String(Math.floor(dur/60)).padStart(2,'0');
+  const ss = String(dur%60).padStart(2,'0');
+  const frags = Object.values(fragments).filter(Boolean).length;
+  const improvement = document.getElementById('bitImprovement') ? document.getElementById('bitImprovement').value : '';
+
+  let t='';
+  t+='=== BITÁCORA DEL ESCAPE ROOM "C.Y.T.E." ===\n';
+  t+='Equipo: '+session.team+'\n';
+  t+='Rol: '+(session.role==='host'?'Anfitrión':'Jugador')+'\n';
+  t+='Ronda: '+session.round+'\n';
+  t+='Equipo par: '+session.pair+'\n';
+  t+='Inicio: '+(session.startedAt?session.startedAt.toLocaleTimeString():'—')+'\n';
+  t+='Término: '+(metrics.endedAt?metrics.endedAt.toLocaleTimeString():'—')+'\n';
+  t+='Duración total: '+mm+':'+ss+'\n';
+  t+='Fragmentos: '+frags+'/5\n';
+  t+='Clave final: '+(metrics.finalKey||'(no ingresada)')+' — '+(metrics.finalKeyCorrect?'CORRECTA':'INCORRECTA')+'\n';
+  t+='Intentos totales: '+metrics.attemptsTotal+'\n';
+  t+='Aciertos: '+metrics.attemptsCorrect+' | Errores: '+metrics.attemptsWrong+'\n';
+  t+='Pistas utilizadas: '+metrics.hintsUsed+'\n';
+  t+='Trampas visitadas: '+Object.values(metrics.trapsVisited).filter(Boolean).length+'/3\n';
+  t+='Mejora aplicada: '+(improvement||'(no escrita)')+'\n';
+  return t;
+}
+
+function copyBitacora(){
+  const text=bitacoraAsText();
+  navigator.clipboard.writeText(text).then(()=>{
+    alert('📋 Bitácora copiada al portapapeles.\n\nPégala en tu reporte.');
+  }).catch(()=>{
+    const ta=document.createElement('textarea');
+    ta.value=text; document.body.appendChild(ta); ta.select();
+    document.execCommand('copy'); ta.remove();
+    alert('📋 Bitácora copiada.');
+  });
+}
+
+function downloadBitacora(){
+  const text=bitacoraAsText();
+  const blob=new Blob([text],{type:'text/plain'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;
+  a.download='bitacora_'+session.team.replace(/\s+/g,'_')+'.txt';
+  a.click();
+  URL.revokeObjectURL(url);
 }
 
 /* ============ RENDER ============ */
@@ -1170,12 +1484,6 @@ document.addEventListener('contextmenu',e=>{
 });
 
 resizeCanvas();
-if(loadProgress()){
-  setTimeout(()=>{
-    const resume=confirm('💾 Se encontró una partida guardada. ¿Deseas continuar?');
-    if(!resume) clearProgress();
-  },500);
-}
 </script>
 </body>
 </html>
