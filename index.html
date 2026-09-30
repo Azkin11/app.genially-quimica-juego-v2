@@ -1,1 +1,505 @@
 
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<title>Escape Room CYTE | Firewall Periodico - Sub-cuartos y Obstaculos</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none}
+:root{--cyan:#00f0ff;--magenta:#ff00aa;--green:#00ff88;--red:#ff3355;--yellow:#ffdd00;--bg:#0a0a12;--panel:#12121f;--border:#1f1f35;--hud-h:44px}
+html,body{height:100%;overflow:hidden;position:fixed;width:100%}
+body{font-family:'Courier New',monospace;background:var(--bg);color:#e0e0ff;touch-action:none}
+.overlay{position:fixed;inset:0;background:rgba(5,5,15,.97);z-index:100;display:none;flex-direction:column;align-items:center;justify-content:center;padding:20px 16px;text-align:center;overflow-y:auto}
+.overlay.show{display:flex;animation:fadeIn .4s ease}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+h1.title{font-size:clamp(1.5rem,7vw,3rem);color:var(--cyan);text-shadow:0 0 10px var(--cyan);letter-spacing:3px;margin-bottom:8px}
+h2.subtitle{font-size:clamp(.75rem,3vw,1.1rem);color:var(--magenta);text-shadow:0 0 10px var(--magenta);letter-spacing:2px;margin-bottom:20px}
+.story{max-width:680px;width:100%;background:rgba(18,18,31,.92);border:1px solid var(--border);border-left:4px solid var(--cyan);padding:18px;margin-bottom:16px;text-align:left;line-height:1.65;font-size:clamp(.78rem,3.4vw,.92rem);border-radius:6px;max-height:50vh;overflow-y:auto}
+.story p{margin-bottom:10px}
+.story .hl{color:var(--cyan);font-weight:bold}
+.story .warn{color:var(--yellow);font-weight:bold}
+.story .alert{color:var(--red);font-weight:bold}
+.btn{font-family:'Courier New',monospace;background:transparent;color:var(--cyan);border:2px solid var(--cyan);padding:14px 28px;font-size:clamp(.8rem,3.5vw,1rem);letter-spacing:2px;cursor:pointer;transition:all .25s;text-transform:uppercase;font-weight:bold;border-radius:6px;margin:5px;min-height:48px;touch-action:manipulation}
+.btn:active{background:var(--cyan);color:var(--bg);box-shadow:0 0 20px var(--cyan)}
+.btn.green{color:var(--green);border-color:var(--green)}
+.btn.green:active{background:var(--green);box-shadow:0 0 20px var(--green)}
+.btn.magenta{color:var(--magenta);border-color:var(--magenta)}
+.btn.magenta:active{background:var(--magenta);box-shadow:0 0 20px var(--magenta)}
+.btn.red{color:var(--red);border-color:var(--red)}
+.btn.red:active{background:var(--red);box-shadow:0 0 20px var(--red)}
+.btn.small{padding:8px 14px;font-size:.75rem;min-height:40px;margin:3px}
+.form-group{margin-bottom:14px;text-align:left;width:100%;max-width:400px}
+.form-group label{display:block;color:var(--cyan);font-size:.8rem;letter-spacing:2px;margin-bottom:6px}
+.form-group input,.form-group select{width:100%;padding:12px;background:var(--panel);border:2px solid var(--border);color:var(--cyan);font-family:'Courier New',monospace;font-size:.95rem;border-radius:6px;outline:none}
+.radio-row{display:flex;gap:8px;flex-wrap:wrap}
+.radio-row label{flex:1;min-width:100px;padding:12px;background:var(--panel);border:2px solid var(--border);border-radius:6px;cursor:pointer;text-align:center;color:#a0a0d0;font-size:.8rem}
+.radio-row input{display:none}
+.radio-row input:checked+span{color:var(--cyan)}
+.radio-row label:has(input:checked){border-color:var(--cyan);background:rgba(0,240,255,.1)}
+#gameWrap{display:none;position:fixed;inset:0;flex-direction:column;background:var(--bg)}
+#gameWrap.show{display:flex}
+#hud{height:var(--hud-h);flex-shrink:0;display:flex;justify-content:space-between;align-items:center;padding:0 8px;background:#12121f;border-bottom:1px solid var(--border);font-size:clamp(.6rem,2.5vw,.8rem);gap:4px;position:relative}
+#hud .item{color:var(--cyan);white-space:nowrap}
+#hud .item b{color:var(--yellow)}
+#hud button{background:transparent;border:1px solid var(--border);color:var(--cyan);padding:4px 8px;border-radius:4px;font-family:'Courier New',monospace;font-size:inherit;cursor:pointer;min-height:32px}
+#canvasWrap{flex:1;position:relative;display:flex;align-items:center;justify-content:center;background:#050510;overflow:hidden;min-height:0}
+#gameCanvas{display:block;max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;touch-action:none}
+#prompt{position:absolute;left:50%;bottom:12px;transform:translateX(-50%);padding:8px 16px;background:rgba(0,240,255,.18);border:2px solid var(--cyan);color:var(--cyan);font-weight:bold;border-radius:6px;letter-spacing:1px;font-size:clamp(.7rem,3vw,.9rem);display:none;pointer-events:none}
+#prompt.show{display:block}
+#controls{flex-shrink:0;height:clamp(150px,26vh,200px);background:#0d0d1a;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;padding:8px 14px;gap:10px}
+#dpad{position:relative;width:clamp(130px,34vw,170px);aspect-ratio:1;flex-shrink:0}
+#dpad button{position:absolute;width:44%;height:44%;background:rgba(0,240,255,.1);border:2px solid var(--cyan);color:var(--cyan);font-size:clamp(1.1rem,4.5vw,1.6rem);border-radius:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;touch-action:none;font-family:'Courier New',monospace;font-weight:bold;padding:0}
+#dpad button.pressed{background:var(--cyan);color:var(--bg)}
+#dpad .up{top:0;left:28%}
+#dpad .down{bottom:0;left:28%}
+#dpad .left{top:28%;left:0}
+#dpad .right{top:28%;right:0}
+#actionBtn{width:clamp(80px,22vw,110px);height:clamp(80px,22vw,110px);background:rgba(255,0,170,.2);border:3px solid var(--magenta);color:var(--magenta);border-radius:50%;font-size:clamp(.9rem,3.5vw,1.1rem);font-family:'Courier New',monospace;font-weight:bold;cursor:pointer;display:flex;align-items:center;justify-content:center;touch-action:none}
+#modal{position:fixed;inset:0;background:rgba(5,5,15,.94);z-index:200;display:none;align-items:center;justify-content:center;padding:12px;overflow-y:auto}
+#modal.show{display:flex}
+.modal-box{max-width:640px;width:100%;background:#12121f;border:1px solid var(--border);border-radius:10px;padding:clamp(16px,4vw,26px);position:relative}
+.tag{display:inline-block;font-size:clamp(.6rem,2.4vw,.7rem);letter-spacing:1.5px;background:rgba(0,240,255,.12);color:var(--cyan);padding:3px 10px;border-radius:20px;border:1px solid var(--cyan);margin-bottom:12px}
+.question{background:rgba(0,0,0,.35);border-left:3px solid var(--magenta);padding:12px 14px;margin-bottom:14px;border-radius:4px;line-height:1.55;font-size:clamp(.8rem,3.4vw,.92rem)}
+.options{display:flex;flex-direction:column;gap:8px;margin-bottom:14px}
+.option{background:var(--panel);border:1px solid var(--border);color:#e0e0ff;padding:12px 14px;text-align:left;cursor:pointer;font-family:'Courier New',monospace;font-size:clamp(.75rem,3.2vw,.88rem);border-radius:6px}
+.option.correct{border-color:var(--green);background:rgba(0,255,136,.15);color:var(--green)}
+.option.wrong{border-color:var(--red);background:rgba(255,51,85,.15);color:var(--red)}
+.feedback{margin-top:10px;padding:12px;border-radius:6px;font-size:clamp(.75rem,3.2vw,.88rem);display:none}
+.feedback.show{display:block}
+.feedback.ok{background:rgba(0,255,136,.1);border-left:3px solid var(--green);color:var(--green)}
+.feedback.err{background:rgba(255,51,85,.1);border-left:3px solid var(--red);color:var(--red)}
+.key-input{font-family:'Courier New',monospace;font-size:clamp(1.1rem,5vw,1.4rem);text-align:center;letter-spacing:6px;padding:12px;background:var(--panel);border:2px solid var(--cyan);color:var(--cyan);border-radius:6px;width:min(280px,80vw);margin:12px 0;text-transform:uppercase}
+</style>
+</head>
+<body>
+
+<div id="intro" class="overlay show">
+<h1 class="title">FIREWALL PERIODICO</h1>
+<h2 class="subtitle">ESCAPE ROOM C.Y.T.E. - SECTOR SUB-CUARTOS</h2>
+<div class="story">
+<p class="alert">ALERTA DE NAVEGACION:</p>
+<p>Los sectores de prueba han sido bloqueados por divisiones estructurales y servidores corruptos. Para acceder a las terminales con las preguntas de <span class="hl">Carga Nuclear Efectiva</span>, deberas navegar por los pasillos y esquivar los obstaculos de los sub-cuartos.</p>
+</div>
+<button class="btn" onclick="showSessionSetup()">INICIAR MISION</button>
+</div>
+
+<div id="sessionOverlay" class="overlay">
+<h1 class="title">SESION DE JUEGO</h1>
+<div class="form-group"><label>NOMBRE DEL EQUIPO</label><input type="text" id="cfgTeam" value="Equipo 2" maxlength="30"></div>
+<button class="btn green" onclick="startGame()">ENTRAR AL SECTOR</button>
+</div>
+
+<div id="gameWrap">
+<div id="hud">
+<div class="item">SALA: <b id="roomName">HUB CENTRAL</b></div>
+<div class="item">TIEMPO: <b id="timer">15:00</b></div>
+<div class="item">FRAG: <b><span id="fragCount">0</span>/5</b></div>
+<button onclick="pauseGame()">PAUSA</button>
+</div>
+<div id="canvasWrap">
+<canvas id="gameCanvas" width="960" height="600"></canvas>
+<div id="prompt">Presiona E / Toca para interactuar</div>
+</div>
+<div id="controls">
+<div id="dpad">
+<button class="up" data-dir="up">^</button>
+<button class="left" data-dir="left">&lt;</button>
+<button class="right" data-dir="right">&gt;</button>
+<button class="down" data-dir="down">v</button>
+</div>
+<button id="actionBtn">E</button>
+</div>
+</div>
+
+<div id="modal">
+<div class="modal-box">
+<span class="tag" id="mTag">TERMINAL</span>
+<h3 id="mTitle" style="color:var(--cyan);margin-bottom:10px">Pregunta</h3>
+<div class="question" id="mQuestion"></div>
+<div class="options" id="mOptions"></div>
+<div class="feedback" id="mFeedback"></div>
+<div style="display:flex;justify-content:flex-end;margin-top:10px">
+<button class="btn small" onclick="closeModal()">CERRAR</button>
+</div>
+</div>
+</div>
+
+<div id="finalScreen" class="overlay">
+<h1 class="title">SISTEMA LIBERADO</h1>
+<h2 class="subtitle">INGRESA LA CLAVE FINAL</h2>
+<p style="margin-bottom:10px">Reuniste los 5 fragmentos al completar los sub-cuartos.</p>
+<input type="text" class="key-input" id="finalKey" maxlength="5" placeholder="_____" autocomplete="off">
+<br>
+<button class="btn green" onclick="checkFinal()">DESBLOQUEAR</button>
+<p id="finalMsg" style="margin-top:14px;font-size:.95rem;min-height:26px"></p>
+</div>
+
+<script>
+const W = 960, H = 600;
+const TILE_SIZE = 40; // Rejilla de 24x15
+const canvas = document.getElementById('gameCanvas');
+const ctx = canvas.getContext('2d');
+
+// Matriz de mapa: 1 = Muro (Obstaculo), 0 = Suelo transitable
+// Sub-cuartos divididos con pasillos y puertas
+const ROOM_MAPS = {
+  hub: [
+    [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+    [1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1],
+    [1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1],
+    [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+    [1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1],
+    [1,1,1,0,1,1,1,1,1,1,0,0,0,0,1,1,1,1,1,1,0,1,1,1],
+    [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+    [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+    [1,1,1,0,1,1,1,1,1,1,0,0,0,0,1,1,1,1,1,1,0,1,1,1],
+    [1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1],
+    [1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1],
+    [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+    [1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1],
+    [1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1],
+    [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+  ],
+  cam1: [ // Camara 1: Sub-cuartos divididos con servidores como obstaculos
+    [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+    [1,0,0,0,1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,1,0,0,0,1],
+    [1,0,0,0,1,0,1,1,1,0,1,0,0,1,0,1,1,1,0,1,0,0,0,1],
+    [1,0,0,0,1,0,1,0,1,0,1,0,0,1,0,1,0,1,0,1,0,0,0,1],
+    [1,0,0,0,0,0,1,0,1,0,0,0,0,0,0,1,0,1,0,0,0,0,0,1],
+    [1,1,1,1,1,0,1,0,1,1,1,0,0,1,1,1,0,1,0,1,1,1,1,1],
+    [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+    [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+    [1,1,1,1,1,0,1,0,1,1,1,0,0,1,1,1,0,1,0,1,1,1,1,1],
+    [1,0,0,0,0,0,1,0,1,0,0,0,0,0,0,1,0,1,0,0,0,0,0,1],
+    [1,0,0,0,1,0,1,0,1,0,1,0,0,1,0,1,0,1,0,1,0,0,0,1],
+    [1,0,0,0,1,0,1,1,1,0,1,0,0,1,0,1,1,1,0,1,0,0,0,1],
+    [1,0,0,0,1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,1,0,0,0,1],
+    [1,0,0,0,1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,1,0,0,0,1],
+    [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+  ]
+};
+
+// Preguntas y Fragmentos de Clave
+const QUESTIONS = {
+  q1: {
+    title: 'Sub-cuarto Alpha: Definicion Zeff',
+    question: '¿Cual es la expresion correcta para calcular la Carga Nuclear Efectiva (Zeff)?',
+    options: ['Zeff = Z + S', 'Zeff = Z - S', 'Zeff = S - Z', 'Zeff = Z / S'],
+    correct: 1,
+    fragment: 'Z'
+  },
+  q2: {
+    title: 'Sub-cuarto Beta: Reglas de Slater',
+    question: 'Segun las reglas de Slater, ¿cuanto contribuyen los electrones del mismo grupo (n) en orbitales s/p al apantallamiento S?',
+    options: ['1.00', '0.85', '0.35', '0.00'],
+    correct: 2,
+    fragment: 'E'
+  },
+  q3: {
+    title: 'Sub-cuarto Gamma: Tendencia Periodica',
+    question: 'A lo largo de un mismo periodo de izquierda a derecha, ¿como varia Zeff para los electrones de valencia?',
+    options: ['Disminuye', 'Permanece constante', 'Aumenta', 'Varia aleatoriamente'],
+    correct: 2,
+    fragment: 'F'
+  },
+  q4: {
+    title: 'Sub-cuarto Delta: Apantallamiento',
+    question: '¿Cual de los siguientes subniveles ejerce un mayor efecto de apantallamiento sobre los electrones externos?',
+    options: ['4f', '3d', '2p', '1s'],
+    correct: 3,
+    fragment: 'F'
+  },
+  q5: {
+    title: 'Sub-cuarto Epsilon: Aplicacion en Materiales',
+    question: '¿Por que el Wolframio (W) retiene fuertemente sus electrones internos frente a la ionizacion en semiconductores?',
+    options: ['Alta Carga Nuclear Efectiva (Zeff)', 'Bajo numero atomico', 'Apantallamiento total S=Z', 'Ausencia de protones'],
+    correct: 0,
+    fragment: '!'
+  }
+};
+
+// Objetos e interactivos en los sub-cuartos
+const ROOM_OBJECTS = {
+  hub: [
+    { x: 3, y: 3, label: 'SECTOR ALPHA', target: 'cam1', type: 'door' }
+  ],
+  cam1: [
+    { x: 2, y: 2, type: 'terminal', qKey: 'q1', label: 'TERMINAL ALPHA' },
+    { x: 21, y: 2, type: 'terminal', qKey: 'q2', label: 'TERMINAL BETA' },
+    { x: 2, y: 12, type: 'terminal', qKey: 'q3', label: 'TERMINAL GAMMA' },
+    { x: 21, y: 12, type: 'terminal', qKey: 'q4', label: 'TERMINAL DELTA' },
+    { x: 12, y: 3, type: 'terminal', qKey: 'q5', label: 'TERMINAL EPSILON' },
+    { x: 12, y: 7, label: 'SALIDA A HUB', target: 'hub', type: 'door' }
+  ]
+};
+
+let currentRoom = 'hub';
+let player = { x: 12 * TILE_SIZE, y: 7 * TILE_SIZE, speed: 4, radius: 14 };
+let keys = { up: false, down: false, left: false, right: false };
+let unlockedFragments = [];
+let solvedQuestions = {};
+let activeObject = null;
+let gameInterval, timerInterval, timeLeft = 900;
+
+function showSessionSetup(){
+  document.getElementById('intro').classList.remove('show');
+  document.getElementById('sessionOverlay').classList.add('show');
+}
+
+function startGame(){
+  document.getElementById('sessionOverlay').classList.remove('show');
+  document.getElementById('gameWrap').classList.add('show');
+  resizeCanvas();
+  setupControls();
+  gameInterval = requestAnimationFrame(gameLoop);
+  startTimer();
+}
+
+function startTimer(){
+  timerInterval = setInterval(() => {
+    timeLeft--;
+    let m = Math.floor(timeLeft/60).toString().padStart(2,'0');
+    let s = (timeLeft%60).toString().padStart(2,'0');
+    document.getElementById('timer').textContent = `${m}:${s}`;
+    if(timeLeft <= 0){
+      clearInterval(timerInterval);
+      alert('¡TIEMPO AGOTADO! El firewall no pudo ser restaurado.');
+      location.reload();
+    }
+  }, 1000);
+}
+
+// Colision con la matriz del mapa (muros y paredes de sub-cuartos)
+function isWall(x, y){
+  let map = ROOM_MAPS[currentRoom] || ROOM_MAPS.hub;
+  let tileX = Math.floor(x / TILE_SIZE);
+  let tileY = Math.floor(y / TILE_SIZE);
+  if(tileX < 0 || tileX >= 24 || tileY < 0 || tileY >= 15) return true;
+  return map[tileY][tileX] === 1;
+}
+
+function checkMoveCollision(newX, newY){
+  let r = player.radius;
+  return isWall(newX - r, newY - r) ||
+         isWall(newX + r, newY - r) ||
+         isWall(newX - r, newY + r) ||
+         isWall(newX + r, newY + r);
+}
+
+function updatePlayer(){
+  let dx = 0, dy = 0;
+  if(keys.up) dy -= player.speed;
+  if(keys.down) dy += player.speed;
+  if(keys.left) dx -= player.speed;
+  if(keys.right) dx += player.speed;
+
+  // Movimiento independiente por ejes para deslizamiento suave sobre muros
+  if(dx !== 0 && !checkMoveCollision(player.x + dx, player.y)){
+    player.x += dx;
+  }
+  if(dy !== 0 && !checkMoveCollision(player.x, player.y + dy)){
+    player.y += dy;
+  }
+
+  // Verificar proximidad con objetos interactivos
+  let objs = ROOM_OBJECTS[currentRoom] || [];
+  activeObject = null;
+  for(let obj of objs){
+    let ox = obj.x * TILE_SIZE + TILE_SIZE/2;
+    let oy = obj.y * TILE_SIZE + TILE_SIZE/2;
+    let dist = Math.hypot(player.x - ox, player.y - oy);
+    if(dist < TILE_SIZE * 1.2){
+      activeObject = obj;
+      break;
+    }
+  }
+
+  const promptEl = document.getElementById('prompt');
+  if(activeObject){
+    promptEl.classList.add('show');
+    promptEl.textContent = `Presiona E para [${activeObject.label}]`;
+  } else {
+    promptEl.classList.remove('show');
+  }
+}
+
+function render(){
+  ctx.clearRect(0, 0, W, H);
+  let map = ROOM_MAPS[currentRoom] || ROOM_MAPS.hub;
+
+  // Dibujar mapa (Suelo y Muros/Obstaculos)
+  for(let r=0; r<15; r++){
+    for(let c=0; c<24; c++){
+      let x = c * TILE_SIZE;
+      let y = r * TILE_SIZE;
+      if(map[r][c] === 1){ // Obstaculo / Muro
+        ctx.fillStyle = '#1f1f35';
+        ctx.fillRect(x, y, TILE_SIZE, TILE_SIZE);
+        ctx.strokeStyle = '#00f0ff';
+        ctx.strokeRect(x+1, y+1, TILE_SIZE-2, TILE_SIZE-2);
+      } else { // Suelo
+        ctx.fillStyle = '#0a0a1a';
+        ctx.fillRect(x, y, TILE_SIZE, TILE_SIZE);
+        ctx.strokeStyle = 'rgba(0,240,255,0.05)';
+        ctx.strokeRect(x, y, TILE_SIZE, TILE_SIZE);
+      }
+    }
+  }
+
+  // Dibujar objetos interactivos (Terminales y Puertas)
+  let objs = ROOM_OBJECTS[currentRoom] || [];
+  for(let obj of objs){
+    let x = obj.x * TILE_SIZE;
+    let y = obj.y * TILE_SIZE;
+    if(obj.type === 'terminal'){
+      let solved = solvedQuestions[obj.qKey];
+      ctx.fillStyle = solved ? '#00ff88' : '#ff00aa';
+      ctx.fillRect(x+8, y+8, TILE_SIZE-16, TILE_SIZE-16);
+      ctx.shadowColor = solved ? '#00ff88' : '#ff00aa';
+      ctx.shadowBlur = 10;
+      ctx.fillStyle = '#ffffff';
+      ctx.font = '10px monospace';
+      ctx.fillText('TERM', x+6, y+24);
+      ctx.shadowBlur = 0;
+    } else if(obj.type === 'door'){
+      ctx.fillStyle = '#ffdd00';
+      ctx.fillRect(x+4, y+4, TILE_SIZE-8, TILE_SIZE-8);
+    }
+  }
+
+  // Dibujar jugador
+  ctx.fillStyle = '#00f0ff';
+  ctx.beginPath();
+  ctx.arc(player.x, player.y, player.radius, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.shadowColor = '#00f0ff';
+  ctx.shadowBlur = 15;
+  ctx.stroke();
+  ctx.shadowBlur = 0;
+}
+
+function gameLoop(){
+  updatePlayer();
+  render();
+  requestAnimationFrame(gameLoop);
+}
+
+function interact(){
+  if(!activeObject) return;
+  if(activeObject.type === 'door'){
+    currentRoom = activeObject.target;
+    document.getElementById('roomName').textContent = currentRoom.toUpperCase();
+    player.x = 12 * TILE_SIZE;
+    player.y = 7 * TILE_SIZE;
+  } else if(activeObject.type === 'terminal'){
+    openQuestionModal(activeObject.qKey);
+  }
+}
+
+function openQuestionModal(qKey){
+  let q = QUESTIONS[qKey];
+  if(!q) return;
+  document.getElementById('mTag').textContent = q.title;
+  document.getElementById('mQuestion').innerHTML = q.question;
+  let optContainer = document.getElementById('mOptions');
+  optContainer.innerHTML = '';
+  document.getElementById('mFeedback').className = 'feedback';
+  document.getElementById('mFeedback').style.display = 'none';
+
+  q.options.forEach((opt, idx) => {
+    let btn = document.createElement('button');
+    btn.className = 'option';
+    btn.textContent = `${String.fromCharCode(65+idx)}) ${opt}`;
+    btn.onclick = () => handleAnswer(qKey, idx, btn);
+    optContainer.appendChild(btn);
+  });
+
+  document.getElementById('modal').classList.add('show');
+}
+
+function handleAnswer(qKey, selected, btnEl){
+  let q = QUESTIONS[qKey];
+  let fb = document.getElementById('mFeedback');
+  fb.style.display = 'block';
+
+  if(selected === q.correct){
+    fb.className = 'feedback ok show';
+    fb.innerHTML = `<b>¡CORRECTO!</b> Fragmento recuperado: [<b>${q.fragment}</b>]`;
+    btnEl.classList.add('correct');
+    if(!solvedQuestions[qKey]){
+      solvedQuestions[qKey] = true;
+      unlockedFragments.push(q.fragment);
+      document.getElementById('fragCount').textContent = unlockedFragments.length;
+      if(unlockedFragments.length === 5){
+        setTimeout(triggerFinalPhase, 1500);
+      }
+    }
+  } else {
+    fb.className = 'feedback err show';
+    fb.textContent = 'RESPUESTA INCORRECTA. Revisa los conceptos de Carga Nuclear Efectiva.';
+    btnEl.classList.add('wrong');
+  }
+}
+
+function closeModal(){
+  document.getElementById('modal').classList.remove('show');
+}
+
+function triggerFinalPhase(){
+  closeModal();
+  document.getElementById('finalScreen').classList.add('show');
+}
+
+function checkFinal(){
+  let val = document.getElementById('finalKey').value.trim().toUpperCase();
+  let msg = document.getElementById('finalMsg');
+  if(val === 'ZEFF!'){
+    msg.style.color = 'var(--green)';
+    msg.textContent = '¡SISTEMA RESTAURADO! Clave Zeff! verificada con exito.';
+  } else {
+    msg.style.color = 'var(--red)';
+    msg.textContent = 'CLAVE INCORRECTA. Asegurate de unir todos los fragmentos.';
+  }
+}
+
+function setupControls(){
+  window.addEventListener('keydown', e => {
+    if(e.key === 'ArrowUp' || e.key === 'w') keys.up = true;
+    if(e.key === 'ArrowDown' || e.key === 's') keys.down = true;
+    if(e.key === 'ArrowLeft' || e.key === 'a') keys.left = true;
+    if(e.key === 'ArrowRight' || e.key === 'd') keys.right = true;
+    if(e.key === 'e' || e.key === 'E') interact();
+  });
+  window.addEventListener('keyup', e => {
+    if(e.key === 'ArrowUp' || e.key === 'w') keys.up = false;
+    if(e.key === 'ArrowDown' || e.key === 's') keys.down = false;
+    if(e.key === 'ArrowLeft' || e.key === 'a') keys.left = false;
+    if(e.key === 'ArrowRight' || e.key === 'd') keys.right = false;
+  });
+
+  document.querySelectorAll('#dpad button').forEach(btn => {
+    let dir = btn.dataset.dir;
+    btn.addEventListener('touchstart', (e)=>{ e.preventDefault(); keys[dir] = true; });
+    btn.addEventListener('touchend', (e)=>{ e.preventDefault(); keys[dir] = false; });
+    btn.addEventListener('mousedown', ()=> keys[dir] = true);
+    btn.addEventListener('mouseup', ()=> keys[dir] = false);
+  });
+
+  let actBtn = document.getElementById('actionBtn');
+  actBtn.addEventListener('click', interact);
+  actBtn.addEventListener('touchstart', (e)=>{ e.preventDefault(); interact(); });
+}
+
+function resizeCanvas(){
+  const wrap = document.getElementById('canvasWrap');
+  let s = Math.min(wrap.clientWidth / W, wrap.clientHeight / H);
+  canvas.style.width = Math.floor(W * s) + 'px';
+  canvas.style.height = Math.floor(H * s) + 'px';
+}
+window.addEventListener('resize', resizeCanvas);
+</script>
+</body>
+</html>
