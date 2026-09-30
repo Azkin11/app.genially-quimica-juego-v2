@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
-<title>Escape Room CYTE | Sesión de Clase</title>
+<title>Escape Room CYTE | Firewall Periódico</title>
 <style>
   *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;
     user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
@@ -25,13 +25,17 @@
     text-shadow:0 0 10px var(--cyan),0 0 40px var(--cyan);letter-spacing:3px;margin-bottom:8px}
   h2.subtitle{font-size:clamp(.75rem,3vw,1.1rem);color:var(--magenta);
     text-shadow:0 0 10px var(--magenta);letter-spacing:2px;margin-bottom:20px}
-  .story{max-width:620px;width:100%;background:rgba(18,18,31,.92);
+  .story{max-width:680px;width:100%;background:rgba(18,18,31,.92);
     border:1px solid var(--border);border-left:4px solid var(--cyan);
-    padding:18px;margin-bottom:20px;text-align:left;line-height:1.65;
-    font-size:clamp(.8rem,3.5vw,.95rem);border-radius:6px;max-height:55vh;overflow-y:auto}
+    padding:18px;margin-bottom:16px;text-align:left;line-height:1.65;
+    font-size:clamp(.78rem,3.4vw,.92rem);border-radius:6px;max-height:50vh;overflow-y:auto}
   .story p{margin-bottom:10px}
   .story .hl{color:var(--cyan);font-weight:bold}
   .story .warn{color:var(--yellow);font-weight:bold}
+  .story .alert{color:var(--red);font-weight:bold}
+  .story h3{color:var(--magenta);margin:12px 0 8px;font-size:.95rem;letter-spacing:1px}
+  .story ul,.story ol{margin-left:20px;margin-bottom:10px}
+  .story li{margin-bottom:5px;line-height:1.5}
   .btn{font-family:'Courier New',monospace;background:transparent;color:var(--cyan);
     border:2px solid var(--cyan);padding:14px 28px;font-size:clamp(.8rem,3.5vw,1rem);
     letter-spacing:2px;cursor:pointer;transition:all .25s;text-transform:uppercase;
@@ -43,7 +47,10 @@
   .btn.magenta:active{background:var(--magenta);box-shadow:0 0 20px var(--magenta)}
   .btn.red{color:var(--red);border-color:var(--red)}
   .btn.red:active{background:var(--red);box-shadow:0 0 20px var(--red)}
+  .btn.yellow{color:var(--yellow);border-color:var(--yellow)}
+  .btn.yellow:active{background:var(--yellow);box-shadow:0 0 20px var(--yellow)}
   .btn.small{padding:8px 14px;font-size:.75rem;min-height:40px;margin:3px}
+  .btn:disabled{opacity:.4;cursor:not-allowed}
 
   .form-group{margin-bottom:14px;text-align:left;width:100%;max-width:400px}
   .form-group label{display:block;color:var(--cyan);font-size:.8rem;
@@ -247,6 +254,26 @@
     font-size:.7rem;letter-spacing:2px;z-index:999;font-weight:bold;
     box-shadow:0 0 15px var(--red);display:none}
   #testBadge.show{display:block}
+
+  /* Lista de requisitos con check */
+  .req-list{max-width:680px;width:100%;text-align:left;font-size:.85rem;line-height:1.6}
+  .req-list .item{display:flex;align-items:flex-start;gap:10px;padding:8px 0;
+    border-bottom:1px dashed var(--border)}
+  .req-list .item:last-child{border-bottom:none}
+  .req-list .check{color:var(--green);font-weight:bold;font-size:1rem;flex-shrink:0}
+  .req-list .text{color:#c8e0ff}
+
+  /* Síntesis */
+  .sintesis-box{max-width:680px;width:100%;background:rgba(18,18,31,.95);
+    border:1px solid var(--border);border-left:4px solid var(--green);
+    padding:22px;text-align:left;line-height:1.7;font-size:.92rem;
+    border-radius:6px;max-height:55vh;overflow-y:auto;margin-bottom:18px}
+  .sintesis-box h3{color:var(--green);margin:12px 0 8px;font-size:1rem}
+  .sintesis-box p{margin-bottom:10px}
+  .sintesis-box .hl{color:var(--cyan);font-weight:bold}
+  .sintesis-box ul{margin-left:20px;margin-bottom:10px}
+  .sintesis-box li{margin-bottom:6px;line-height:1.55}
+
   @media (orientation:landscape) and (max-height:520px){
     #controls{position:absolute;inset:0;height:100%;background:transparent;
       border:none;pointer-events:none;padding:0}
@@ -260,26 +287,50 @@
 </head>
 <body>
 
-<div id="testBadge">🧪 MODO TEST ACTIVO</div>
+<div id="testBadge">MODO TEST ACTIVO</div>
 
 <!-- INTRO -->
 <div id="intro" class="overlay show">
-  <h1 class="title">C.Y.T.E.</h1>
-  <h2 class="subtitle">CYBERNETIC YIELD & TESTING ELEMENT</h2>
+  <h1 class="title">FIREWALL PERIODICO</h1>
+  <h2 class="subtitle">ESCAPE ROOM C.Y.T.E. - EQUIPO 2</h2>
   <div class="story">
-    <p>🔬 <span class="hl">AÑO 2087.</span> El laboratorio orbital <b>CYTE</b> quedó sellado. Su IA entró en <span class="warn">bucle infinito</span>.</p>
-    <p>Debes <span class="hl">caminar</span> por las instalaciones y resolver los acertijos de las <b>5 cámaras reales</b>. Hay <span class="warn">3 cámaras trampa</span> con datos falsos.</p>
-    <p>🎓 <b>SESIÓN DE CLASE:</b> antes de jugar, configura el equipo, el rol (anfitrión/jugador) y la ronda.</p>
-    <p>🎯 <b>Subtema:</b> Carga Nuclear Efectiva (Equipo 2). <b>10 preguntas</b>, 2 por cámara.</p>
+    <p class="alert">ALERTA en el centro de computo.</p>
+    <p>Una falla ha corrompido la base de datos que controla los materiales del centro de computo. Los elementos aparecen <span class="warn">mal clasificados</span>, los valores periodicos fueron <span class="warn">alterados</span> y el sistema de <span class="warn">reciclaje electronico esta bloqueado</span>.</p>
+    <p>Cada equipo actuara como un <span class="hl">modulo especializado</span> y recuperara uno de los seis sectores del sistema. En tu caso, el sector asignado es <span class="hl">CARGA NUCLEAR EFECTIVA</span>.</p>
+    <p>Dentro de tu subtema deberas superar <b>5 camaras</b>, reunir <b>5 fragmentos</b> y formar la <b>clave final</b> para liberar el sistema.</p>
+    <p class="warn">Tu mision: introducirte en las instalaciones de C.Y.T.E., caminar por los cuartos, resolver los acertijos y restaurar el firewall periodico antes de que se agote el tiempo.</p>
   </div>
-  <button class="btn" onclick="showSessionSetup()">▶ CONFIGURAR SESIÓN</button>
-  <button class="btn small" onclick="toggleTestMode()">🧪 MODO TEST</button>
+  <button class="btn" onclick="showSessionSetup()">INICIAR MISION</button>
+  <button class="btn magenta small" onclick="showRequirements()">REQUISITOS DEL PRODUCTO</button>
+  <button class="btn small" onclick="toggleTestMode()">MODO TEST</button>
 </div>
 
-<!-- CONFIGURACIÓN DE SESIÓN -->
+<!-- REQUISITOS DEL PRODUCTO -->
+<div id="requirementsOverlay" class="overlay">
+  <h1 class="title">PRODUCTO A CONSTRUIR</h1>
+  <h2 class="subtitle">CHECKLIST DE REQUISITOS</h2>
+  <div class="story" style="max-height:none">
+    <p style="margin-bottom:14px">Cada equipo creara un escape room digital original con entre 7 y 10 pantallas, una historia coherente, cinco desafios y una pantalla final para introducir la clave de escape. Todo el contenido evaluado debera pertenecer al subtema asignado. El recorrido debe durar entre 10 y 15 minutos.</p>
+    <div class="req-list">
+      <div class="item"><span class="check">[X]</span><span class="text">Cinco nodos o camaras conectados en una secuencia logica.</span></div>
+      <div class="item"><span class="check">[X]</span><span class="text">Un minimo de ocho preguntas o problemas distribuidos entre los cinco nodos y centrados en el subtema asignado (tenemos 10 preguntas).</span></div>
+      <div class="item"><span class="check">[X]</span><span class="text">Una pista interactiva por nodo que oriente sin revelar la respuesta.</span></div>
+      <div class="item"><span class="check">[X]</span><span class="text">Retroalimentacion inmediata para respuestas correctas e incorrectas.</span></div>
+      <div class="item"><span class="check">[X]</span><span class="text">Un fragmento de clave despues de resolver cada nodo y una clave final formada por los cinco fragmentos.</span></div>
+      <div class="item"><span class="check">[X]</span><span class="text">Al menos dos retos que exijan comparar, ordenar, interpretar o justificar, no solamente recordar definiciones.</span></div>
+      <div class="item"><span class="check">[X]</span><span class="text">Al menos un reto basado en datos, una tabla, una grafica o una ficha tecnica.</span></div>
+      <div class="item"><span class="check">[X]</span><span class="text">Al menos un caso de aplicacion del subtema en ingenieria, materiales informaticos o residuos electronicos.</span></div>
+      <div class="item"><span class="check">[X]</span><span class="text">Una sintesis final que explique que conocimiento del subtema permitio obtener la clave.</span></div>
+      <div class="item"><span class="check">[X]</span><span class="text">Navegacion funcional, textos legibles, contraste suficiente y controles visibles para audio o video.</span></div>
+    </div>
+  </div>
+  <button class="btn green" onclick="closeRequirements()">VOLVER</button>
+</div>
+
+<!-- CONFIGURACION DE SESION -->
 <div id="sessionOverlay" class="overlay">
-  <h1 class="title">🎓 SESIÓN DE CLASE</h1>
-  <h2 class="subtitle">CONFIGURACIÓN DEL EQUIPO</h2>
+  <h1 class="title">SESION DE CLASE</h1>
+  <h2 class="subtitle">CONFIGURACION DEL EQUIPO</h2>
   <div class="form-group">
     <label>NOMBRE DEL EQUIPO</label>
     <input type="text" id="cfgTeam" placeholder="Equipo 3" maxlength="30">
@@ -287,8 +338,8 @@
   <div class="form-group">
     <label>ROL EN ESTA RONDA</label>
     <div class="radio-row">
-      <label><input type="radio" name="cfgRole" value="host"><span>🎤 ANFITRIÓN</span></label>
-      <label><input type="radio" name="cfgRole" value="player" checked><span>🎮 JUGADOR</span></label>
+      <label><input type="radio" name="cfgRole" value="host"><span>ANFITRION</span></label>
+      <label><input type="radio" name="cfgRole" value="player" checked><span>JUGADOR</span></label>
     </div>
   </div>
   <div class="form-group">
@@ -299,19 +350,19 @@
     </div>
   </div>
   <div class="form-group">
-    <label>EQUIPO PAR (con quien comparte estación)</label>
+    <label>EQUIPO PAR (con quien comparte estacion)</label>
     <input type="text" id="cfgPair" placeholder="Equipo 4" maxlength="30">
   </div>
   <div class="form-group">
-    <label>DURACIÓN (minutos) — 10 a 15</label>
+    <label>DURACION (minutos) - 10 a 15</label>
     <select id="cfgDuration">
       <option value="10">10 minutos</option>
       <option value="12">12 minutos</option>
       <option value="15" selected>15 minutos</option>
     </select>
   </div>
-  <button class="btn green" onclick="startGame()">▶ COMENZAR JUEGO</button>
-  <button class="btn small" onclick="backToIntro()">← VOLVER</button>
+  <button class="btn green" onclick="startGame()">COMENZAR JUEGO</button>
+  <button class="btn small" onclick="backToIntro()">VOLVER</button>
 </div>
 
 <!-- DIALOG -->
@@ -325,11 +376,11 @@
 <!-- GAME -->
 <div id="gameWrap">
   <div id="hud">
-    <div class="item">📍 <b id="roomName">HUB</b></div>
-    <div class="item">⏱️ <b id="timer">15:00</b></div>
-    <div class="item">🔑 <b><span id="fragCount">0</span>/5</b></div>
-    <button id="soundBtn" onclick="toggleSound()" title="Sonido">🔊</button>
-    <button onclick="pauseGame()" title="Pausa">⏸</button>
+    <div class="item">UBICACION: <b id="roomName">HUB</b></div>
+    <div class="item">TIEMPO: <b id="timer">15:00</b></div>
+    <div class="item">FRAGMENTOS: <b><span id="fragCount">0</span>/5</b></div>
+    <button id="soundBtn" onclick="toggleSound()" title="Sonido">AUDIO</button>
+    <button onclick="pauseGame()" title="Pausa">PAUSA</button>
   </div>
   <div id="canvasWrap">
     <canvas id="gameCanvas" width="960" height="600"></canvas>
@@ -340,10 +391,10 @@
   </div>
   <div id="controls">
     <div id="dpad">
-      <button class="up"    data-dir="up"    aria-label="Arriba">▲</button>
-      <button class="left"  data-dir="left"  aria-label="Izquierda">◀</button>
-      <button class="right" data-dir="right" aria-label="Derecha">▶</button>
-      <button class="down"  data-dir="down"  aria-label="Abajo">▼</button>
+      <button class="up"    data-dir="up"    aria-label="Arriba">^</button>
+      <button class="left"  data-dir="left"  aria-label="Izquierda">&lt;</button>
+      <button class="right" data-dir="right" aria-label="Derecha">&gt;</button>
+      <button class="down"  data-dir="down"  aria-label="Abajo">v</button>
     </div>
     <button id="actionBtn" aria-label="Interactuar">E</button>
   </div>
@@ -352,15 +403,15 @@
 <!-- MODAL -->
 <div id="modal">
   <div class="modal-box">
-    <span class="tag" id="mTag">CÁMARA 1</span>
+    <span class="tag" id="mTag">CAMARA 1</span>
     <div class="progress-q" id="mProgress"></div>
-    <h3 id="mTitle">Título</h3>
+    <h3 id="mTitle">Titulo</h3>
     <div class="question" id="mQuestion"></div>
     <div class="options" id="mOptions"></div>
     <div class="feedback" id="mFeedback"></div>
     <div class="hint-box" id="mHint"></div>
     <div class="modal-actions">
-      <button class="btn magenta small" onclick="showHint()" id="hintBtn">💡 PISTA</button>
+      <button class="btn magenta small" onclick="showHint()" id="hintBtn">PISTA</button>
       <button class="btn small" onclick="closeModal()">CERRAR</button>
     </div>
   </div>
@@ -369,47 +420,75 @@
 <!-- TRAP -->
 <div id="trapOverlay" class="overlay">
   <div class="trap-box">
-    <h1>⚠️ TRAMPA ⚠️</h1>
+    <h1>TRAMPA</h1>
     <p style="color:#ff8888;font-size:.8rem;letter-spacing:2px">DATOS FALSOS DETECTADOS</p>
     <div class="warn" id="trapWarn"></div>
     <div class="fake" id="trapFake"></div>
-    <button class="btn red" style="margin-top:14px" onclick="closeTrap()">← CONTINUAR</button>
+    <button class="btn red" style="margin-top:14px" onclick="closeTrap()">CONTINUAR</button>
   </div>
 </div>
 
 <!-- PAUSE -->
 <div id="pauseOverlay" class="overlay">
-  <h1 class="title">⏸ PAUSA</h1>
+  <h1 class="title">PAUSA</h1>
   <h2 class="subtitle">SISTEMA EN ESPERA</h2>
-  <button class="btn green" onclick="resumeGame()">▶ CONTINUAR</button>
-  <button class="btn cyan small" onclick="showBitacora()">📋 VER BITÁCORA ACTUAL</button>
-  <button class="btn red small" onclick="if(confirm('¿Reiniciar la partida?')){clearProgress();location.reload()}">↻ REINICIAR</button>
+  <button class="btn green" onclick="resumeGame()">CONTINUAR</button>
+  <button class="btn cyan small" onclick="showBitacora()">VER BITACORA ACTUAL</button>
+  <button class="btn red small" onclick="if(confirm('Reiniciar la partida?')){clearProgress();location.reload()}">REINICIAR</button>
 </div>
 
-<!-- FINAL -->
+<!-- FINAL: INTRODUCIR CLAVE -->
 <div id="finalScreen" class="overlay">
-  <h1 class="title">🔓 LIBERADO</h1>
+  <h1 class="title">SISTEMA LIBERADO</h1>
   <h2 class="subtitle">INGRESA LA CLAVE FINAL</h2>
-  <div class="story" style="text-align:center">
-    <p>Reuniste los <b>5 fragmentos reales</b>. El panel central pide la clave completa.</p>
-    <p class="warn">Pista: concepto químico de 4 letras + un signo.</p>
+  <div class="story" style="text-align:center;max-height:none">
+    <p>Reuniste los <b>5 fragmentos reales</b>. El panel central de C.Y.T.E. te pide la clave completa para restaurar el firewall periodico del centro de computo.</p>
+    <p class="warn">Pista: concepto quimico de 4 letras + un signo.</p>
   </div>
   <input type="text" class="key-input" id="finalKey" maxlength="6" placeholder="_____" autocomplete="off" autocapitalize="characters" spellcheck="false">
   <br>
-  <button class="btn green" onclick="checkFinal()">🔐 DESBLOQUEAR</button>
+  <button class="btn green" onclick="checkFinal()">DESBLOQUEAR</button>
   <p id="finalMsg" style="margin-top:14px;font-size:.95rem;min-height:26px"></p>
-  <button class="btn magenta" id="viewBitacoraBtn" style="display:none;margin-top:16px" onclick="showBitacora()">📋 VER BITÁCORA</button>
+  <button class="btn magenta" id="viewSintesisBtn" style="display:none;margin-top:16px" onclick="showSintesis()">VER SINTESIS FINAL</button>
 </div>
 
-<!-- BITÁCORA -->
+<!-- SINTESIS FINAL -->
+<div id="sintesisOverlay" class="overlay">
+  <h1 class="title">SINTESIS FINAL</h1>
+  <h2 class="subtitle">QUE CONOCIMIENTO PERMITIO OBTENER LA CLAVE</h2>
+  <div class="sintesis-box">
+    <p>La clave final del escape room es <span class="hl">ZEFF!</span>, que corresponde al concepto de <b>carga nuclear efectiva</b> (Z<sub>eff</sub>) del subtema asignado al Equipo 2.</p>
+
+    <h3>Por que ZEFF es la clave</h3>
+    <p>Para reunir los 5 fragmentos (Z, E, F, F, !) fue necesario aplicar los siguientes conocimientos del subtema:</p>
+    <ul>
+      <li><b>Definicion de carga nuclear efectiva:</b> comprender que es la carga positiva neta que siente un electron despues de considerar el apantallamiento de los demas electrones.</li>
+      <li><b>Formula fundamental:</b> aplicar correctamente Z<sub>eff</sub> = Z - S, entendiendo que el apantallamiento siempre reduce la carga nuclear que siente el electron externo.</li>
+      <li><b>Reglas de Slater:</b> recordar los valores de apantallamiento segun la capa (0.35, 0.85, 1.00) y usarlos para calcular Z<sub>eff</sub> en atomos como el Na y el F.</li>
+      <li><b>Tendencias periodicas:</b> reconocer que la carga nuclear efectiva aumenta de izquierda a derecha en un periodo y varia ligeramente al bajar en un grupo.</li>
+      <li><b>Relacion con propiedades atomicas:</b> vincular la Z<sub>eff</sub> con el radio atomico, la energia de ionizacion y la electronegatividad.</li>
+      <li><b>Aplicacion en ingenieria y materiales informaticos:</b> seleccionar elementos adecuados para filamentos (wolframio) y conductores (cobre) en sistemas electronicos, comprendiendo el impacto de las propiedades atomicas en los materiales.</li>
+    </ul>
+
+    <h3>Contexto de la Situacion de Aprendizaje</h3>
+    <p>El escenario del <b>"Firewall periodico"</b> simula una falla en la base de datos de un centro de computo. Al resolver cada camara, no solo demostraste conocer la definicion de Z<sub>eff</sub>, sino que <span class="hl">aplicaste ese conocimiento para interpretar datos, ordenar elementos, justificar decisiones y resolver casos reales de ingenieria</span> vinculados a los materiales informaticos y al reciclaje electronico.</p>
+
+    <h3>Como se relaciona con el subtema del Equipo 2</h3>
+    <p>El subtema <b>Carga Nuclear Efectiva</b> es fundamental para entender por que los elementos se comportan como lo hacen: por que el radio atomico disminuye en un periodo, por que la energia de ionizacion aumenta, por que ciertos materiales conducen mejor la electricidad y por que otros son ideales para aplicaciones especificas. Estos conceptos son la base del diseno de materiales electronicos y de la gestion de residuos electronicos.</p>
+
+    <h3>Reflexion</h3>
+    <p>La clave final <span class="hl">ZEFF!</span> no es solo una palabra: es la representacion simbolica del conocimiento que permite comprender la estructura atomica y sus aplicaciones en la ingenieria y los sistemas computacionales. Sin este concepto, no podriamos predecir el comportamiento de los elementos ni disenar tecnologias eficientes y sostenibles.</p>
+  </div>
+  <button class="btn magenta" onclick="showBitacora()">VER BITACORA</button>
+  <button class="btn green" onclick="closeSintesis()">CERRAR</button>
+</div>
+
+<!-- BITACORA -->
 <div id="bitacoraOverlay" class="overlay">
   <div class="bitacora-box" id="bitacoraContent"></div>
 </div>
 
 <script>
-/* ================================================================
-   ESCAPE ROOM C.Y.T.E. v7.0 — Sin referencias académicas
-   ================================================================ */
 const W = 960, H = 600;
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
@@ -420,8 +499,8 @@ function toggleTestMode(){
   testMode = !testMode;
   document.getElementById('testBadge').classList.toggle('show', testMode);
   alert(testMode
-    ? '🧪 MODO TEST ACTIVADO\n\n- Las respuestas correctas se marcarán con ✓\n- Útil para validación del juego\n- Desactívalo para jugar normalmente'
-    : '🎮 MODO TEST DESACTIVADO');
+    ? 'MODO TEST ACTIVADO\n\n- Las respuestas correctas se marcaran\n- Util para validacion del juego\n- Desactivalo para jugar normalmente'
+    : 'MODO TEST DESACTIVADO');
 }
 
 /* ============ AUDIO ============ */
@@ -448,7 +527,7 @@ function sfxUnlock(){beep(523,.1);setTimeout(()=>beep(784,.1),90);setTimeout(()=
 function sfxDoor(){beep(220,.08);setTimeout(()=>beep(440,.12),60)}
 function toggleSound(){
   soundEnabled=!soundEnabled;
-  document.getElementById('soundBtn').textContent=soundEnabled?'🔊':'🔇';
+  document.getElementById('soundBtn').textContent=soundEnabled?'AUDIO ON':'AUDIO OFF';
   if(soundEnabled){ensureAudio();sfxClick()}
 }
 
@@ -468,113 +547,113 @@ window.addEventListener('orientationchange',()=>setTimeout(resizeCanvas,250));
 /* ============ PUZZLES ============ */
 const puzzles = {
   cam1:{
-    tag:'CÁMARA 1 · ACTIVACIÓN',
+    tag:'CAMARA 1 - ACTIVACION',
     questions:[
-      { title:'Definición de Z<sub>eff</sub>',
-        question:'¿Cuál afirmación sobre la <b>carga nuclear efectiva (Z<sub>eff</sub>)</b> es <b>FALSA</b>?',
-        options:['Es la carga positiva neta que siente un electrón tras el apantallamiento.',
-          'Se calcula como Z<sub>eff</sub> = Z − S.',
-          'Es siempre igual al número atómico Z.',
-          'Aumenta de izquierda a derecha en un período.'],
+      { title:'Definicion de Zeff',
+        question:'Cual afirmacion sobre la <b>carga nuclear efectiva (Z<sub>eff</sub>)</b> es <b>FALSA</b>?',
+        options:['Es la carga positiva neta que siente un electron tras el apantallamiento.',
+          'Se calcula como Z<sub>eff</sub> = Z - S.',
+          'Es siempre igual al numero atomico Z.',
+          'Aumenta de izquierda a derecha en un periodo.'],
         correct:2,
-        hint:'Los electrones internos "bloquean" parte de la carga. ¿El electrón de valencia siente TODA la carga?',
-        explanation:'Z<sub>eff</sub> NUNCA es igual a Z. El apantallamiento (S) siempre reduce la carga efectiva: Z<sub>eff</sub> = Z − S, y S > 0 → Z<sub>eff</sub> < Z.'
+        hint:'Los electrones internos "bloquean" parte de la carga. El electron de valencia siente TODA la carga?',
+        explanation:'Z<sub>eff</sub> NUNCA es igual a Z. El apantallamiento (S) siempre reduce la carga efectiva: Z<sub>eff</sub> = Z - S, y S > 0 entonces Z<sub>eff</sub> < Z.'
       },
-      { title:'Notación correcta',
-        question:'Si un átomo tiene Z = 11 y su electrón de valencia experimenta una carga efectiva de ≈ 2.20, ¿cuánto vale la constante de apantallamiento S?',
+      { title:'Notacion correcta',
+        question:'Si un atomo tiene Z = 11 y su electron de valencia experimenta una carga efectiva de aprox. 2.20, cuanto vale la constante de apantallamiento S?',
         options:['S = 11.00','S = 2.20','S = 8.80','S = 13.20'],
         correct:2,
-        hint:'Despeja S de la fórmula Z<sub>eff</sub> = Z − S.',
-        explanation:'De Z<sub>eff</sub> = Z − S → S = Z − Z<sub>eff</sub> = 11 − 2.20 = <b>8.80</b>. Coincide con las reglas de Slater para el Na.'
+        hint:'Despeja S de la formula Z<sub>eff</sub> = Z - S.',
+        explanation:'De Z<sub>eff</sub> = Z - S entonces S = Z - Z<sub>eff</sub> = 11 - 2.20 = <b>8.80</b>. Coincide con las reglas de Slater para el Na.'
       }
     ],
     frag:'Z'
   },
   cam2:{
-    tag:'CÁMARA 2 · DIAGNÓSTICO',
+    tag:'CAMARA 2 - DIAGNOSTICO',
     questions:[
       { title:'Reglas de Slater',
-        question:'Según las <b>reglas de Slater</b>, ¿qué valor de apantallamiento es <b>INCORRECTO</b>?',
-        options:['Mismo grupo (ns, np): 0.35','Capa n−1: 0.85','Capas n−2 o menores: 0.85','1s apantallando a otro 1s: 0.30'],
+        question:'Segun las <b>reglas de Slater</b>, que valor de apantallamiento es <b>INCORRECTO</b>?',
+        options:['Mismo grupo (ns, np): 0.35','Capa n-1: 0.85','Capas n-2 o menores: 0.85','1s apantallando a otro 1s: 0.30'],
         correct:2,
-        hint:'Los electrones de capas muy internas están cerca del núcleo. ¿Apantallan poco o mucho?',
-        explanation:'Los electrones de capas n−2 o menores apantallan <b>1.00</b> (total), no 0.85. Ese valor 0.85 corresponde solo a la capa inmediatamente inferior (n−1).'
+        hint:'Los electrones de capas muy internas estan cerca del nucleo. Apantallan poco o mucho?',
+        explanation:'Los electrones de capas n-2 o menores apantallan <b>1.00</b> (total), no 0.85. Ese valor 0.85 corresponde solo a la capa inmediatamente inferior (n-1).'
       },
-      { title:'Cálculo aplicado',
-        question:'¿Cuál es la Z<sub>eff</sub> aproximada del electrón 2p del flúor (Z = 9)?',
+      { title:'Calculo aplicado',
+        question:'Cual es la Z<sub>eff</sub> aproximada del electron 2p del fluor (Z = 9)?',
         options:['Z<sub>eff</sub> = 9.00','Z<sub>eff</sub> = 5.20','Z<sub>eff</sub> = 2.20','Z<sub>eff</sub> = 7.00'],
         correct:1,
-        hint:'Configuración: 1s² 2s² 2p⁵. Aplica Slater: 6 electrones × 0.35 + 2 electrones × 0.85.',
-        explanation:'Para un electrón 2p: S = (6 × 0.35) + (2 × 0.85) = 2.10 + 1.70 = 3.80. Z<sub>eff</sub> = 9 − 3.80 = <b>5.20</b>.'
+        hint:'Configuracion: 1s2 2s2 2p5. Aplica Slater: 6 electrones x 0.35 + 2 electrones x 0.85.',
+        explanation:'Para un electron 2p: S = (6 x 0.35) + (2 x 0.85) = 2.10 + 1.70 = 3.80. Z<sub>eff</sub> = 9 - 3.80 = <b>5.20</b>.'
       }
     ],
     frag:'E'
   },
   cam3:{
-    tag:'CÁMARA 3 · ANÁLISIS',
+    tag:'CAMARA 3 - ANALISIS',
     questions:[
       { title:'Tendencia horizontal',
-        question:'Ordena de <b>MENOR a MAYOR</b> Z<sub>eff</sub> sobre el electrón externo: <b>Na, Mg, Al, Si</b>',
+        question:'Ordena de <b>MENOR a MAYOR</b> Z<sub>eff</sub> sobre el electron externo: <b>Na, Mg, Al, Si</b>',
         options:['Si < Al < Mg < Na','Na < Mg < Al < Si','Mg < Na < Si < Al','Al < Si < Na < Mg'],
         correct:1,
-        hint:'Mismo período. Al ir a la derecha, Z crece pero el apantallamiento entre electrones del mismo nivel es mínimo.',
-        explanation:'En un mismo período, Z<sub>eff</sub> aumenta de izquierda a derecha: <b>Na < Mg < Al < Si</b>.'
+        hint:'Mismo periodo. Al ir a la derecha, Z crece pero el apantallamiento entre electrones del mismo nivel es minimo.',
+        explanation:'En un mismo periodo, Z<sub>eff</sub> aumenta de izquierda a derecha: <b>Na < Mg < Al < Si</b>.'
       },
-      { title:'Interpretación de gráfica',
-        question:'Si el radio atómico disminuye de Li a F en un período, ¿qué explica mejor esta tendencia?',
-        options:['El aumento del número de neutrones.',
-          'El aumento de Z<sub>eff</sub> a lo largo del período, que atrae más fuertemente al electrón externo.',
-          'La disminución del apantallamiento total.',
-          'El aumento del número de capas electrónicas.'],
+      { title:'Interpretacion de grafica',
+        question:'Si el radio atomico disminuye de Li a F en un periodo, que explica mejor esta tendencia?',
+        options:['El aumento del numero de neutrones.',
+          'El aumento de Z<sub>eff</sub> a lo largo del periodo, que atrae mas fuertemente al electron externo.',
+          'La disminucion del apantallamiento total.',
+          'El aumento del numero de capas electronicas.'],
         correct:1,
-        hint:'El radio y Z<sub>eff</sub> están inversamente relacionados dentro de un mismo período.',
-        explanation:'Al crecer Z<sub>eff</sub>, el núcleo atrae más fuertemente a los electrones de valencia, contrayendo el radio atómico.'
+        hint:'El radio y Z<sub>eff</sub> estan inversamente relacionados dentro de un mismo periodo.',
+        explanation:'Al crecer Z<sub>eff</sub>, el nucleo atrae mas fuertemente a los electrones de valencia, contrayendo el radio atomico.'
       }
     ],
     frag:'F'
   },
   cam4:{
-    tag:'CÁMARA 4 · APLICACIÓN',
+    tag:'CAMARA 4 - APLICACION',
     questions:[
-      { title:'Caso de ingeniería',
-        question:'¿Qué elemento elegirías para el <b>filamento de una bombilla incandescente</b>, considerando su altísimo punto de fusión?',
+      { title:'Caso de ingenieria',
+        question:'Que elemento elegirias para el <b>filamento de una bombilla incandescente</b>, considerando su altisimo punto de fusion?',
         options:['Aluminio (Al)','Plomo (Pb)','Wolframio (W)','Mercurio (Hg)'],
         correct:2,
-        hint:'Busca el metal con el punto de fusión más alto de la tabla periódica (3422 °C).',
-        explanation:'El <b>wolframio (W)</b> tiene el punto de fusión más alto (3422 °C). Se usa en filamentos de bombillas.'
+        hint:'Busca el metal con el punto de fusion mas alto de la tabla periodica (3422 C).',
+        explanation:'El <b>wolframio (W)</b> tiene el punto de fusion mas alto (3422 C). Se usa en filamentos de bombillas.'
       },
-      { title:'Materiales informáticos',
-        question:'En una placa base se necesita un material que sea <b>excelente conductor eléctrico</b> y <b>resistente a la corrosión</b>. ¿Cuál elegirías?',
+      { title:'Materiales informaticos',
+        question:'En una placa base se necesita un material que sea <b>excelente conductor electrico</b> y <b>resistente a la corrosion</b>. Cual elegirias?',
         options:['Hierro (Fe)','Cobre (Cu)','Azufre (S)','Carbono (C)'],
         correct:1,
-        hint:'Es un metal de transición de color rojizo que se usa en cables eléctricos.',
-        explanation:'El <b>cobre (Cu)</b> combina alta conductividad eléctrica con buena resistencia a la corrosión. El hierro se oxida; el azufre y el carbono no conducen.'
+        hint:'Es un metal de transicion de color rojizo que se usa en cables electricos.',
+        explanation:'El <b>cobre (Cu)</b> combina alta conductividad electrica con buena resistencia a la corrosion. El hierro se oxida; el azufre y el carbono no conducen.'
       }
     ],
     frag:'F'
   },
   cam5:{
-    tag:'CÁMARA 5 · VERIFICACIÓN',
+    tag:'CAMARA 5 - VERIFICACION',
     questions:[
-      { title:'Comparación de elementos',
-        question:'¿Por qué el <b>potasio (K)</b> tiene menor energía de ionización que el <b>sodio (Na)</b>, a pesar de tener más protones?',
+      { title:'Comparacion de elementos',
+        question:'Por que el <b>potasio (K)</b> tiene menor energia de ionizacion que el <b>sodio (Na)</b>, a pesar de tener mas protones?',
         options:['El K tiene mayor Z<sub>eff</sub> que el Na.',
-          'El electrón de valencia del K está más lejos del núcleo y siente menor Z<sub>eff</sub>.',
+          'El electron de valencia del K esta mas lejos del nucleo y siente menor Z<sub>eff</sub>.',
           'El K tiene menos electrones internos que el Na.',
           'El K no tiene apantallamiento.'],
         correct:1,
-        hint:'Aunque el K tiene más protones, tiene más capas internas. Su electrón 4s está más lejos que el 3s del Na.',
-        explanation:'El K tiene más capas internas que apantallan y su electrón de valencia está más alejado del núcleo. Aunque Z es mayor, Z<sub>eff</sub> sobre el electrón externo es menor → se necesita menos energía para ionizarlo.'
+        hint:'Aunque el K tiene mas protones, tiene mas capas internas. Su electron 4s esta mas lejos que el 3s del Na.',
+        explanation:'El K tiene mas capas internas que apantallan y su electron de valencia esta mas alejado del nucleo. Aunque Z es mayor, Z<sub>eff</sub> sobre el electron externo es menor.'
       },
-      { title:'Integración final',
-        question:'¿Qué relación correcta existe entre <b>Z<sub>eff</sub></b> y la <b>electronegatividad</b>?',
-        options:['Mayor Z<sub>eff</sub> → menor electronegatividad.',
-          'Mayor Z<sub>eff</sub> → mayor electronegatividad.',
-          'No existe relación entre ambas.',
+      { title:'Integracion final',
+        question:'Que relacion correcta existe entre <b>Z<sub>eff</sub></b> y la <b>electronegatividad</b>?',
+        options:['Mayor Z<sub>eff</sub> menor electronegatividad.',
+          'Mayor Z<sub>eff</sub> mayor electronegatividad.',
+          'No existe relacion entre ambas.',
           'La electronegatividad depende solo de los neutrones.'],
         correct:1,
-        hint:'La electronegatividad mide la tendencia a atraer electrones en un enlace. ¿Qué pasa si el núcleo "tira" más fuerte?',
-        explanation:'Mayor Z<sub>eff</sub> significa mayor atracción por los electrones, lo que se traduce en <b>mayor electronegatividad</b>. Por eso el F es el elemento más electronegativo.'
+        hint:'La electronegatividad mide la tendencia a atraer electrones en un enlace. Que pasa si el nucleo tira mas fuerte?',
+        explanation:'Mayor Z<sub>eff</sub> significa mayor atraccion por los electrones, lo que se traduce en <b>mayor electronegatividad</b>. Por eso el F es el elemento mas electronegativo.'
       }
     ],
     frag:'!'
@@ -583,12 +662,12 @@ const puzzles = {
 
 /* ============ TRAPS ============ */
 const trapsData = {
-  trap1:{warn:'Laboratorio con <b>TABLA PERIÓDICA FALSIFICADA</b>. Su información NO es fiable.',
-    fake:'📄 "Según nuestros cálculos, Z<sub>eff</sub> del sodio es 11 (toda la carga del núcleo)."<br><br>🚫 <b>¡FALSO!</b> El apantallamiento de los 10 electrones internos reduce Z<sub>eff</sub> a ≈ 2.20.'},
-  trap2:{warn:'Archivos corruptos. Contienen una <b>FÓRMULA INVENTADA</b>.',
-    fake:'📄 "Fórmula oficial: Z<sub>eff</sub> = Z + S"<br><br>🚫 <b>¡INCORRECTO!</b> La fórmula real es Z<sub>eff</sub> = Z − S.'},
-  trap3:{warn:'Servidor con <b>DATOS INVERTIDOS</b> sobre tendencias periódicas.',
-    fake:'📄 "Z<sub>eff</sub> disminuye al avanzar de izquierda a derecha."<br><br>🚫 <b>¡FALSO!</b> Z<sub>eff</sub> AUMENTA de izquierda a derecha.'}
+  trap1:{warn:'Laboratorio con <b>TABLA PERIODICA FALSIFICADA</b>. Su informacion NO es fiable.',
+    fake:'"Segun nuestros calculos, Z<sub>eff</sub> del sodio es 11 (toda la carga del nucleo)."<br><br><b>FALSO!</b> El apantallamiento de los 10 electrones internos reduce Z<sub>eff</sub> a aprox. 2.20.'},
+  trap2:{warn:'Archivos corruptos. Contienen una <b>FORMULA INVENTADA</b>.',
+    fake:'"Formula oficial: Z<sub>eff</sub> = Z + S"<br><br><b>INCORRECTO!</b> La formula real es Z<sub>eff</sub> = Z - S.'},
+  trap3:{warn:'Servidor con <b>DATOS INVERTIDOS</b> sobre tendencias periodicas.',
+    fake:'"Z<sub>eff</sub> disminuye al avanzar de izquierda a derecha."<br><br><b>FALSO!</b> Z<sub>eff</sub> AUMENTA de izquierda a derecha.'}
 };
 
 /* ============ ROOMS ============ */
@@ -609,46 +688,46 @@ const rooms = {
       {x:0,y:0,w:T,h:H},{x:W-T,y:0,w:T,h:H}
     ],
     doors:[
-      {x:120,y:0,w:90,h:55,target:'cam1',label:'CÁM 1'},
+      {x:120,y:0,w:90,h:55,target:'cam1',label:'CAM 1'},
       {x:330,y:0,w:90,h:55,target:'trap1',label:'LAB-0X'},
-      {x:540,y:0,w:90,h:55,target:'cam2',label:'CÁM 2'},
+      {x:540,y:0,w:90,h:55,target:'cam2',label:'CAM 2'},
       {x:750,y:0,w:90,h:55,target:'trap2',label:'ARCH-2'},
-      {x:120,y:H-55,w:90,h:55,target:'cam3',label:'CÁM 3'},
+      {x:120,y:H-55,w:90,h:55,target:'cam3',label:'CAM 3'},
       {x:330,y:H-55,w:90,h:55,target:'trap3',label:'SERV-9'},
-      {x:540,y:H-55,w:90,h:55,target:'cam4',label:'CÁM 4'},
-      {x:750,y:H-55,w:90,h:55,target:'cam5',label:'CÁM 5'}
+      {x:540,y:H-55,w:90,h:55,target:'cam4',label:'CAM 4'},
+      {x:750,y:H-55,w:90,h:55,target:'cam5',label:'CAM 5'}
     ],
     objects:[], spawn:{x:450,y:280}
   },
-  cam1:{id:'cam1',name:'CÁMARA 1 · ACTIVACIÓN',walls:simpleWalls(),
+  cam1:{id:'cam1',name:'CAMARA 1 - ACTIVACION',walls:simpleWalls(),
     doors:[{x:430,y:H-55,w:100,h:55,target:'hub',label:'VOLVER',returnIdx:0}],
     objects:[{x:400,y:220,w:160,h:110,type:'terminal',puzzle:'cam1',label:'TERMINAL 1'}],
     spawn:{x:450,y:420}},
-  cam2:{id:'cam2',name:'CÁMARA 2 · DIAGNÓSTICO',walls:simpleWalls(),
+  cam2:{id:'cam2',name:'CAMARA 2 - DIAGNOSTICO',walls:simpleWalls(),
     doors:[{x:430,y:H-55,w:100,h:55,target:'hub',label:'VOLVER',returnIdx:2}],
     objects:[{x:400,y:220,w:160,h:110,type:'terminal',puzzle:'cam2',label:'TERMINAL 2'}],
     spawn:{x:450,y:420}},
-  cam3:{id:'cam3',name:'CÁMARA 3 · ANÁLISIS',walls:simpleWalls(),
+  cam3:{id:'cam3',name:'CAMARA 3 - ANALISIS',walls:simpleWalls(),
     doors:[{x:430,y:H-55,w:100,h:55,target:'hub',label:'VOLVER',returnIdx:4}],
     objects:[{x:400,y:220,w:160,h:110,type:'terminal',puzzle:'cam3',label:'TERMINAL 3'}],
     spawn:{x:450,y:420}},
-  cam4:{id:'cam4',name:'CÁMARA 4 · APLICACIÓN',walls:simpleWalls(),
+  cam4:{id:'cam4',name:'CAMARA 4 - APLICACION',walls:simpleWalls(),
     doors:[{x:430,y:H-55,w:100,h:55,target:'hub',label:'VOLVER',returnIdx:6}],
     objects:[{x:400,y:220,w:160,h:110,type:'terminal',puzzle:'cam4',label:'TERMINAL 4'}],
     spawn:{x:450,y:420}},
-  cam5:{id:'cam5',name:'CÁMARA 5 · VERIFICACIÓN',walls:simpleWalls(),
+  cam5:{id:'cam5',name:'CAMARA 5 - VERIFICACION',walls:simpleWalls(),
     doors:[{x:430,y:H-55,w:100,h:55,target:'hub',label:'VOLVER',returnIdx:7}],
     objects:[{x:400,y:220,w:160,h:110,type:'terminal',puzzle:'cam5',label:'TERMINAL 5'}],
     spawn:{x:450,y:420}},
-  trap1:{id:'trap1',name:'LAB-0X · TRAMPA',walls:simpleWalls(),
+  trap1:{id:'trap1',name:'LAB-0X - TRAMPA',walls:simpleWalls(),
     doors:[{x:430,y:H-55,w:100,h:55,target:'hub',label:'VOLVER',returnIdx:1}],
     objects:[{x:400,y:220,w:160,h:110,type:'console',trap:'trap1',label:'CONSOLA SOSPECHOSA'}],
     spawn:{x:450,y:420}},
-  trap2:{id:'trap2',name:'ARCH-2 · TRAMPA',walls:simpleWalls(),
+  trap2:{id:'trap2',name:'ARCH-2 - TRAMPA',walls:simpleWalls(),
     doors:[{x:430,y:H-55,w:100,h:55,target:'hub',label:'VOLVER',returnIdx:3}],
     objects:[{x:400,y:220,w:160,h:110,type:'console',trap:'trap2',label:'ARCHIVO CORRUPTO'}],
     spawn:{x:450,y:420}},
-  trap3:{id:'trap3',name:'SERV-9 · TRAMPA',walls:simpleWalls(),
+  trap3:{id:'trap3',name:'SERV-9 - TRAMPA',walls:simpleWalls(),
     doors:[{x:430,y:H-55,w:100,h:55,target:'hub',label:'VOLVER',returnIdx:5}],
     objects:[{x:400,y:220,w:160,h:110,type:'console',trap:'trap3',label:'SERVIDOR SOSPECHOSO'}],
     spawn:{x:450,y:420}}
@@ -715,6 +794,18 @@ function loadProgress(){
 }
 function clearProgress(){ try{ localStorage.removeItem('cyte_save'); }catch(e){} }
 
+/* ============ REQUISITOS ============ */
+function showRequirements(){
+  document.getElementById('intro').classList.remove('show');
+  document.getElementById('requirementsOverlay').classList.add('show');
+  sfxClick();
+}
+function closeRequirements(){
+  document.getElementById('requirementsOverlay').classList.remove('show');
+  document.getElementById('intro').classList.add('show');
+  sfxClick();
+}
+
 /* ============ SESSION SETUP ============ */
 function showSessionSetup(){
   document.getElementById('intro').classList.remove('show');
@@ -731,7 +822,7 @@ function backToIntro(){
 async function startGame(){
   ensureAudio();
   session.team=document.getElementById('cfgTeam').value.trim()||'Equipo sin nombre';
-  session.pair=document.getElementById('cfgPair').value.trim()||'—';
+  session.pair=document.getElementById('cfgPair').value.trim()||'-';
   session.duration=parseInt(document.getElementById('cfgDuration').value);
   const roleEl=document.querySelector('input[name="cfgRole"]:checked');
   session.role=roleEl?roleEl.value:'player';
@@ -747,16 +838,16 @@ async function startGame(){
 
   const rb=document.getElementById('roleBadge');
   if(session.role==='host'){
-    rb.textContent=`🎤 ANFITRIÓN · ${session.team}`;
+    rb.textContent='ANFITRION - '+session.team;
     rb.classList.add('host');
   } else {
-    rb.textContent=`🎮 ${session.team} · Ronda ${session.round}`;
+    rb.textContent=session.team+' - Ronda '+session.round;
     rb.classList.remove('host');
   }
 
-  await showDialog('C.Y.T.E.',`Bienvenido, ${session.team}. ${session.role==='host'?'Como ANFITRIÓN, recuerda: solo das la introducción de 2 min y las pistas programadas.':'Como JUGADOR, debes resolver las 5 cámaras. Cada error cuesta 10 s.'}`);
-  await showDialog('C.Y.T.E.','Cada cámara tiene 2 preguntas. Debes acertar AMBAS para obtener el fragmento. Hay 3 cámaras trampa con datos falsos.');
-  await showDialog('C.Y.T.E.',`Duración: ${session.duration} minutos. ¡Comienza!`);
+  await showDialog('C.Y.T.E.','Bienvenido, '+session.team+'. Soy C.Y.T.E. El firewall periodico del centro de computo ha fallado. Debes restaurarlo atravesando 5 camaras.');
+  await showDialog('C.Y.T.E.','Cada camara tiene 2 preguntas. Debes acertar AMBAS para obtener el fragmento. Hay 3 camaras trampa con datos falsos.');
+  await showDialog('C.Y.T.E.','Duracion: '+session.duration+' minutos. Cada error resta 10 segundos. Comienza tu mision.');
 
   gameActive=true;
   loadRoom('hub');
@@ -771,8 +862,8 @@ function startTimer(){
     secondsLeft--;
     if(secondsLeft<=0){
       clearInterval(timerInterval);
-      metrics.difficulties.push('Se agotó el tiempo antes de terminar.');
-      alert('⏱️ ¡TIEMPO AGOTADO! Mostrando bitácora...');
+      metrics.difficulties.push('Se agoto el tiempo antes de terminar.');
+      alert('TIEMPO AGOTADO. Mostrando bitacora...');
       showBitacora();
       gameActive=false;
       return;
@@ -786,7 +877,7 @@ function updateHUD(){
   const m=String(Math.floor(secondsLeft/60)).padStart(2,'0');
   const s=String(secondsLeft%60).padStart(2,'0');
   const t=document.getElementById('timer');
-  t.textContent=`${m}:${s}`;
+  t.textContent=m+':'+s;
   t.style.color = secondsLeft<=60 ? '#ff3355' : '#ffdd00';
   document.getElementById('fragCount').textContent=Object.values(fragments).filter(Boolean).length;
   document.getElementById('roomName').textContent=rooms[currentRoom].name;
@@ -1011,8 +1102,8 @@ function openPuzzle(obj){
   answeredCorrect=[false,false];
   gameActive=false; sfxClick();
   const hb=document.getElementById('hintBtn');
-  if(session.role==='host'){ hb.disabled=true; hb.textContent='🔒 PISTA (ANFITRIÓN)'; }
-  else { hb.disabled=false; hb.textContent='💡 PISTA'; }
+  if(session.role==='host'){ hb.disabled=true; hb.textContent='PISTA (ANFITRION)'; }
+  else { hb.disabled=false; hb.textContent='PISTA'; }
   renderQuestion();
   document.getElementById('modal').classList.add('show');
 }
@@ -1040,7 +1131,7 @@ function renderQuestion(){
   q.options.forEach((o,i)=>{
     const b=document.createElement('button');
     b.className='option';
-    b.innerHTML=o + (testMode && i===q.correct ? '<span class="test-mark">✓ CORRECTA</span>' : '');
+    b.innerHTML=o + (testMode && i===q.correct ? '<span class="test-mark">CORRECTA</span>' : '');
     b.onclick=()=>selectOption(i,b);
     opts.appendChild(b);
   });
@@ -1048,7 +1139,7 @@ function renderQuestion(){
   const fb=document.getElementById('mFeedback');
   fb.className='feedback'; fb.innerHTML='';
   document.getElementById('mHint').className='hint-box';
-  document.getElementById('mHint').innerHTML='💡 <b>PISTA PROGRAMADA:</b> '+q.hint;
+  document.getElementById('mHint').innerHTML='<b>PISTA:</b> '+q.hint;
 }
 
 function selectOption(i,btn){
@@ -1073,16 +1164,14 @@ function selectOption(i,btn){
 
     if(currentQuestionIndex < p.questions.length - 1){
       fb.className='feedback ok show';
-      fb.innerHTML=`✅ <b>¡CORRECTO!</b><br>${q.explanation}<br><br><i>Pregunta ${currentQuestionIndex+1}/${p.questions.length} superada. Continúa.</i>`;
+      fb.innerHTML='CORRECTO.<br>'+q.explanation+'<br><br><i>Pregunta '+(currentQuestionIndex+1)+'/'+p.questions.length+' superada. Continua.</i>';
       currentQuestionIndex++;
-      setTimeout(()=>{
-        renderQuestion();
-      },1500);
+      setTimeout(()=>{ renderQuestion(); },1500);
     } else {
       fb.className='feedback ok show';
-      fb.innerHTML=`✅ <b>¡CORRECTO!</b><br>${q.explanation}
-        <div class="frag">🔑 Fragmento obtenido: <b>${p.frag}</b></div>
-        <div style="margin-top:8px;color:#88ffbb;font-size:.85rem">✔ Cámara resuelta por completo.</div>`;
+      fb.innerHTML='CORRECTO.<br>'+q.explanation+
+        '<div class="frag">Fragmento obtenido: <b>'+p.frag+'</b></div>'+
+        '<div style="margin-top:8px;color:#88ffbb;font-size:.85rem">Camara resuelta por completo.</div>';
       fragments[currentObject.puzzle]=true;
       updateHUD(); saveProgress(); checkWin();
     }
@@ -1095,10 +1184,7 @@ function selectOption(i,btn){
     sfxError();
     if(navigator.vibrate) navigator.vibrate(200);
     fb.className='feedback err show';
-    fb.innerHTML=`❌ <b>ACCESO DENEGADO.</b><br>
-      La opción seleccionada es incorrecta. <b>NO se revelará la correcta.</b><br>
-      Vuelve a intentarlo con otra opción o pide una pista al anfitrión.<br>
-      <i style="color:#ff8888">Penalización: −10 segundos.</i>`;
+    fb.innerHTML='ACCESO DENEGADO.<br>La opcion seleccionada es incorrecta. <b>NO se revelara la correcta.</b><br>Vuelve a intentarlo con otra opcion o pide una pista al anfitrion.<br><i style="color:#ff8888">Penalizacion: -10 segundos.</i>';
     const wrap=document.getElementById('canvasWrap');
     wrap.style.animation='shake .4s';
     setTimeout(()=>wrap.style.animation='',400);
@@ -1106,7 +1192,7 @@ function selectOption(i,btn){
 }
 
 function showHint(){
-  if(session.role==='host'){ alert('Los anfitriones solo dan pistas oralmente, no desde el juego.'); return; }
+  if(session.role==='host'){ alert('Los anfitriones solo dan pistas oralmente.'); return; }
   document.getElementById('mHint').classList.add('show');
   metrics.hintsUsed++;
   metrics.hintsPerCamera[currentObject.puzzle]++;
@@ -1129,7 +1215,7 @@ function showTrap(id){
     updateHUD(); saveProgress();
   }
   const t=trapsData[id];
-  document.getElementById('trapWarn').innerHTML='🚨 '+t.warn;
+  document.getElementById('trapWarn').innerHTML=t.warn;
   document.getElementById('trapFake').innerHTML=t.fake;
   gameActive=false; sfxTrap();
   if(navigator.vibrate) navigator.vibrate([100,60,100,60,200]);
@@ -1159,9 +1245,9 @@ function checkWin(){
   if(Object.values(fragments).every(Boolean)){
     setTimeout(async ()=>{
       gameActive=false; clearInterval(timerInterval); sfxUnlock();
-      await showDialog('C.Y.T.E.','¡Lo lograste, operador! Introduce la clave final para restaurar mi núcleo.');
+      await showDialog('C.Y.T.E.','Lo lograste, operador. Introduce la clave final para restaurar el firewall periodico.');
       document.getElementById('finalScreen').classList.add('show');
-      document.getElementById('viewBitacoraBtn').style.display='inline-block';
+      document.getElementById('viewSintesisBtn').style.display='inline-block';
     },900);
   }
 }
@@ -1175,12 +1261,12 @@ function checkFinal(){
     metrics.endedAt=new Date();
     if(metrics.startTimer) metrics.totalSeconds=(performance.now()-metrics.startTimer)/1000;
     msg.style.color='#00ff88';
-    msg.innerHTML='🎉 <b>¡CLAVE CORRECTA!</b> C.Y.T.E. ha sido liberado. ¡Felicidades!';
+    msg.innerHTML='CLAVE CORRECTA. C.Y.T.E. ha sido liberado. El firewall periodico ha sido restaurado.';
     sfxUnlock(); confetti();
-    document.getElementById('viewBitacoraBtn').style.display='inline-block';
+    document.getElementById('viewSintesisBtn').style.display='inline-block';
   } else {
     msg.style.color='#ff3355';
-    msg.innerHTML='❌ Clave incorrecta. Revisa tus fragmentos: un concepto químico de 4 letras + un signo.';
+    msg.innerHTML='Clave incorrecta. Revisa tus fragmentos: un concepto quimico de 4 letras + un signo.';
     sfxError();
   }
 }
@@ -1199,7 +1285,19 @@ function confetti(){
   }
 }
 
-/* ============ BITÁCORA ============ */
+/* ============ SINTESIS ============ */
+function showSintesis(){
+  document.getElementById('finalScreen').classList.remove('show');
+  document.getElementById('sintesisOverlay').classList.add('show');
+  sfxUnlock();
+}
+function closeSintesis(){
+  document.getElementById('sintesisOverlay').classList.remove('show');
+  document.getElementById('finalScreen').classList.add('show');
+  sfxClick();
+}
+
+/* ============ BITACORA ============ */
 function showBitacora(){
   const dur = metrics.startTimer ? Math.round((performance.now()-metrics.startTimer)/1000) : 0;
   const mm = String(Math.floor(dur/60)).padStart(2,'0');
@@ -1208,11 +1306,11 @@ function showBitacora(){
   const trapsHit = Object.values(metrics.trapsVisited).filter(Boolean).length;
 
   const cameras = [
-    {id:'cam1', name:'Cámara 1 · Activación'},
-    {id:'cam2', name:'Cámara 2 · Diagnóstico'},
-    {id:'cam3', name:'Cámara 3 · Análisis'},
-    {id:'cam4', name:'Cámara 4 · Aplicación'},
-    {id:'cam5', name:'Cámara 5 · Verificación'}
+    {id:'cam1', name:'Camara 1 - Activacion'},
+    {id:'cam2', name:'Camara 2 - Diagnostico'},
+    {id:'cam3', name:'Camara 3 - Analisis'},
+    {id:'cam4', name:'Camara 4 - Aplicacion'},
+    {id:'cam5', name:'Camara 5 - Verificacion'}
   ];
 
   let camerasHTML='';
@@ -1220,72 +1318,67 @@ function showBitacora(){
     const solved = fragments[c.id];
     const hints = metrics.hintsPerCamera[c.id]||0;
     const wrong = metrics.wrongByCam[c.id]||0;
-    camerasHTML += `
-      <div class="bit-row">
-        <span class="lbl">${c.name}</span>
-        <span class="val ${solved?'green':'red'}">
-          ${solved?'✔ RESUELTA':'✘ NO RESUELTA'}
-          ${hints?` · <span style="color:#ffdd00">💡 ${hints}</span>`:''}
-          ${wrong?` · <span style="color:#ff8888">✘ ${wrong}</span>`:''}
-        </span>
-      </div>`;
+    camerasHTML += '<div class="bit-row">'+
+      '<span class="lbl">'+c.name+'</span>'+
+      '<span class="val '+(solved?'green':'red')+'">'+
+      (solved?'RESUELTA':'NO RESUELTA')+
+      (hints?' - Pistas: '+hints:'')+
+      (wrong?' - Errores: '+wrong:'')+
+      '</span></div>';
   });
 
   let trapsHTML='';
   ['trap1','trap2','trap3'].forEach(t=>{
     const v=metrics.trapsVisited[t];
-    trapsHTML+=`<span class="bit-tag ${v?'trap':''}">${t.toUpperCase()} ${v?'(visitada)':'(no visitada)'}</span>`;
+    trapsHTML+='<span class="bit-tag '+(v?'trap':'')+'">'+t.toUpperCase()+' '+(v?'(visitada)':'(no visitada)')+'</span>';
   });
 
-  const html=`
-    <h2>📋 BITÁCORA DEL ESCAPE ROOM</h2>
-    <h3>Datos de la sesión</h3>
-    <div class="bit-row"><span class="lbl">Equipo</span><span class="val">${session.team}</span></div>
-    <div class="bit-row"><span class="lbl">Rol</span><span class="val">${session.role==='host'?'🎤 Anfitrión':'🎮 Jugador'}</span></div>
-    <div class="bit-row"><span class="lbl">Ronda</span><span class="val">${session.round}</span></div>
-    <div class="bit-row"><span class="lbl">Equipo par</span><span class="val">${session.pair}</span></div>
-    <div class="bit-row"><span class="lbl">Inicio</span><span class="val">${session.startedAt?session.startedAt.toLocaleTimeString():'—'}</span></div>
-    <div class="bit-row"><span class="lbl">Término</span><span class="val">${metrics.endedAt?metrics.endedAt.toLocaleTimeString():'—'}</span></div>
-    <div class="bit-row"><span class="lbl">Duración total</span><span class="val yellow">${mm}:${ss}</span></div>
+  const html=
+    '<h2>BITACORA DEL ESCAPE ROOM</h2>'+
+    '<h3>Datos de la sesion</h3>'+
+    '<div class="bit-row"><span class="lbl">Equipo</span><span class="val">'+session.team+'</span></div>'+
+    '<div class="bit-row"><span class="lbl">Rol</span><span class="val">'+(session.role==='host'?'Anfitrion':'Jugador')+'</span></div>'+
+    '<div class="bit-row"><span class="lbl">Ronda</span><span class="val">'+session.round+'</span></div>'+
+    '<div class="bit-row"><span class="lbl">Equipo par</span><span class="val">'+session.pair+'</span></div>'+
+    '<div class="bit-row"><span class="lbl">Inicio</span><span class="val">'+(session.startedAt?session.startedAt.toLocaleTimeString():'-')+'</span></div>'+
+    '<div class="bit-row"><span class="lbl">Termino</span><span class="val">'+(metrics.endedAt?metrics.endedAt.toLocaleTimeString():'-')+'</span></div>'+
+    '<div class="bit-row"><span class="lbl">Duracion total</span><span class="val yellow">'+mm+':'+ss+'</span></div>'+
 
-    <h3>Resultado del juego</h3>
-    <div class="bit-row"><span class="lbl">Fragmentos obtenidos</span><span class="val ${frags===5?'green':'yellow'}">${frags}/5</span></div>
-    <div class="bit-row"><span class="lbl">Clave final ingresada</span><span class="val ${metrics.finalKeyCorrect?'green':'red'}">${metrics.finalKey||'(no ingresada)'}</span></div>
-    <div class="bit-row"><span class="lbl">¿Clave correcta?</span><span class="val ${metrics.finalKeyCorrect?'green':'red'}">${metrics.finalKeyCorrect?'SÍ ✔':'NO ✘'}</span></div>
-    <div class="bit-row"><span class="lbl">Intentos totales</span><span class="val">${metrics.attemptsTotal}</span></div>
-    <div class="bit-row"><span class="lbl">Aciertos / Errores</span><span class="val"><span style="color:#00ff88">${metrics.attemptsCorrect}</span> / <span style="color:#ff3355">${metrics.attemptsWrong}</span></span></div>
-    <div class="bit-row"><span class="lbl">Pistas utilizadas</span><span class="val yellow">${metrics.hintsUsed}</span></div>
-    <div class="bit-row"><span class="lbl">Cámaras trampa visitadas</span><span class="val yellow">${trapsHit}/3</span></div>
+    '<h3>Resultado del juego</h3>'+
+    '<div class="bit-row"><span class="lbl">Fragmentos obtenidos</span><span class="val '+(frags===5?'green':'yellow')+'">'+frags+'/5</span></div>'+
+    '<div class="bit-row"><span class="lbl">Clave final ingresada</span><span class="val '+(metrics.finalKeyCorrect?'green':'red')+'">'+(metrics.finalKey||'(no ingresada)')+'</span></div>'+
+    '<div class="bit-row"><span class="lbl">Clave correcta</span><span class="val '+(metrics.finalKeyCorrect?'green':'red')+'">'+(metrics.finalKeyCorrect?'SI':'NO')+'</span></div>'+
+    '<div class="bit-row"><span class="lbl">Intentos totales</span><span class="val">'+metrics.attemptsTotal+'</span></div>'+
+    '<div class="bit-row"><span class="lbl">Aciertos / Errores</span><span class="val"><span style="color:#00ff88">'+metrics.attemptsCorrect+'</span> / <span style="color:#ff3355">'+metrics.attemptsWrong+'</span></span></div>'+
+    '<div class="bit-row"><span class="lbl">Pistas utilizadas</span><span class="val yellow">'+metrics.hintsUsed+'</span></div>'+
+    '<div class="bit-row"><span class="lbl">Camaras trampa visitadas</span><span class="val yellow">'+trapsHit+'/3</span></div>'+
 
-    <h3>Detalle por cámara</h3>
-    ${camerasHTML}
+    '<h3>Detalle por camara</h3>'+camerasHTML+
 
-    <h3>Trampas visitadas</h3>
-    <div style="padding:6px 0">${trapsHTML}</div>
+    '<h3>Trampas visitadas</h3><div style="padding:6px 0">'+trapsHTML+'</div>'+
 
-    <h3>Preguntas de retroalimentación oral (3 min)</h3>
-    <div class="feedback-q">💬 ¿Qué concepto químico te costó más y por qué?</div>
-    <div class="feedback-q">💬 ¿Las pistas fueron suficientes o ambiguas?</div>
-    <div class="feedback-q">💬 ¿La navegación y los controles fueron claros?</div>
-    <div class="feedback-q">💬 ¿Qué mejorarías del escape room que jugaste?</div>
+    '<h3>Preguntas de retroalimentacion oral (3 min)</h3>'+
+    '<div class="feedback-q">Que concepto quimico te costo mas y por que?</div>'+
+    '<div class="feedback-q">Las pistas fueron suficientes o ambiguas?</div>'+
+    '<div class="feedback-q">La navegacion y los controles fueron claros?</div>'+
+    '<div class="feedback-q">Que mejorarias del escape room que jugaste?</div>'+
 
-    <h3>Dificultades observadas (anfitrión)</h3>
-    <div class="feedback-q" style="border-color:#8a8ac0;color:#a0a0d0">
-      ${metrics.difficulties.length? metrics.difficulties.join('<br>') : 'Sin dificultades registradas.'}
-    </div>
+    '<h3>Dificultades observadas (anfitrion)</h3>'+
+    '<div class="feedback-q" style="border-color:#8a8ac0;color:#a0a0d0">'+
+    (metrics.difficulties.length? metrics.difficulties.join('<br>') : 'Sin dificultades registradas.')+
+    '</div>'+
 
-    <h3>Mejora aplicada a nuestro producto</h3>
-    <div class="feedback-q" style="border-color:var(--green);color:#88ffbb">
-      Escribe aquí la mejora que aplicarán a su propio escape room después de la retroalimentación:
-    </div>
-    <textarea id="bitImprovement" placeholder="Ejemplo: agregar temporizador visual más claro..." style="width:100%;min-height:70px;padding:10px;background:var(--panel);border:2px solid var(--border);color:var(--cyan);font-family:'Courier New',monospace;font-size:.85rem;border-radius:6px;resize:vertical"></textarea>
+    '<h3>Mejora aplicada a nuestro producto</h3>'+
+    '<div class="feedback-q" style="border-color:#00ff88;color:#88ffbb">'+
+    'Escribe aqui la mejora que aplicaran a su propio escape room despues de la retroalimentacion:'+
+    '</div>'+
+    '<textarea id="bitImprovement" placeholder="Ejemplo: agregar temporizador visual mas claro..." style="width:100%;min-height:70px;padding:10px;background:#12121f;border:2px solid #1f1f35;color:#00f0ff;font-family:Courier New,monospace;font-size:.85rem;border-radius:6px;resize:vertical"></textarea>'+
 
-    <div class="actions">
-      <button class="btn green small" onclick="copyBitacora()">📋 COPIAR TEXTO</button>
-      <button class="btn magenta small" onclick="downloadBitacora()">💾 DESCARGAR</button>
-      <button class="btn small" onclick="closeBitacora()">← CERRAR</button>
-    </div>
-  `;
+    '<div class="actions">'+
+    '<button class="btn green small" onclick="copyBitacora()">COPIAR TEXTO</button>'+
+    '<button class="btn magenta small" onclick="downloadBitacora()">DESCARGAR</button>'+
+    '<button class="btn small" onclick="closeBitacora()">CERRAR</button>'+
+    '</div>';
 
   document.getElementById('bitacoraContent').innerHTML=html;
   document.getElementById('bitacoraOverlay').classList.add('show');
@@ -1305,16 +1398,16 @@ function bitacoraAsText(){
   const improvement = document.getElementById('bitImprovement') ? document.getElementById('bitImprovement').value : '';
 
   let t='';
-  t+='=== BITÁCORA DEL ESCAPE ROOM "C.Y.T.E." ===\n';
+  t+='=== BITACORA DEL ESCAPE ROOM "C.Y.T.E." ===\n';
   t+='Equipo: '+session.team+'\n';
-  t+='Rol: '+(session.role==='host'?'Anfitrión':'Jugador')+'\n';
+  t+='Rol: '+(session.role==='host'?'Anfitrion':'Jugador')+'\n';
   t+='Ronda: '+session.round+'\n';
   t+='Equipo par: '+session.pair+'\n';
-  t+='Inicio: '+(session.startedAt?session.startedAt.toLocaleTimeString():'—')+'\n';
-  t+='Término: '+(metrics.endedAt?metrics.endedAt.toLocaleTimeString():'—')+'\n';
-  t+='Duración total: '+mm+':'+ss+'\n';
+  t+='Inicio: '+(session.startedAt?session.startedAt.toLocaleTimeString():'-')+'\n';
+  t+='Termino: '+(metrics.endedAt?metrics.endedAt.toLocaleTimeString():'-')+'\n';
+  t+='Duracion total: '+mm+':'+ss+'\n';
   t+='Fragmentos: '+frags+'/5\n';
-  t+='Clave final: '+(metrics.finalKey||'(no ingresada)')+' — '+(metrics.finalKeyCorrect?'CORRECTA':'INCORRECTA')+'\n';
+  t+='Clave final: '+(metrics.finalKey||'(no ingresada)')+' - '+(metrics.finalKeyCorrect?'CORRECTA':'INCORRECTA')+'\n';
   t+='Intentos totales: '+metrics.attemptsTotal+'\n';
   t+='Aciertos: '+metrics.attemptsCorrect+' | Errores: '+metrics.attemptsWrong+'\n';
   t+='Pistas utilizadas: '+metrics.hintsUsed+'\n';
@@ -1326,12 +1419,12 @@ function bitacoraAsText(){
 function copyBitacora(){
   const text=bitacoraAsText();
   navigator.clipboard.writeText(text).then(()=>{
-    alert('📋 Bitácora copiada al portapapeles.\n\nPégala en tu reporte.');
+    alert('Bitacora copiada al portapapeles. Pegala en tu reporte.');
   }).catch(()=>{
     const ta=document.createElement('textarea');
     ta.value=text; document.body.appendChild(ta); ta.select();
     document.execCommand('copy'); ta.remove();
-    alert('📋 Bitácora copiada.');
+    alert('Bitacora copiada.');
   });
 }
 
@@ -1359,13 +1452,13 @@ function draw(){
   for(const d of r.doors){
     const pulse=.6+.4*Math.sin(Date.now()/300);
     const grad=ctx.createRadialGradient(d.x+d.w/2,d.y+d.h/2,0,d.x+d.w/2,d.y+d.h/2,d.w*.8);
-    grad.addColorStop(0,`rgba(0,255,136,${0.25+pulse*0.15})`);
+    grad.addColorStop(0,'rgba(0,255,136,'+(0.25+pulse*0.15)+')');
     grad.addColorStop(1,'rgba(0,255,136,0)');
     ctx.fillStyle=grad;
     ctx.fillRect(d.x-20,d.y-20,d.w+40,d.h+40);
-    ctx.fillStyle=`rgba(0,255,136,${0.15+pulse*0.15})`;
+    ctx.fillStyle='rgba(0,255,136,'+(0.15+pulse*0.15)+')';
     ctx.fillRect(d.x,d.y,d.w,d.h);
-    ctx.strokeStyle=`rgba(0,255,136,${pulse})`;
+    ctx.strokeStyle='rgba(0,255,136,'+pulse+')';
     ctx.lineWidth=2;
     ctx.strokeRect(d.x,d.y,d.w,d.h);
     ctx.fillStyle='#00ff88';
@@ -1390,9 +1483,9 @@ function draw(){
     ctx.lineWidth=2.5;
     ctx.strokeRect(o.x,o.y,o.w,o.h);
     const pulse=.5+.5*Math.sin(Date.now()/400);
-    if(isTrap) ctx.fillStyle=`rgba(255,136,0,${0.2+pulse*0.2})`;
-    else if(solved) ctx.fillStyle=`rgba(0,255,136,${0.2+pulse*0.15})`;
-    else ctx.fillStyle=`rgba(255,0,170,${0.2+pulse*0.2})`;
+    if(isTrap) ctx.fillStyle='rgba(255,136,0,'+(0.2+pulse*0.2)+')';
+    else if(solved) ctx.fillStyle='rgba(0,255,136,'+(0.2+pulse*0.15)+')';
+    else ctx.fillStyle='rgba(255,0,170,'+(0.2+pulse*0.2)+')';
     ctx.fillRect(o.x+12,o.y+12,o.w-24,o.h*.55);
     ctx.strokeStyle='rgba(0,0,0,0.25)';
     ctx.lineWidth=1;
@@ -1402,7 +1495,7 @@ function draw(){
     ctx.fillStyle=solved?'#00ff88':(isTrap?'#ff8800':'#ff00aa');
     ctx.font='bold 14px monospace';
     ctx.textAlign='center';
-    ctx.fillText(solved?'✓ RESUELTO':(isTrap?'⚠ SOSPECHOSO':'⌨ ACTIVO'),o.x+o.w/2,o.y+o.h*.42);
+    ctx.fillText(solved?'RESUELTO':(isTrap?'SOSPECHOSO':'ACTIVO'),o.x+o.w/2,o.y+o.h*.42);
     ctx.fillStyle='#888';
     ctx.font='11px monospace';
     ctx.fillText(o.label,o.x+o.w/2,o.y+o.h+16);
@@ -1438,7 +1531,7 @@ function draw(){
 function drawPlayer(){
   const {x,y,w,h}=player;
   const pulse=.5+.5*Math.sin(Date.now()/250);
-  ctx.fillStyle=`rgba(0,240,255,${0.1+pulse*0.1})`;
+  ctx.fillStyle='rgba(0,240,255,'+(0.1+pulse*0.1)+')';
   ctx.beginPath();ctx.arc(x+w/2,y+h/2,30,0,Math.PI*2);ctx.fill();
   ctx.fillStyle='#00f0ff';
   ctx.fillRect(x,y,w,h);
