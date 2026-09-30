@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -69,6 +68,38 @@
   .btn.magenta:active{background:var(--magenta);box-shadow:0 0 20px var(--magenta)}
   .btn.red{color:var(--red);border-color:var(--red)}
   .btn.red:active{background:var(--red);box-shadow:0 0 20px var(--red)}
+  .btn.small{padding:8px 14px;font-size:.75rem;min-height:40px;margin:3px}
+
+  /* ===== DIALOG TYPEWRITER ===== */
+  #dialogOverlay{
+    position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:150;
+    display:none;align-items:flex-end;justify-content:center;padding:20px
+  }
+  #dialogOverlay.show{display:flex}
+  .dialog-box{
+    max-width:720px;width:100%;background:#0d0d1a;
+    border:2px solid var(--cyan);border-radius:10px;padding:20px;
+    box-shadow:0 0 40px rgba(0,240,255,.3);
+    font-size:clamp(.85rem,3.5vw,1rem);line-height:1.6;
+    min-height:120px;position:relative
+  }
+  .dialog-box .name{
+    position:absolute;top:-14px;left:20px;background:var(--bg);
+    color:var(--cyan);padding:2px 12px;border:1px solid var(--cyan);
+    border-radius:4px;font-size:.75rem;letter-spacing:2px
+  }
+  .dialog-box .text{color:#c8e0ff;min-height:60px}
+  .dialog-box .cursor{
+    display:inline-block;width:10px;background:var(--cyan);
+    animation:blink .7s infinite;margin-left:2px
+  }
+  @keyframes blink{0%,50%{opacity:1}51%,100%{opacity:0}}
+  .dialog-box .continue{
+    text-align:right;color:var(--cyan);font-size:.75rem;
+    letter-spacing:2px;margin-top:12px;cursor:pointer;
+    animation:pulse 1s infinite
+  }
+  @keyframes pulse{0%,100%{opacity:.6}50%{opacity:1}}
 
   /* ===== GAME LAYOUT ===== */
   #gameWrap{
@@ -87,6 +118,11 @@
   }
   #hud .item{color:var(--cyan);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   #hud .item b{color:var(--yellow)}
+  #hud button{
+    background:transparent;border:1px solid var(--border);color:var(--cyan);
+    padding:4px 8px;border-radius:4px;font-family:'Courier New',monospace;
+    font-size:inherit;cursor:pointer;min-height:32px
+  }
 
   #canvasWrap{
     flex:1;position:relative;display:flex;
@@ -98,10 +134,42 @@
     display:block;
     max-width:100%;max-height:100%;
     width:auto;height:auto;
-    image-rendering:pixelated;
     object-fit:contain;
     touch-action:none
   }
+
+  /* Fragment HUD flotante */
+  #fragHud{
+    position:absolute;top:10px;left:10px;z-index:5;
+    display:flex;gap:5px;pointer-events:none
+  }
+  #fragHud .f{
+    width:26px;height:32px;background:rgba(18,18,31,.85);
+    border:2px dashed #333;border-radius:5px;
+    display:flex;align-items:center;justify-content:center;
+    font-weight:bold;color:#444;font-size:.85rem;
+    transition:all .4s
+  }
+  #fragHud .f.unlocked{
+    border-style:solid;border-color:var(--green);color:var(--green);
+    background:rgba(0,255,136,.15);box-shadow:0 0 10px var(--green)
+  }
+
+  /* Mini-map */
+  #miniMap{
+    position:absolute;top:10px;right:10px;z-index:5;
+    width:110px;height:90px;background:rgba(18,18,31,.85);
+    border:1px solid var(--border);border-radius:6px;
+    pointer-events:none;font-size:.5rem;padding:4px
+  }
+  #miniMap .mm-room{
+    display:inline-block;width:14px;height:14px;margin:2px;
+    background:#1f1f35;border:1px solid #333;border-radius:2px;
+    transition:all .3s
+  }
+  #miniMap .mm-room.cur{border-color:var(--cyan);background:rgba(0,240,255,.3);box-shadow:0 0 8px var(--cyan)}
+  #miniMap .mm-room.done{border-color:var(--green);background:rgba(0,255,136,.2)}
+  #miniMap .mm-room.trap{border-color:#ff8800;background:rgba(255,136,0,.2)}
 
   #prompt{
     position:absolute;left:50%;bottom:12px;transform:translateX(-50%);
@@ -113,12 +181,8 @@
     white-space:nowrap
   }
   #prompt.show{display:block}
-  @keyframes pulse{
-    0%,100%{box-shadow:0 0 10px var(--cyan)}
-    50%{box-shadow:0 0 25px var(--cyan)}
-  }
 
-  /* ===== CONTROLS (d-pad + action) ===== */
+  /* ===== CONTROLS ===== */
   #controls{
     flex-shrink:0;height:clamp(150px,26vh,200px);
     background:linear-gradient(180deg,#0d0d1a,#0a0a12);
@@ -165,7 +229,7 @@
     box-shadow:0 0 25px var(--magenta);transform:scale(.94)
   }
 
-  /* ===== MODAL ACERTIJOS ===== */
+  /* ===== MODAL ===== */
   #modal{
     position:fixed;inset:0;background:rgba(5,5,15,.94);z-index:200;
     display:none;align-items:center;justify-content:center;
@@ -240,15 +304,21 @@
     display:flex;justify-content:space-between;gap:8px;
     margin-top:14px;flex-wrap:wrap
   }
-  .modal-actions .btn{flex:1;min-width:110px;padding:12px 14px;font-size:.78rem}
+  .modal-actions .btn{flex:1;min-width:100px}
 
-  /* ===== TRAP ===== */
+  /* TRAP */
   .trap-box{
     max-width:600px;width:100%;background:#1a0a0f;
     border:2px solid var(--red);border-radius:10px;
     padding:clamp(18px,4vw,28px);text-align:center;
     box-shadow:0 0 40px rgba(255,51,85,.3);
-    max-height:calc(100vh - 24px);overflow-y:auto
+    max-height:calc(100vh - 24px);overflow-y:auto;
+    animation:shake .4s
+  }
+  @keyframes shake{
+    0%,100%{transform:translateX(0)}
+    25%{transform:translateX(-8px)}
+    75%{transform:translateX(8px)}
   }
   .trap-box h1{
     color:var(--red);text-shadow:0 0 15px var(--red);
@@ -268,7 +338,6 @@
     text-align:left
   }
 
-  /* ===== FINAL ===== */
   .key-input{
     font-family:'Courier New',monospace;
     font-size:clamp(1.1rem,5vw,1.4rem);text-align:center;
@@ -286,7 +355,7 @@
   }
   @keyframes fall{to{transform:translateY(105vh) rotate(720deg);opacity:0}}
 
-  /* ===== LANDSCAPE MOBILE ===== */
+  /* LANDSCAPE */
   @media (orientation:landscape) and (max-height:520px){
     #controls{
       position:absolute;inset:0;height:100%;
@@ -305,15 +374,6 @@
       width:clamp(76px,16vh,100px);
       height:clamp(76px,16vh,100px)
     }
-    #canvasWrap{flex:1}
-  }
-
-  @media (min-width:900px){
-    #controls{
-      height:170px;justify-content:space-around;padding:12px 40px
-    }
-    #dpad{width:150px;height:150px;aspect-ratio:1}
-    #actionBtn{width:110px;height:110px}
   }
 </style>
 </head>
@@ -332,17 +392,29 @@
   <button class="btn" onclick="startGame()">▶ INICIAR MISIÓN</button>
 </div>
 
+<!-- DIALOG TYPEWRITER -->
+<div id="dialogOverlay">
+  <div class="dialog-box">
+    <span class="name" id="dlgName">C.Y.T.E.</span>
+    <div class="text" id="dlgText"></div>
+    <div class="continue" id="dlgContinue">▶ TOCA PARA CONTINUAR</div>
+  </div>
+</div>
+
 <!-- GAME -->
 <div id="gameWrap">
   <div id="hud">
     <div class="item">📍 <b id="roomName">HUB</b></div>
     <div class="item">⏱️ <b id="timer">15:00</b></div>
     <div class="item">🔑 <b><span id="fragCount">0</span>/5</b></div>
-    <div class="item">⚠️ <b id="trapCount">0</b></div>
+    <button id="soundBtn" onclick="toggleSound()" title="Sonido">🔊</button>
+    <button onclick="pauseGame()" title="Pausa">⏸</button>
   </div>
 
   <div id="canvasWrap">
     <canvas id="gameCanvas" width="960" height="600"></canvas>
+    <div id="fragHud"></div>
+    <div id="miniMap"></div>
     <div id="prompt">Presiona E para interactuar</div>
   </div>
 
@@ -367,8 +439,8 @@
     <div class="feedback" id="mFeedback"></div>
     <div class="hint-box" id="mHint"></div>
     <div class="modal-actions">
-      <button class="btn magenta" onclick="showHint()">💡 PISTA</button>
-      <button class="btn" onclick="closeModal()">CERRAR</button>
+      <button class="btn magenta small" onclick="showHint()">💡 PISTA</button>
+      <button class="btn small" onclick="closeModal()">CERRAR</button>
     </div>
   </div>
 </div>
@@ -384,6 +456,14 @@
   </div>
 </div>
 
+<!-- PAUSE -->
+<div id="pauseOverlay" class="overlay">
+  <h1 class="title">⏸ PAUSA</h1>
+  <h2 class="subtitle">SISTEMA EN ESPERA</h2>
+  <button class="btn green" onclick="resumeGame()">▶ CONTINUAR</button>
+  <button class="btn red" onclick="if(confirm('¿Reiniciar la partida?')) location.reload()">↻ REINICIAR</button>
+</div>
+
 <!-- FINAL -->
 <div id="finalScreen" class="overlay">
   <h1 class="title">🔓 LIBERADO</h1>
@@ -396,28 +476,79 @@
   <br>
   <button class="btn green" onclick="checkFinal()">🔐 DESBLOQUEAR</button>
   <p id="finalMsg" style="margin-top:14px;font-size:.95rem;min-height:26px"></p>
-  <button class="btn" onclick="location.reload()" style="margin-top:12px">↻ REINICIAR</button>
 </div>
 
 <script>
 /* ================================================================
-   ESCAPE ROOM C.Y.T.E. — Mobile + Genially
+   ESCAPE ROOM C.Y.T.E. v3.0
    ================================================================ */
-
 const W = 960, H = 600;
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 
-/* ============ RESIZE CANVAS (responsive) ============ */
+/* ============ AUDIO (Web Audio API) ============ */
+let audioCtx = null;
+let soundEnabled = true;
+
+function ensureAudio(){
+  if(!audioCtx){
+    try{
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    }catch(e){ soundEnabled = false; }
+  }
+  if(audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+}
+
+function beep(freq, dur, type='sine', vol=0.15){
+  if(!soundEnabled || !audioCtx) return;
+  const o = audioCtx.createOscillator();
+  const g = audioCtx.createGain();
+  o.type = type;
+  o.frequency.setValueAtTime(freq, audioCtx.currentTime);
+  g.gain.setValueAtTime(vol, audioCtx.currentTime);
+  g.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + dur);
+  o.connect(g); g.connect(audioCtx.destination);
+  o.start(); o.stop(audioCtx.currentTime + dur);
+}
+
+function sfxClick(){ beep(800, 0.06, 'square', 0.08); }
+function sfxFootstep(){ beep(120 + Math.random()*40, 0.04, 'triangle', 0.05); }
+function sfxSuccess(){
+  beep(660, 0.12, 'sine', 0.15);
+  setTimeout(()=>beep(880, 0.18, 'sine', 0.15), 100);
+  setTimeout(()=>beep(1320, 0.25, 'sine', 0.12), 220);
+}
+function sfxError(){
+  beep(180, 0.15, 'sawtooth', 0.15);
+  setTimeout(()=>beep(120, 0.25, 'sawtooth', 0.15), 120);
+}
+function sfxTrap(){
+  beep(90, 0.4, 'sawtooth', 0.2);
+  setTimeout(()=>beep(70, 0.5, 'sawtooth', 0.18), 200);
+}
+function sfxUnlock(){
+  beep(523, 0.1, 'sine', 0.12);
+  setTimeout(()=>beep(784, 0.1, 'sine', 0.12), 90);
+  setTimeout(()=>beep(1046, 0.3, 'sine', 0.14), 180);
+}
+function sfxDoor(){
+  beep(220, 0.08, 'sine', 0.08);
+  setTimeout(()=>beep(440, 0.12, 'sine', 0.08), 60);
+}
+function toggleSound(){
+  soundEnabled = !soundEnabled;
+  document.getElementById('soundBtn').textContent = soundEnabled ? '🔊' : '🔇';
+  if(soundEnabled){ ensureAudio(); sfxClick(); }
+}
+
+/* ============ CANVAS RESIZE ============ */
 function resizeCanvas(){
   const wrap = document.getElementById('canvasWrap');
   const availW = wrap.clientWidth;
   const availH = wrap.clientHeight;
   const scale = Math.min(availW / W, availH / H);
-  const cssW = Math.floor(W * scale);
-  const cssH = Math.floor(H * scale);
-  canvas.style.width = cssW + 'px';
-  canvas.style.height = cssH + 'px';
+  canvas.style.width = Math.floor(W * scale) + 'px';
+  canvas.style.height = Math.floor(H * scale) + 'px';
   const dpr = Math.min(window.devicePixelRatio || 1, 2);
   canvas.width = Math.floor(W * dpr);
   canvas.height = Math.floor(H * dpr);
@@ -428,96 +559,65 @@ window.addEventListener('orientationchange', ()=>setTimeout(resizeCanvas, 250));
 
 /* ============ ACERTIJOS ============ */
 const puzzles = {
-  cam1:{
-    tag:'CÁMARA 1 · ACTIVACIÓN', title:'Reconocer conceptos esenciales',
+  cam1:{tag:'CÁMARA 1 · ACTIVACIÓN', title:'Reconocer conceptos esenciales',
     question:'¿Cuál afirmación sobre la <b>carga nuclear efectiva (Z<sub>eff</sub>)</b> es <b>FALSA</b>?',
-    options:[
-      'Es la carga positiva neta que siente un electrón tras el apantallamiento.',
+    options:['Es la carga positiva neta que siente un electrón tras el apantallamiento.',
       'Se calcula como Z<sub>eff</sub> = Z − S.',
       'Es siempre igual al número atómico Z.',
       'Aumenta de izquierda a derecha en un período.'],
-    correct:2,
+    correct:2, frag:'Z',
     hint:'Los electrones internos "bloquean" parte de la carga. ¿El electrón de valencia siente TODA la carga?',
-    explanation:'Z<sub>eff</sub> NUNCA es igual a Z porque el apantallamiento (S) siempre reduce la carga efectiva. Como S > 0, entonces Z<sub>eff</sub> < Z.',
-    frag:'Z'
-  },
-  cam2:{
-    tag:'CÁMARA 2 · DIAGNÓSTICO', title:'Detectar el dato incorrecto',
+    explanation:'Z<sub>eff</sub> NUNCA es igual a Z porque el apantallamiento (S) siempre reduce la carga efectiva. Como S > 0, entonces Z<sub>eff</sub> < Z.'},
+  cam2:{tag:'CÁMARA 2 · DIAGNÓSTICO', title:'Detectar el dato incorrecto',
     question:'Según las <b>reglas de Slater</b>, ¿qué valor de apantallamiento es <b>INCORRECTO</b>?',
-    options:[
-      'Mismo grupo (ns, np): 0.35',
-      'Capa n−1: 0.85',
-      'Capas n−2 o menores: 0.85',
-      '1s apantallando a otro 1s: 0.30'],
-    correct:2,
+    options:['Mismo grupo (ns, np): 0.35','Capa n−1: 0.85','Capas n−2 o menores: 0.85','1s apantallando a otro 1s: 0.30'],
+    correct:2, frag:'E',
     hint:'Los electrones de capas muy internas están cerca del núcleo. ¿Apantallan poco o mucho?',
-    explanation:'Los electrones de capas n−2 o menores apantallan <b>1.00</b> (total), no 0.85.',
-    frag:'E'
-  },
-  cam3:{
-    tag:'CÁMARA 3 · ANÁLISIS', title:'Interpretar tendencias periódicas',
+    explanation:'Los electrones de capas n−2 o menores apantallan <b>1.00</b> (total), no 0.85.'},
+  cam3:{tag:'CÁMARA 3 · ANÁLISIS', title:'Interpretar tendencias periódicas',
     question:'Ordena de <b>MENOR a MAYOR</b> Z<sub>eff</sub>: <b>Na, Mg, Al, Si</b>',
     options:['Si < Al < Mg < Na','Na < Mg < Al < Si','Mg < Na < Si < Al','Al < Si < Na < Mg'],
-    correct:1,
+    correct:1, frag:'F',
     hint:'Mismo período. Al ir a la derecha, Z crece pero el apantallamiento entre electrones del mismo nivel es mínimo.',
-    explanation:'En un mismo período, Z<sub>eff</sub> aumenta de izquierda a derecha: Na < Mg < Al < Si.',
-    frag:'F'
-  },
-  cam4:{
-    tag:'CÁMARA 4 · APLICACIÓN', title:'Caso de ingeniería',
+    explanation:'En un mismo período, Z<sub>eff</sub> aumenta de izquierda a derecha: Na < Mg < Al < Si.'},
+  cam4:{tag:'CÁMARA 4 · APLICACIÓN', title:'Caso de ingeniería',
     question:'¿Qué elemento elegirías para el <b>filamento de una bombilla incandescente</b>?',
     options:['Aluminio (Al)','Plomo (Pb)','Wolframio (W)','Mercurio (Hg)'],
-    correct:2,
+    correct:2, frag:'F',
     hint:'Busca el metal con el punto de fusión más alto de la tabla periódica (3422 °C).',
-    explanation:'El <b>wolframio (W)</b> tiene el punto de fusión más alto (3422 °C). Se usa en filamentos de bombillas.',
-    frag:'F'
-  },
-  cam5:{
-    tag:'CÁMARA 5 · VERIFICACIÓN', title:'Integrar y justificar',
+    explanation:'El <b>wolframio (W)</b> tiene el punto de fusión más alto (3422 °C). Se usa en filamentos de bombillas.'},
+  cam5:{tag:'CÁMARA 5 · VERIFICACIÓN', title:'Integrar y justificar',
     question:'¿Por qué el <b>K</b> tiene menor energía de ionización que el <b>Na</b>?',
-    options:[
-      'El K tiene mayor Z<sub>eff</sub> que el Na.',
+    options:['El K tiene mayor Z<sub>eff</sub> que el Na.',
       'El electrón de valencia del K está más lejos y siente menor Z<sub>eff</sub>.',
       'El K tiene menos electrones internos.',
       'El K no tiene apantallamiento.'],
-    correct:1,
+    correct:1, frag:'!',
     hint:'Aunque el K tiene más protones, tiene más capas internas. Su electrón 4s está más lejos que el 3s del Na.',
-    explanation:'El K tiene más capas internas que apantallan y su electrón de valencia está más alejado del núcleo → menor Z<sub>eff</sub> efectiva.',
-    frag:'!'
-  }
+    explanation:'El K tiene más capas internas que apantallan y su electrón de valencia está más alejado del núcleo → menor Z<sub>eff</sub> efectiva.'}
 };
 
 /* ============ TRAMPAS ============ */
 const trapsData = {
-  trap1:{
-    warn:'Laboratorio con <b>TABLA PERIÓDICA FALSIFICADA</b>. Su información NO es fiable.',
-    fake:'📄 "Según nuestros cálculos, Z<sub>eff</sub> del sodio es 11 (toda la carga del núcleo)."<br><br>🚫 <b>¡FALSO!</b> El apantallamiento de los 10 electrones internos reduce Z<sub>eff</sub> a ≈ 2.20.'
-  },
-  trap2:{
-    warn:'Archivos corruptos. Contienen una <b>FÓRMULA INVENTADA</b>.',
-    fake:'📄 "Fórmula oficial: Z<sub>eff</sub> = Z + S"<br><br>🚫 <b>¡INCORRECTO!</b> La fórmula real es Z<sub>eff</sub> = Z − S.'
-  },
-  trap3:{
-    warn:'Servidor con <b>DATOS INVERTIDOS</b> sobre tendencias periódicas.',
-    fake:'📄 "Z<sub>eff</sub> disminuye al avanzar de izquierda a derecha."<br><br>🚫 <b>¡FALSO!</b> Z<sub>eff</sub> AUMENTA de izquierda a derecha.'
-  }
+  trap1:{warn:'Laboratorio con <b>TABLA PERIÓDICA FALSIFICADA</b>. Su información NO es fiable.',
+    fake:'📄 "Según nuestros cálculos, Z<sub>eff</sub> del sodio es 11 (toda la carga del núcleo)."<br><br>🚫 <b>¡FALSO!</b> El apantallamiento de los 10 electrones internos reduce Z<sub>eff</sub> a ≈ 2.20.'},
+  trap2:{warn:'Archivos corruptos. Contienen una <b>FÓRMULA INVENTADA</b>.',
+    fake:'📄 "Fórmula oficial: Z<sub>eff</sub> = Z + S"<br><br>🚫 <b>¡INCORRECTO!</b> La fórmula real es Z<sub>eff</sub> = Z − S.'},
+  trap3:{warn:'Servidor con <b>DATOS INVERTIDOS</b> sobre tendencias periódicas.',
+    fake:'📄 "Z<sub>eff</sub> disminuye al avanzar de izquierda a derecha."<br><br>🚫 <b>¡FALSO!</b> Z<sub>eff</sub> AUMENTA de izquierda a derecha.'}
 };
 
 /* ============ HABITACIONES ============ */
 const T = 20;
 function simpleWalls(){
   return [
-    {x:0, y:0, w:W, h:T},
-    {x:0, y:0, w:T, h:H},
-    {x:W-T, y:0, w:T, h:H},
-    {x:0, y:H-T, w:430, h:T},
-    {x:530, y:H-T, w:430, h:T}
+    {x:0,y:0,w:W,h:T},{x:0,y:0,w:T,h:H},{x:W-T,y:0,w:T,h:H},
+    {x:0,y:H-T,w:430,h:T},{x:530,y:H-T,w:430,h:T}
   ];
 }
 
 const rooms = {
-  hub:{
-    id:'hub', name:'CENTRO DE CONTROL',
+  hub:{id:'hub', name:'CENTRO DE CONTROL',
     walls:[
       {x:0,y:0,w:120,h:T},{x:210,y:0,w:120,h:T},{x:420,y:0,w:120,h:T},
       {x:630,y:0,w:120,h:T},{x:840,y:0,w:120,h:T},
@@ -535,64 +635,40 @@ const rooms = {
       {x:540,y:H-55,w:90,h:55,target:'cam4',label:'CÁM 4'},
       {x:750,y:H-55,w:90,h:55,target:'cam5',label:'CÁM 5'}
     ],
-    objects:[], spawn:{x:450, y:280}
+    objects:[], spawn:{x:450,y:280}
   },
-  cam1:{
-    id:'cam1', name:'CÁMARA 1 · ACTIVACIÓN',
-    walls:simpleWalls(),
+  cam1:{id:'cam1', name:'CÁMARA 1 · ACTIVACIÓN', walls:simpleWalls(),
     doors:[{x:430,y:H-55,w:100,h:55,target:'hub',label:'VOLVER',returnIdx:0}],
     objects:[{x:400,y:220,w:160,h:110,type:'terminal',puzzle:'cam1',label:'TERMINAL 1'}],
-    spawn:{x:450,y:420}
-  },
-  cam2:{
-    id:'cam2', name:'CÁMARA 2 · DIAGNÓSTICO',
-    walls:simpleWalls(),
+    spawn:{x:450,y:420}},
+  cam2:{id:'cam2', name:'CÁMARA 2 · DIAGNÓSTICO', walls:simpleWalls(),
     doors:[{x:430,y:H-55,w:100,h:55,target:'hub',label:'VOLVER',returnIdx:2}],
     objects:[{x:400,y:220,w:160,h:110,type:'terminal',puzzle:'cam2',label:'TERMINAL 2'}],
-    spawn:{x:450,y:420}
-  },
-  cam3:{
-    id:'cam3', name:'CÁMARA 3 · ANÁLISIS',
-    walls:simpleWalls(),
+    spawn:{x:450,y:420}},
+  cam3:{id:'cam3', name:'CÁMARA 3 · ANÁLISIS', walls:simpleWalls(),
     doors:[{x:430,y:H-55,w:100,h:55,target:'hub',label:'VOLVER',returnIdx:4}],
     objects:[{x:400,y:220,w:160,h:110,type:'terminal',puzzle:'cam3',label:'TERMINAL 3'}],
-    spawn:{x:450,y:420}
-  },
-  cam4:{
-    id:'cam4', name:'CÁMARA 4 · APLICACIÓN',
-    walls:simpleWalls(),
+    spawn:{x:450,y:420}},
+  cam4:{id:'cam4', name:'CÁMARA 4 · APLICACIÓN', walls:simpleWalls(),
     doors:[{x:430,y:H-55,w:100,h:55,target:'hub',label:'VOLVER',returnIdx:6}],
     objects:[{x:400,y:220,w:160,h:110,type:'terminal',puzzle:'cam4',label:'TERMINAL 4'}],
-    spawn:{x:450,y:420}
-  },
-  cam5:{
-    id:'cam5', name:'CÁMARA 5 · VERIFICACIÓN',
-    walls:simpleWalls(),
+    spawn:{x:450,y:420}},
+  cam5:{id:'cam5', name:'CÁMARA 5 · VERIFICACIÓN', walls:simpleWalls(),
     doors:[{x:430,y:H-55,w:100,h:55,target:'hub',label:'VOLVER',returnIdx:7}],
     objects:[{x:400,y:220,w:160,h:110,type:'terminal',puzzle:'cam5',label:'TERMINAL 5'}],
-    spawn:{x:450,y:420}
-  },
-  trap1:{
-    id:'trap1', name:'LAB-0X · TRAMPA',
-    walls:simpleWalls(),
+    spawn:{x:450,y:420}},
+  trap1:{id:'trap1', name:'LAB-0X · TRAMPA', walls:simpleWalls(),
     doors:[{x:430,y:H-55,w:100,h:55,target:'hub',label:'VOLVER',returnIdx:1}],
     objects:[{x:400,y:220,w:160,h:110,type:'console',trap:'trap1',label:'CONSOLA SOSPECHOSA'}],
-    spawn:{x:450,y:420}
-  },
-  trap2:{
-    id:'trap2', name:'ARCH-2 · TRAMPA',
-    walls:simpleWalls(),
+    spawn:{x:450,y:420}},
+  trap2:{id:'trap2', name:'ARCH-2 · TRAMPA', walls:simpleWalls(),
     doors:[{x:430,y:H-55,w:100,h:55,target:'hub',label:'VOLVER',returnIdx:3}],
     objects:[{x:400,y:220,w:160,h:110,type:'console',trap:'trap2',label:'ARCHIVO CORRUPTO'}],
-    spawn:{x:450,y:420}
-  },
-  trap3:{
-    id:'trap3', name:'SERV-9 · TRAMPA',
-    walls:simpleWalls(),
+    spawn:{x:450,y:420}},
+  trap3:{id:'trap3', name:'SERV-9 · TRAMPA', walls:simpleWalls(),
     doors:[{x:430,y:H-55,w:100,h:55,target:'hub',label:'VOLVER',returnIdx:5}],
     objects:[{x:400,y:220,w:160,h:110,type:'console',trap:'trap3',label:'SERVIDOR SOSPECHOSO'}],
-    spawn:{x:450,y:420}
-  }
+    spawn:{x:450,y:420}}
 };
 
 /* ============ ESTADO ============ */
@@ -602,19 +678,58 @@ const keys = {up:false, down:false, left:false, right:false};
 let nearObject = null;
 let transitionCooldown = 0;
 let gameActive = false;
+let paused = false;
 let secondsLeft = 15 * 60;
 let timerInterval = null;
 let currentPuzzle = null;
 let currentObject = null;
+let lastFootstep = 0;
 
 const fragments = {cam1:false, cam2:false, cam3:false, cam4:false, cam5:false};
 const trapsVisited = {trap1:false, trap2:false, trap3:false};
 
-/* ============ INICIO ============ */
-function startGame(){
+// Particles
+const particles = [];
+function spawnParticle(x, y, color, vx, vy, life){
+  particles.push({x, y, vx, vy, life, maxLife:life, color});
+}
+
+/* ============ SAVE/LOAD ============ */
+function saveProgress(){
+  try{
+    localStorage.setItem('cyte_save', JSON.stringify({
+      fragments, trapsVisited, secondsLeft, currentRoom
+    }));
+  }catch(e){}
+}
+function loadProgress(){
+  try{
+    const s = localStorage.getItem('cyte_save');
+    if(!s) return false;
+    const d = JSON.parse(s);
+    Object.assign(fragments, d.fragments || {});
+    Object.assign(trapsVisited, d.trapsVisited || {});
+    secondsLeft = d.secondsLeft || 15*60;
+    if(d.currentRoom) currentRoom = d.currentRoom;
+    return true;
+  }catch(e){ return false; }
+}
+function clearProgress(){
+  try{ localStorage.removeItem('cyte_save'); }catch(e){}
+}
+
+/* ============ START ============ */
+async function startGame(){
+  ensureAudio();
   document.getElementById('intro').classList.remove('show');
   document.getElementById('gameWrap').classList.add('show');
   resizeCanvas();
+
+  // Diálogo inicial con C.Y.T.E.
+  await showDialog('C.Y.T.E.', 'Bienvenido, operador. Soy C.Y.T.E., la inteligencia artificial del laboratorio. He detectado intrusos en mis sistemas. Solo tú puedes ayudarme a restaurar mi núcleo.');
+  await showDialog('C.Y.T.E.', 'Debes atravesar 5 cámaras reales y responder correctamente cada acertijo sobre CARGA NUCLEAR EFECTIVA. Pero cuidado: hay 3 cámaras trampa con datos falsos que confundirán tus decisiones.');
+  await showDialog('C.Y.T.E.', 'Cada respuesta incorrecta te costará 15 segundos. Cada trampa, 30 segundos. Tienes 15 minutos. ¡Comienza tu misión!');
+
   gameActive = true;
   loadRoom('hub');
   startTimer();
@@ -624,12 +739,17 @@ function startGame(){
 function startTimer(){
   if(timerInterval) clearInterval(timerInterval);
   timerInterval = setInterval(()=>{
-    if(!gameActive) return;
+    if(!gameActive || paused) return;
     secondsLeft--;
     if(secondsLeft <= 0){
       clearInterval(timerInterval);
       alert('⏱️ ¡TIEMPO AGOTADO! Reiniciando el sistema...');
+      clearProgress();
       location.reload();
+    }
+    if(secondsLeft <= 60 && secondsLeft > 0 && secondsLeft % 10 === 0){
+      // Beep de urgencia
+      beep(440, 0.15, 'sine', 0.1);
     }
     updateHUD();
   }, 1000);
@@ -639,21 +759,118 @@ function updateHUD(){
   const m = String(Math.floor(secondsLeft/60)).padStart(2,'0');
   const s = String(secondsLeft%60).padStart(2,'0');
   document.getElementById('timer').textContent = `${m}:${s}`;
+  document.getElementById('timer').style.color = secondsLeft <= 60 ? '#ff3355' : '#ffdd00';
   document.getElementById('fragCount').textContent = Object.values(fragments).filter(Boolean).length;
-  document.getElementById('trapCount').textContent = Object.values(trapsVisited).filter(Boolean).length;
   document.getElementById('roomName').textContent = rooms[currentRoom].name;
+  updateFragHud();
+  updateMiniMap();
 }
 
-/* ============ INPUT TECLADO (desktop) ============ */
+/* ============ FRAG HUD ============ */
+function updateFragHud(){
+  const wrap = document.getElementById('fragHud');
+  wrap.innerHTML = '';
+  const order = ['cam1','cam2','cam3','cam4','cam5'];
+  const frags = ['Z','E','F','F','!'];
+  order.forEach((k, i)=>{
+    const d = document.createElement('div');
+    d.className = 'f' + (fragments[k] ? ' unlocked' : '');
+    d.textContent = fragments[k] ? frags[i] : '?';
+    wrap.appendChild(d);
+  });
+}
+
+/* ============ MINI-MAP ============ */
+function updateMiniMap(){
+  const mm = document.getElementById('miniMap');
+  mm.innerHTML = '';
+  const layout = [
+    ['cam1','trap1','cam2','trap2'],
+    ['cam3','trap3','cam4','cam5']
+  ];
+  const nameMap = {
+    cam1:'C1', cam2:'C2', cam3:'C3', cam4:'C4', cam5:'C5',
+    trap1:'T1', trap2:'T2', trap3:'T3', hub:'HUB'
+  };
+  // Fila hub
+  const hubRow = document.createElement('div');
+  const hubDot = document.createElement('span');
+  hubDot.className = 'mm-room' + (currentRoom==='hub'?' cur':'');
+  hubDot.textContent = 'H';
+  hubDot.title = 'HUB';
+  hubRow.appendChild(hubDot);
+  mm.appendChild(hubRow);
+
+  layout.forEach(row=>{
+    const r = document.createElement('div');
+    row.forEach(k=>{
+      const span = document.createElement('span');
+      span.className = 'mm-room';
+      if(k.startsWith('trap') && trapsVisited[k]) span.classList.add('trap');
+      if(k.startsWith('cam') && fragments[k]) span.classList.add('done');
+      if(currentRoom===k) span.classList.add('cur');
+      span.textContent = nameMap[k];
+      r.appendChild(span);
+    });
+    mm.appendChild(r);
+  });
+}
+
+/* ============ DIALOG TYPEWRITER ============ */
+let dialogResolve = null;
+function showDialog(name, text){
+  return new Promise(resolve=>{
+    dialogResolve = resolve;
+    document.getElementById('dlgName').textContent = name;
+    document.getElementById('dialogOverlay').classList.add('show');
+    const el = document.getElementById('dlgText');
+    el.innerHTML = '';
+    let i = 0;
+    const speed = 22;
+    function type(){
+      if(i < text.length){
+        el.textContent += text[i++];
+        if(Math.random() < 0.4) beep(1400 + Math.random()*200, 0.012, 'square', 0.02);
+        setTimeout(type, speed);
+      } else {
+        el.innerHTML = text + '<span class="cursor">&nbsp;</span>';
+      }
+    }
+    type();
+  });
+}
+
+function closeDialog(){
+  if(dialogResolve){
+    document.getElementById('dialogOverlay').classList.remove('show');
+    const r = dialogResolve;
+    dialogResolve = null;
+    sfxClick();
+    r();
+  }
+}
+document.getElementById('dialogOverlay').addEventListener('click', closeDialog);
+document.getElementById('dialogOverlay').addEventListener('touchstart', e=>{
+  e.preventDefault(); closeDialog();
+}, {passive:false});
+
+/* ============ INPUT TECLADO ============ */
 document.addEventListener('keydown', e=>{
+  if(document.getElementById('dialogOverlay').classList.contains('show')){
+    if(e.key === ' ' || e.key === 'Enter' || e.key.toLowerCase() === 'e') closeDialog();
+    return;
+  }
   const k = e.key.toLowerCase();
   if(k === 'w' || k === 'arrowup') keys.up = true;
   if(k === 's' || k === 'arrowdown') keys.down = true;
   if(k === 'a' || k === 'arrowleft') keys.left = true;
   if(k === 'd' || k === 'arrowright') keys.right = true;
   if(['arrowup','arrowdown','arrowleft','arrowright',' '].includes(k)) e.preventDefault();
-  if(k === 'e' && gameActive && !document.getElementById('modal').classList.contains('show')){
+  if(k === 'e' && gameActive && !paused && !document.getElementById('modal').classList.contains('show')){
     interact();
+  }
+  if(k === 'escape' && gameActive){
+    paused ? resumeGame() : pauseGame();
   }
 });
 document.addEventListener('keyup', e=>{
@@ -664,7 +881,7 @@ document.addEventListener('keyup', e=>{
   if(k === 'd' || k === 'arrowright') keys.right = false;
 });
 
-/* ============ INPUT TÁCTIL (D-Pad + acción) ============ */
+/* ============ INPUT TÁCTIL ============ */
 (function bindDpad(){
   document.querySelectorAll('#dpad button').forEach(btn=>{
     const dir = btn.dataset.dir;
@@ -672,11 +889,9 @@ document.addEventListener('keyup', e=>{
       keys[dir] = on;
       btn.classList.toggle('pressed', on);
     };
-    // Touch
     btn.addEventListener('touchstart', e=>{e.preventDefault(); press(true);}, {passive:false});
     btn.addEventListener('touchend',   e=>{e.preventDefault(); press(false);}, {passive:false});
     btn.addEventListener('touchcancel',()=>press(false));
-    // Mouse
     btn.addEventListener('mousedown', ()=>press(true));
     btn.addEventListener('mouseup',   ()=>press(false));
     btn.addEventListener('mouseleave',()=>press(false));
@@ -687,11 +902,13 @@ document.addEventListener('keyup', e=>{
     e.preventDefault();
     ab.classList.add('pressed');
     setTimeout(()=>ab.classList.remove('pressed'), 120);
-    if(gameActive && !document.getElementById('modal').classList.contains('show')) interact();
+    if(document.getElementById('dialogOverlay').classList.contains('show')){
+      closeDialog(); return;
+    }
+    if(gameActive && !paused && !document.getElementById('modal').classList.contains('show')) interact();
   };
   ab.addEventListener('touchstart', trigger, {passive:false});
-  ab.addEventListener('click', (e)=>{
-    // Si ya se manejó por touchstart, evitar doble disparo
+  ab.addEventListener('click', e=>{
     if(e.detail === 0) trigger(e);
   });
   ab.addEventListener('contextmenu', e=>e.preventDefault());
@@ -705,6 +922,7 @@ function loadRoom(id){
   player.y = r.spawn.y;
   transitionCooldown = 0.5;
   updateHUD();
+  saveProgress();
 }
 
 /* ============ COLISIONES ============ */
@@ -719,7 +937,7 @@ function collides(x, y){
 
 /* ============ UPDATE ============ */
 function update(dt){
-  if(!gameActive) return;
+  if(!gameActive || paused) return;
   if(transitionCooldown > 0) transitionCooldown -= dt;
 
   let vx = 0, vy = 0;
@@ -735,6 +953,22 @@ function update(dt){
     else if(vy > 0) player.dir = 'down';
     else if(vx < 0) player.dir = 'left';
     else if(vx > 0) player.dir = 'right';
+
+    // Footsteps
+    const now = performance.now();
+    if(now - lastFootstep > 320){
+      sfxFootstep();
+      lastFootstep = now;
+      // Chispas al caminar
+      spawnParticle(
+        player.x + player.w/2 + (Math.random()-.5)*20,
+        player.y + player.h,
+        'rgba(0,240,255,0.6)',
+        (Math.random()-.5)*20,
+        -20 - Math.random()*20,
+        0.5
+      );
+    }
   }
 
   const step = player.speed * (dt * 60);
@@ -747,6 +981,7 @@ function update(dt){
   player.x = Math.max(0, Math.min(W - player.w, player.x));
   player.y = Math.max(0, Math.min(H - player.h, player.y));
 
+  // Puertas
   if(transitionCooldown <= 0){
     for(const d of rooms[currentRoom].doors){
       if(overlap({x:player.x, y:player.y, w:player.w, h:player.h}, d)){
@@ -755,6 +990,7 @@ function update(dt){
     }
   }
 
+  // Objetos cercanos
   nearObject = null;
   const cx = player.x + player.w/2, cy = player.y + player.h/2;
   for(const o of rooms[currentRoom].objects){
@@ -762,10 +998,21 @@ function update(dt){
     if(Math.hypot(cx - ox, cy - oy) < 110){ nearObject = o; break; }
   }
   document.getElementById('prompt').classList.toggle('show', !!nearObject);
+
+  // Partículas
+  for(let i = particles.length - 1; i >= 0; i--){
+    const p = particles[i];
+    p.x += p.vx * dt;
+    p.y += p.vy * dt;
+    p.vy += 30 * dt;
+    p.life -= dt;
+    if(p.life <= 0) particles.splice(i, 1);
+  }
 }
 
 function enterDoor(d){
   transitionCooldown = 0.9;
+  sfxDoor();
   if(d.target === 'hub' && d.returnIdx !== undefined){
     const hubDoor = rooms.hub.doors[d.returnIdx];
     currentRoom = 'hub';
@@ -796,6 +1043,7 @@ function openPuzzle(obj){
   currentObject = obj;
   currentPuzzle = puzzles[obj.puzzle];
   gameActive = false;
+  sfxClick();
 
   document.getElementById('mTag').textContent = currentPuzzle.tag;
   document.getElementById('mTitle').textContent = currentPuzzle.title;
@@ -832,20 +1080,44 @@ function selectOption(i, btn){
     fb.innerHTML = `✅ <b>¡ACCESO CONCEDIDO!</b><br>${p.explanation}
       <div class="frag">🔑 Fragmento obtenido: <b>${p.frag}</b></div>`;
     fragments[currentObject.puzzle] = true;
-    updateHUD(); checkWin();
+    sfxSuccess();
+    if(navigator.vibrate) navigator.vibrate([60, 40, 60]);
+    // Chispas de éxito
+    for(let k=0; k<20; k++){
+      spawnParticle(
+        currentObject.x + currentObject.w/2,
+        currentObject.y + currentObject.h/2,
+        '#00ff88',
+        (Math.random()-.5)*200,
+        (Math.random()-.5)*200,
+        1.2
+      );
+    }
+    updateHUD();
+    saveProgress();
+    checkWin();
   } else {
     btn.classList.add('wrong','disabled');
     secondsLeft = Math.max(0, secondsLeft - 15);
     updateHUD();
+    sfxError();
+    if(navigator.vibrate) navigator.vibrate(200);
     fb.className = 'feedback err show';
     fb.innerHTML = `❌ <b>ACCESO DENEGADO.</b><br>
       La opción seleccionada es incorrecta. <b>NO se revelará la correcta.</b><br>
       Vuelve a intentarlo con otra opción o pide una pista.<br>
       <i style="color:#ff8888">Penalización: −15 segundos.</i>`;
+    // Screen shake
+    const wrap = document.getElementById('canvasWrap');
+    wrap.style.animation = 'shake .4s';
+    setTimeout(()=>wrap.style.animation = '', 400);
   }
 }
 
-function showHint(){ document.getElementById('mHint').classList.add('show'); }
+function showHint(){ 
+  document.getElementById('mHint').classList.add('show'); 
+  beep(880, 0.08, 'sine', 0.1);
+}
 
 function closeModal(){
   document.getElementById('modal').classList.remove('show');
@@ -860,24 +1132,43 @@ function showTrap(id){
     trapsVisited[id] = true;
     secondsLeft = Math.max(0, secondsLeft - 30);
     updateHUD();
+    saveProgress();
   }
   const t = trapsData[id];
   document.getElementById('trapWarn').innerHTML = '🚨 ' + t.warn;
   document.getElementById('trapFake').innerHTML = t.fake;
   gameActive = false;
+  sfxTrap();
+  if(navigator.vibrate) navigator.vibrate([100, 60, 100, 60, 200]);
   document.getElementById('trapOverlay').classList.add('show');
+  updateHUD();
 }
 function closeTrap(){
   document.getElementById('trapOverlay').classList.remove('show');
   gameActive = true;
 }
 
+/* ============ PAUSA ============ */
+function pauseGame(){
+  if(!gameActive) return;
+  paused = true;
+  document.getElementById('pauseOverlay').classList.add('show');
+  sfxClick();
+}
+function resumeGame(){
+  paused = false;
+  document.getElementById('pauseOverlay').classList.remove('show');
+  sfxClick();
+}
+
 /* ============ FINAL ============ */
 function checkWin(){
   if(Object.values(fragments).every(Boolean)){
-    setTimeout(()=>{
+    setTimeout(async ()=>{
       gameActive = false;
       clearInterval(timerInterval);
+      sfxUnlock();
+      await showDialog('C.Y.T.E.', '¡Lo lograste, operador! Has reunido los 5 fragmentos. Introduce la clave final en el panel central para restaurar mi núcleo.');
       document.getElementById('finalScreen').classList.add('show');
     }, 900);
   }
@@ -889,24 +1180,27 @@ function checkFinal(){
   if(v === 'ZEFF!'){
     msg.style.color = '#00ff88';
     msg.innerHTML = '🎉 <b>¡CLAVE CORRECTA!</b> C.Y.T.E. ha sido liberado. ¡Felicidades, operador!';
+    sfxUnlock();
     confetti();
+    clearProgress();
   } else {
     msg.style.color = '#ff3355';
     msg.innerHTML = '❌ Clave incorrecta. Revisa tus fragmentos: un concepto químico de 4 letras + un signo.';
+    sfxError();
   }
 }
 
 function confetti(){
   const colors = ['#00f0ff','#ff00aa','#00ff88','#ffdd00','#ff3355'];
-  for(let i=0;i<100;i++){
+  for(let i=0;i<120;i++){
     const c = document.createElement('div');
     c.className = 'confetti';
     c.style.left = Math.random()*100 + 'vw';
     c.style.background = colors[Math.floor(Math.random()*colors.length)];
-    c.style.animationDuration = (2 + Math.random()*2) + 's';
-    c.style.animationDelay = Math.random()*0.6 + 's';
+    c.style.animationDuration = (2 + Math.random()*2.5) + 's';
+    c.style.animationDelay = Math.random()*0.8 + 's';
     document.body.appendChild(c);
-    setTimeout(()=>c.remove(), 5500);
+    setTimeout(()=>c.remove(), 6000);
   }
 }
 
@@ -916,39 +1210,56 @@ function draw(){
   ctx.fillStyle = '#050510';
   ctx.fillRect(0, 0, W, H);
 
-  // rejilla
+  // Rejilla
   ctx.strokeStyle = 'rgba(0,240,255,0.06)';
   ctx.lineWidth = 1;
   for(let x=0; x<W; x+=40){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}
   for(let y=0; y<H; y+=40){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
 
-  // puertas
+  // Puertas
   for(const d of r.doors){
     const pulse = 0.6 + 0.4 * Math.sin(Date.now()/300);
+    // Aura
+    const grad = ctx.createRadialGradient(d.x+d.w/2, d.y+d.h/2, 0, d.x+d.w/2, d.y+d.h/2, d.w*0.8);
+    grad.addColorStop(0, `rgba(0,255,136,${0.25 + pulse*0.15})`);
+    grad.addColorStop(1, 'rgba(0,255,136,0)');
+    ctx.fillStyle = grad;
+    ctx.fillRect(d.x - 20, d.y - 20, d.w + 40, d.h + 40);
+    // Cuerpo
     ctx.fillStyle = `rgba(0,255,136,${0.15 + pulse*0.15})`;
     ctx.fillRect(d.x, d.y, d.w, d.h);
     ctx.strokeStyle = `rgba(0,255,136,${pulse})`;
     ctx.lineWidth = 2;
     ctx.strokeRect(d.x, d.y, d.w, d.h);
+    // Texto
     ctx.fillStyle = '#00ff88';
     ctx.font = 'bold 13px monospace';
     ctx.textAlign = 'center';
     ctx.fillText(d.label, d.x + d.w/2, d.y + d.h/2 + 5);
   }
 
-  // objetos
+  // Objetos
   for(const o of r.objects){
     const solved = o.puzzle && fragments[o.puzzle];
     const isTrap = o.type === 'console';
     const baseColor = isTrap ? '#ff8800' : '#ff00aa';
     const glowColor = solved ? '#00ff88' : baseColor;
 
+    // Aura
+    const grad = ctx.createRadialGradient(o.x+o.w/2, o.y+o.h/2, 0, o.x+o.w/2, o.y+o.h/2, o.w*0.9);
+    grad.addColorStop(0, glowColor + '40');
+    grad.addColorStop(1, glowColor + '00');
+    ctx.fillStyle = grad;
+    ctx.fillRect(o.x-30, o.y-30, o.w+60, o.h+60);
+
+    // Base
     ctx.fillStyle = '#12121f';
     ctx.fillRect(o.x, o.y, o.w, o.h);
     ctx.strokeStyle = glowColor;
     ctx.lineWidth = 2.5;
     ctx.strokeRect(o.x, o.y, o.w, o.h);
 
+    // Pantalla con scanlines
     const pulse = 0.5 + 0.5 * Math.sin(Date.now()/400);
     if(isTrap){
       ctx.fillStyle = `rgba(255,136,0,${0.2 + pulse*0.2})`;
@@ -958,7 +1269,17 @@ function draw(){
       ctx.fillStyle = `rgba(255,0,170,${0.2 + pulse*0.2})`;
     }
     ctx.fillRect(o.x+12, o.y+12, o.w-24, o.h*0.55);
+    // Scanlines
+    ctx.strokeStyle = 'rgba(0,0,0,0.25)';
+    ctx.lineWidth = 1;
+    for(let y = o.y+14; y < o.y+12+o.h*0.55; y += 4){
+      ctx.beginPath();
+      ctx.moveTo(o.x+12, y);
+      ctx.lineTo(o.x+o.w-12, y);
+      ctx.stroke();
+    }
 
+    // Texto
     ctx.fillStyle = solved ? '#00ff88' : (isTrap ? '#ff8800' : '#ff00aa');
     ctx.font = 'bold 14px monospace';
     ctx.textAlign = 'center';
@@ -970,7 +1291,7 @@ function draw(){
     ctx.fillText(o.label, o.x + o.w/2, o.y + o.h + 16);
   }
 
-  // paredes
+  // Paredes
   for(const w of r.walls){
     const grad = ctx.createLinearGradient(w.x, w.y, w.x, w.y + w.h);
     grad.addColorStop(0, '#1a1a2e');
@@ -982,23 +1303,46 @@ function draw(){
     ctx.strokeRect(w.x+0.5, w.y+0.5, w.w-1, w.h-1);
   }
 
+  // Partículas
+  for(const p of particles){
+    ctx.fillStyle = p.color;
+    ctx.globalAlpha = p.life / p.maxLife;
+    ctx.fillRect(p.x - 2, p.y - 2, 4, 4);
+  }
+  ctx.globalAlpha = 1;
+
+  // Sombra/luz alrededor del jugador (viñeta)
+  const vg = ctx.createRadialGradient(player.x+player.w/2, player.y+player.h/2, 40, player.x+player.w/2, player.y+player.h/2, 320);
+  vg.addColorStop(0, 'rgba(0,0,0,0)');
+  vg.addColorStop(1, 'rgba(0,0,0,0.35)');
+  ctx.fillStyle = vg;
+  ctx.fillRect(0, 0, W, H);
+
   drawPlayer();
 }
 
 function drawPlayer(){
   const {x, y, w, h} = player;
   const pulse = 0.5 + 0.5 * Math.sin(Date.now()/250);
+
+  // Aura
   ctx.fillStyle = `rgba(0,240,255,${0.1 + pulse*0.1})`;
   ctx.beginPath();
   ctx.arc(x + w/2, y + h/2, 30, 0, Math.PI*2);
   ctx.fill();
 
+  // Cuerpo
   ctx.fillStyle = '#00f0ff';
   ctx.fillRect(x, y, w, h);
   ctx.strokeStyle = '#ffffff';
   ctx.lineWidth = 2;
   ctx.strokeRect(x, y, w, h);
 
+  // Detalle superior
+  ctx.fillStyle = 'rgba(255,255,255,0.4)';
+  ctx.fillRect(x+4, y+4, w-8, 4);
+
+  // Ojos
   ctx.fillStyle = '#050510';
   const cx = x + w/2, cy = y + h/2;
   const es = 5;
@@ -1010,11 +1354,12 @@ function drawPlayer(){
   ctx.fillRect(e1x - es/2, e1y - es/2, es, es);
   ctx.fillRect(e2x - es/2, e2y - es/2, es, es);
 
+  // Signo !
   if(nearObject){
     const bx = nearObject.x + nearObject.w/2;
     const by = nearObject.y - 22;
     ctx.fillStyle = '#ffdd00';
-    ctx.font = 'bold 26px monospace';
+    ctx.font = 'bold 28px monospace';
     ctx.textAlign = 'center';
     const bob = Math.sin(Date.now()/200) * 3;
     ctx.fillText('!', bx, by + bob);
@@ -1026,16 +1371,27 @@ let last = performance.now();
 function loop(t){
   const dt = Math.min((t - last)/1000, 0.05);
   last = t;
-  if(gameActive) update(dt);
+  if(gameActive && !paused) update(dt);
   draw();
   requestAnimationFrame(loop);
 }
 
-/* ============ BLOQUEAR GESTOS MOLESTOS ============ */
+/* ============ PREVENIR GESTOS ============ */
 document.addEventListener('gesturestart', e=>e.preventDefault());
 document.addEventListener('contextmenu', e=>{
   if(e.target.closest('#dpad, #actionBtn, #gameWrap')) e.preventDefault();
 });
+
+/* ============ INIT ============ */
+resizeCanvas();
+// Intentar cargar progreso si existe
+if(loadProgress()){
+  // Hay partida guardada
+  setTimeout(()=>{
+    const resume = confirm('💾 Se encontró una partida guardada. ¿Deseas continuar?');
+    if(!resume) clearProgress();
+  }, 500);
+}
 </script>
 </body>
 </html>
