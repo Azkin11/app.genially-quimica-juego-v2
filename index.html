@@ -4,24 +4,29 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="mobile-web-app-capable" content="yes">
-<title>Escape Room CYTE | Firewall Periodico - Sub-cuartos y Obstaculos</title>
+<title>Escape Room CYTE | Firewall Periodico - Zeff</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none}
 :root{--cyan:#00f0ff;--magenta:#ff00aa;--green:#00ff88;--red:#ff3355;--yellow:#ffdd00;--bg:#0a0a12;--panel:#12121f;--border:#1f1f35;--hud-h:44px}
 html,body{height:100%;overflow:hidden;position:fixed;width:100%}
 body{font-family:'Courier New',monospace;background:var(--bg);color:#e0e0ff;touch-action:none}
-.overlay{position:fixed;inset:0;background:rgba(5,5,15,.97);z-index:100;display:none;flex-direction:column;align-items:center;justify-content:center;padding:20px 16px;text-align:center;overflow-y:auto}
+.overlay{position:fixed;inset:0;background:rgba(5,5,15,.97);z-index:100;display:none;flex-direction:column;align-items:center;justify-content:center;padding:20px 16px;text-align:center;overflow-y:auto;-webkit-overflow-scrolling:touch}
 .overlay.show{display:flex;animation:fadeIn .4s ease}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
-h1.title{font-size:clamp(1.5rem,7vw,3rem);color:var(--cyan);text-shadow:0 0 10px var(--cyan);letter-spacing:3px;margin-bottom:8px}
-h2.subtitle{font-size:clamp(.75rem,3vw,1.1rem);color:var(--magenta);text-shadow:0 0 10px var(--magenta);letter-spacing:2px;margin-bottom:20px}
-.story{max-width:680px;width:100%;background:rgba(18,18,31,.92);border:1px solid var(--border);border-left:4px solid var(--cyan);padding:18px;margin-bottom:16px;text-align:left;line-height:1.65;font-size:clamp(.78rem,3.4vw,.92rem);border-radius:6px;max-height:50vh;overflow-y:auto}
-.story p{margin-bottom:10px}
+h1.title{font-size:clamp(1.4rem,6vw,2.6rem);color:var(--cyan);text-shadow:0 0 10px var(--cyan);letter-spacing:3px;margin-bottom:8px}
+h2.subtitle{font-size:clamp(.75rem,3vw,1.05rem);color:var(--magenta);text-shadow:0 0 8px var(--magenta);letter-spacing:2px;margin-bottom:18px}
+.story{max-width:720px;width:100%;background:rgba(18,18,31,.95);border:1px solid var(--border);border-left:4px solid var(--cyan);padding:16px;margin-bottom:14px;text-align:left;line-height:1.6;font-size:clamp(.78rem,3.3vw,.92rem);border-radius:6px;max-height:55vh;overflow-y:auto}
+.story p{margin-bottom:8px}
 .story .hl{color:var(--cyan);font-weight:bold}
 .story .warn{color:var(--yellow);font-weight:bold}
 .story .alert{color:var(--red);font-weight:bold}
-.btn{font-family:'Courier New',monospace;background:transparent;color:var(--cyan);border:2px solid var(--cyan);padding:14px 28px;font-size:clamp(.8rem,3.5vw,1rem);letter-spacing:2px;cursor:pointer;transition:all .25s;text-transform:uppercase;font-weight:bold;border-radius:6px;margin:5px;min-height:48px;touch-action:manipulation}
+.story h3{color:var(--magenta);margin:10px 0 6px;font-size:.95rem;letter-spacing:1px}
+.story ul,.story ol{margin-left:20px;margin-bottom:10px}
+.story li{margin-bottom:4px;line-height:1.5}
+.story table{width:100%;border-collapse:collapse;margin:8px 0;font-size:.82rem}
+.story table th,.story table td{border:1px solid var(--border);padding:6px;text-align:left}
+.story table th{background:rgba(0,240,255,.1);color:var(--cyan)}
+.btn{font-family:'Courier New',monospace;background:transparent;color:var(--cyan);border:2px solid var(--cyan);padding:12px 24px;font-size:clamp(.78rem,3.4vw,.95rem);letter-spacing:2px;cursor:pointer;transition:all .25s;text-transform:uppercase;font-weight:bold;border-radius:6px;margin:5px;min-height:48px;touch-action:manipulation}
 .btn:active{background:var(--cyan);color:var(--bg);box-shadow:0 0 20px var(--cyan)}
 .btn.green{color:var(--green);border-color:var(--green)}
 .btn.green:active{background:var(--green);box-shadow:0 0 20px var(--green)}
@@ -29,78 +34,222 @@ h2.subtitle{font-size:clamp(.75rem,3vw,1.1rem);color:var(--magenta);text-shadow:
 .btn.magenta:active{background:var(--magenta);box-shadow:0 0 20px var(--magenta)}
 .btn.red{color:var(--red);border-color:var(--red)}
 .btn.red:active{background:var(--red);box-shadow:0 0 20px var(--red)}
-.btn.small{padding:8px 14px;font-size:.75rem;min-height:40px;margin:3px}
-.form-group{margin-bottom:14px;text-align:left;width:100%;max-width:400px}
-.form-group label{display:block;color:var(--cyan);font-size:.8rem;letter-spacing:2px;margin-bottom:6px}
-.form-group input,.form-group select{width:100%;padding:12px;background:var(--panel);border:2px solid var(--border);color:var(--cyan);font-family:'Courier New',monospace;font-size:.95rem;border-radius:6px;outline:none}
+.btn.yellow{color:var(--yellow);border-color:var(--yellow)}
+.btn.yellow:active{background:var(--yellow);box-shadow:0 0 20px var(--yellow)}
+.btn.small{padding:8px 14px;font-size:.72rem;min-height:38px;margin:3px}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.form-group{margin-bottom:12px;text-align:left;width:100%;max-width:420px}
+.form-group label{display:block;color:var(--cyan);font-size:.78rem;letter-spacing:2px;margin-bottom:6px}
+.form-group input,.form-group select{width:100%;padding:11px;background:var(--panel);border:2px solid var(--border);color:var(--cyan);font-family:'Courier New',monospace;font-size:.92rem;border-radius:6px;outline:none}
 .radio-row{display:flex;gap:8px;flex-wrap:wrap}
-.radio-row label{flex:1;min-width:100px;padding:12px;background:var(--panel);border:2px solid var(--border);border-radius:6px;cursor:pointer;text-align:center;color:#a0a0d0;font-size:.8rem}
+.radio-row label{flex:1;min-width:100px;padding:10px;background:var(--panel);border:2px solid var(--border);border-radius:6px;cursor:pointer;text-align:center;color:#a0a0d0;font-size:.78rem}
 .radio-row input{display:none}
 .radio-row input:checked+span{color:var(--cyan)}
 .radio-row label:has(input:checked){border-color:var(--cyan);background:rgba(0,240,255,.1)}
+#dialogOverlay{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:150;display:none;align-items:flex-end;justify-content:center;padding:20px}
+#dialogOverlay.show{display:flex}
+.dialog-box{max-width:720px;width:100%;background:#0d0d1a;border:2px solid var(--cyan);border-radius:10px;padding:20px;box-shadow:0 0 40px rgba(0,240,255,.3);font-size:clamp(.85rem,3.5vw,1rem);line-height:1.6;min-height:120px;position:relative;cursor:pointer}
+.dialog-box .name{position:absolute;top:-14px;left:20px;background:var(--bg);color:var(--cyan);padding:2px 12px;border:1px solid var(--cyan);border-radius:4px;font-size:.72rem;letter-spacing:2px}
+.dialog-box .text{color:#c8e0ff;min-height:60px}
+.dialog-box .cursor{display:inline-block;width:10px;background:var(--cyan);animation:blink .7s infinite;margin-left:2px}
+@keyframes blink{0%,50%{opacity:1}51%,100%{opacity:0}}
 #gameWrap{display:none;position:fixed;inset:0;flex-direction:column;background:var(--bg)}
 #gameWrap.show{display:flex}
-#hud{height:var(--hud-h);flex-shrink:0;display:flex;justify-content:space-between;align-items:center;padding:0 8px;background:#12121f;border-bottom:1px solid var(--border);font-size:clamp(.6rem,2.5vw,.8rem);gap:4px;position:relative}
-#hud .item{color:var(--cyan);white-space:nowrap}
+#hud{height:var(--hud-h);flex-shrink:0;display:flex;justify-content:space-between;align-items:center;padding:0 8px;background:linear-gradient(90deg,#0d0d1a,#12121f,#0d0d1a);border-bottom:1px solid var(--border);font-size:clamp(.6rem,2.5vw,.78rem);gap:4px;overflow:hidden;position:relative}
+#hud .item{color:var(--cyan);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 #hud .item b{color:var(--yellow)}
-#hud button{background:transparent;border:1px solid var(--border);color:var(--cyan);padding:4px 8px;border-radius:4px;font-family:'Courier New',monospace;font-size:inherit;cursor:pointer;min-height:32px}
+#hud button{background:transparent;border:1px solid var(--border);color:var(--cyan);padding:4px 8px;border-radius:4px;font-family:'Courier New',monospace;font-size:inherit;cursor:pointer;min-height:30px}
 #canvasWrap{flex:1;position:relative;display:flex;align-items:center;justify-content:center;background:#050510;overflow:hidden;min-height:0}
 #gameCanvas{display:block;max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;touch-action:none}
-#prompt{position:absolute;left:50%;bottom:12px;transform:translateX(-50%);padding:8px 16px;background:rgba(0,240,255,.18);border:2px solid var(--cyan);color:var(--cyan);font-weight:bold;border-radius:6px;letter-spacing:1px;font-size:clamp(.7rem,3vw,.9rem);display:none;pointer-events:none}
+#fragHud{position:absolute;top:8px;left:8px;z-index:5;display:flex;gap:4px;pointer-events:none}
+#fragHud .f{width:26px;height:32px;background:rgba(18,18,31,.85);border:2px dashed #333;border-radius:5px;display:flex;align-items:center;justify-content:center;font-weight:bold;color:#444;font-size:.85rem;transition:all .4s}
+#fragHud .f.unlocked{border-style:solid;border-color:var(--green);color:var(--green);background:rgba(0,255,136,.15);box-shadow:0 0 10px var(--green)}
+#miniMap{position:absolute;top:8px;right:8px;z-index:5;width:120px;background:rgba(18,18,31,.9);border:1px solid var(--border);border-radius:6px;pointer-events:none;font-size:.5rem;padding:5px}
+#miniMap .mm-row{display:flex;justify-content:center;margin:2px 0}
+#miniMap .mm-room{display:inline-block;width:18px;height:18px;margin:1px;background:#1f1f35;border:1px solid #333;border-radius:3px;text-align:center;line-height:16px;color:#666;font-size:.55rem;font-weight:bold}
+#miniMap .mm-room.cur{border-color:var(--cyan);background:rgba(0,240,255,.3);box-shadow:0 0 8px var(--cyan);color:var(--cyan)}
+#miniMap .mm-room.done{border-color:var(--green);background:rgba(0,255,136,.2);color:var(--green)}
+#miniMap .mm-room.trap{border-color:#ff8800;background:rgba(255,136,0,.2);color:#ff8800}
+#roleBadge{position:absolute;bottom:10px;left:10px;z-index:5;padding:4px 12px;border-radius:4px;font-size:.68rem;letter-spacing:1px;background:rgba(255,0,170,.2);border:1px solid var(--magenta);color:#ff66cc}
+#roleBadge.host{background:rgba(0,255,136,.15);border-color:var(--green);color:var(--green)}
+#prompt{position:absolute;left:50%;bottom:10px;transform:translateX(-50%);padding:7px 14px;background:rgba(0,240,255,.18);border:2px solid var(--cyan);color:var(--cyan);font-weight:bold;border-radius:6px;letter-spacing:1px;font-size:clamp(.68rem,3vw,.85rem);display:none;pointer-events:none;white-space:nowrap;animation:pulse 1.2s infinite}
 #prompt.show{display:block}
-#controls{flex-shrink:0;height:clamp(150px,26vh,200px);background:#0d0d1a;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;padding:8px 14px;gap:10px}
+@keyframes pulse{0%,100%{opacity:.65}50%{opacity:1}}
+#controls{flex-shrink:0;height:clamp(150px,26vh,200px);background:linear-gradient(180deg,#0d0d1a,#0a0a12);border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;padding:8px 14px;gap:10px;padding-bottom:calc(8px + env(safe-area-inset-bottom,0px))}
 #dpad{position:relative;width:clamp(130px,34vw,170px);aspect-ratio:1;flex-shrink:0}
-#dpad button{position:absolute;width:44%;height:44%;background:rgba(0,240,255,.1);border:2px solid var(--cyan);color:var(--cyan);font-size:clamp(1.1rem,4.5vw,1.6rem);border-radius:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;touch-action:none;font-family:'Courier New',monospace;font-weight:bold;padding:0}
-#dpad button.pressed{background:var(--cyan);color:var(--bg)}
+#dpad button{position:absolute;width:44%;height:44%;background:rgba(0,240,255,.1);border:2px solid var(--cyan);color:var(--cyan);font-size:clamp(1rem,4.5vw,1.5rem);border-radius:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;touch-action:none;font-family:'Courier New',monospace;font-weight:bold;padding:0}
+#dpad button.pressed{background:var(--cyan);color:var(--bg);box-shadow:0 0 20px var(--cyan)}
 #dpad .up{top:0;left:28%}
 #dpad .down{bottom:0;left:28%}
 #dpad .left{top:28%;left:0}
 #dpad .right{top:28%;right:0}
-#actionBtn{width:clamp(80px,22vw,110px);height:clamp(80px,22vw,110px);background:rgba(255,0,170,.2);border:3px solid var(--magenta);color:var(--magenta);border-radius:50%;font-size:clamp(.9rem,3.5vw,1.1rem);font-family:'Courier New',monospace;font-weight:bold;cursor:pointer;display:flex;align-items:center;justify-content:center;touch-action:none}
-#modal{position:fixed;inset:0;background:rgba(5,5,15,.94);z-index:200;display:none;align-items:center;justify-content:center;padding:12px;overflow-y:auto}
+#actionBtn{width:clamp(80px,22vw,110px);height:clamp(80px,22vw,110px);background:radial-gradient(circle,rgba(255,0,170,.2),rgba(255,0,170,.05));border:3px solid var(--magenta);color:var(--magenta);border-radius:50%;font-size:clamp(.85rem,3.5vw,1.05rem);font-family:'Courier New',monospace;font-weight:bold;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;touch-action:none;padding:0}
+#actionBtn:active,#actionBtn.pressed{background:var(--magenta);color:#fff;box-shadow:0 0 25px var(--magenta);transform:scale(.94)}
+#modal{position:fixed;inset:0;background:rgba(5,5,15,.95);z-index:200;display:none;align-items:center;justify-content:center;padding:12px;overflow-y:auto;-webkit-overflow-scrolling:touch}
 #modal.show{display:flex}
-.modal-box{max-width:640px;width:100%;background:#12121f;border:1px solid var(--border);border-radius:10px;padding:clamp(16px,4vw,26px);position:relative}
-.tag{display:inline-block;font-size:clamp(.6rem,2.4vw,.7rem);letter-spacing:1.5px;background:rgba(0,240,255,.12);color:var(--cyan);padding:3px 10px;border-radius:20px;border:1px solid var(--cyan);margin-bottom:12px}
-.question{background:rgba(0,0,0,.35);border-left:3px solid var(--magenta);padding:12px 14px;margin-bottom:14px;border-radius:4px;line-height:1.55;font-size:clamp(.8rem,3.4vw,.92rem)}
-.options{display:flex;flex-direction:column;gap:8px;margin-bottom:14px}
-.option{background:var(--panel);border:1px solid var(--border);color:#e0e0ff;padding:12px 14px;text-align:left;cursor:pointer;font-family:'Courier New',monospace;font-size:clamp(.75rem,3.2vw,.88rem);border-radius:6px}
+.modal-box{max-width:640px;width:100%;background:#12121f;border:1px solid var(--border);border-radius:10px;padding:clamp(16px,4vw,24px);position:relative;box-shadow:0 0 40px rgba(0,240,255,.2);max-height:calc(100vh - 24px);overflow-y:auto}
+.modal-box::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--cyan),var(--magenta));border-radius:10px 10px 0 0}
+.tag{display:inline-block;font-size:clamp(.6rem,2.4vw,.7rem);letter-spacing:1.5px;background:rgba(0,240,255,.12);color:var(--cyan);padding:3px 10px;border-radius:20px;border:1px solid var(--cyan);margin-bottom:10px}
+.progress-q{display:flex;gap:5px;margin-bottom:10px;justify-content:center}
+.progress-q .q{width:28px;height:6px;background:#1f1f35;border-radius:3px;transition:all .3s}
+.progress-q .q.done{background:var(--green);box-shadow:0 0 8px var(--green)}
+.progress-q .q.cur{background:var(--cyan);box-shadow:0 0 8px var(--cyan)}
+.modal-box h3{color:var(--cyan);font-size:clamp(.95rem,3.8vw,1.12rem);margin-bottom:10px;letter-spacing:1px}
+.question{background:rgba(0,0,0,.35);border-left:3px solid var(--magenta);padding:12px 14px;margin-bottom:12px;border-radius:4px;line-height:1.55;font-size:clamp(.8rem,3.3vw,.9rem)}
+.question b{color:var(--yellow)}
+.question table{width:100%;border-collapse:collapse;margin:8px 0;font-size:.78rem}
+.question table th,.question table td{border:1px solid var(--border);padding:5px}
+.question table th{background:rgba(0,240,255,.1);color:var(--cyan)}
+.options{display:flex;flex-direction:column;gap:7px;margin-bottom:12px}
+.option{background:var(--panel);border:1px solid var(--border);color:#e0e0ff;padding:11px 13px;text-align:left;cursor:pointer;font-family:'Courier New',monospace;font-size:clamp(.75rem,3.1vw,.86rem);border-radius:6px;transition:all .15s;min-height:44px;touch-action:manipulation;line-height:1.35}
+.option:active:not(.disabled){border-color:var(--cyan);background:rgba(0,240,255,.08)}
 .option.correct{border-color:var(--green);background:rgba(0,255,136,.15);color:var(--green)}
 .option.wrong{border-color:var(--red);background:rgba(255,51,85,.15);color:var(--red)}
-.feedback{margin-top:10px;padding:12px;border-radius:6px;font-size:clamp(.75rem,3.2vw,.88rem);display:none}
-.feedback.show{display:block}
+.option.disabled{cursor:not-allowed;opacity:.55}
+.option .test-mark{float:right;color:var(--green);font-weight:bold;margin-left:8px}
+.feedback{margin-top:8px;padding:12px;border-radius:6px;font-size:clamp(.75rem,3.1vw,.86rem);line-height:1.5;display:none}
+.feedback.show{display:block;animation:fadeIn .3s}
 .feedback.ok{background:rgba(0,255,136,.1);border-left:3px solid var(--green);color:var(--green)}
 .feedback.err{background:rgba(255,51,85,.1);border-left:3px solid var(--red);color:var(--red)}
+.feedback .frag{margin-top:6px;font-size:clamp(.95rem,4vw,1.05rem);color:var(--yellow);font-weight:bold;letter-spacing:2px}
+.hint-box{margin-top:10px;padding:10px;background:rgba(255,221,0,.08);border-left:3px solid var(--yellow);border-radius:4px;font-size:clamp(.72rem,2.9vw,.83rem);line-height:1.5;display:none;color:#ffe680}
+.hint-box.show{display:block}
+.modal-actions{display:flex;justify-content:space-between;gap:8px;margin-top:12px;flex-wrap:wrap}
+.modal-actions .btn{flex:1;min-width:100px}
+.trap-box{max-width:600px;width:100%;background:#1a0a0f;border:2px solid var(--red);border-radius:10px;padding:clamp(18px,4vw,26px);text-align:center;box-shadow:0 0 40px rgba(255,51,85,.3);max-height:calc(100vh - 24px);overflow-y:auto;animation:shake .4s}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+.trap-box h1{color:var(--red);text-shadow:0 0 15px var(--red);letter-spacing:2px;margin-bottom:8px;font-size:clamp(1.1rem,5vw,1.7rem)}
+.trap-box .warn{background:rgba(255,51,85,.15);border:1px solid var(--red);padding:12px;border-radius:6px;margin:12px 0;color:#ff8888;line-height:1.55;font-size:clamp(.78rem,3.3vw,.9rem)}
+.trap-box .fake{background:rgba(255,221,0,.08);border-left:3px solid var(--yellow);padding:12px;border-radius:4px;color:#ffe680;line-height:1.55;font-size:clamp(.75rem,3.1vw,.88rem);text-align:left}
+.bitacora-box{max-width:720px;width:100%;background:#12121f;border:1px solid var(--border);border-radius:10px;padding:clamp(16px,4vw,24px);max-height:calc(100vh - 30px);overflow-y:auto;text-align:left}
+.bitacora-box h2{color:var(--cyan);letter-spacing:2px;margin-bottom:12px;font-size:clamp(1rem,4vw,1.25rem);text-align:center}
+.bitacora-box h3{color:var(--magenta);font-size:.88rem;letter-spacing:1.5px;margin:14px 0 6px;border-bottom:1px dashed var(--border);padding-bottom:4px}
+.bit-row{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #1a1a2a;font-size:.8rem;line-height:1.5}
+.bit-row .lbl{color:#8a8ac0}
+.bit-row .val{color:var(--cyan);font-weight:bold;text-align:right;margin-left:10px}
+.bit-row .val.green{color:var(--green)}
+.bit-row .val.red{color:var(--red)}
+.bit-row .val.yellow{color:var(--yellow)}
+.bit-tag{display:inline-block;padding:2px 8px;background:rgba(0,240,255,.12);border-radius:10px;font-size:.68rem;margin:2px;color:var(--cyan)}
+.bit-tag.trap{background:rgba(255,136,0,.15);color:#ff8800}
+.feedback-q{background:rgba(0,0,0,.3);padding:10px 12px;border-radius:6px;border-left:3px solid var(--yellow);margin:8px 0;font-size:.78rem;line-height:1.5;color:#ffe680}
 .key-input{font-family:'Courier New',monospace;font-size:clamp(1.1rem,5vw,1.4rem);text-align:center;letter-spacing:6px;padding:12px;background:var(--panel);border:2px solid var(--cyan);color:var(--cyan);border-radius:6px;width:min(280px,80vw);margin:12px 0;text-transform:uppercase}
+.key-input:focus{outline:none;box-shadow:0 0 20px var(--cyan)}
+.confetti{position:fixed;width:9px;height:9px;top:-10px;z-index:9999;animation:fall linear forwards;pointer-events:none}
+@keyframes fall{to{transform:translateY(105vh) rotate(720deg);opacity:0}}
+@keyframes toastAnim{0%{opacity:0;transform:translate(-50%,-50%) scale(.7)}20%{opacity:1;transform:translate(-50%,-50%) scale(1)}75%{opacity:1;transform:translate(-50%,-50%) scale(1)}100%{opacity:0;transform:translate(-50%,-50%) scale(1.15)}}
+#testBadge{position:fixed;top:8px;left:50%;transform:translateX(-50%);background:var(--red);color:#fff;padding:4px 14px;border-radius:20px;font-size:.7rem;letter-spacing:2px;z-index:999;font-weight:bold;box-shadow:0 0 15px var(--red);display:none}
+#testBadge.show{display:block}
+.req-list{max-width:720px;width:100%;text-align:left;font-size:.82rem;line-height:1.55}
+.req-list .item{display:flex;align-items:flex-start;gap:10px;padding:7px 0;border-bottom:1px dashed var(--border)}
+.req-list .item:last-child{border-bottom:none}
+.req-list .check{color:var(--green);font-weight:bold;flex-shrink:0}
+.req-list .text{color:#c8e0ff}
+.sintesis-box{max-width:700px;width:100%;background:rgba(18,18,31,.95);border:1px solid var(--border);border-left:4px solid var(--green);padding:18px;text-align:left;line-height:1.65;font-size:.88rem;border-radius:6px;max-height:55vh;overflow-y:auto;margin-bottom:14px}
+.sintesis-box h3{color:var(--green);margin:10px 0 6px;font-size:.95rem}
+.sintesis-box p{margin-bottom:8px}
+.sintesis-box .hl{color:var(--cyan);font-weight:bold}
+.sintesis-box ul{margin-left:20px;margin-bottom:8px}
+.sintesis-box li{margin-bottom:4px;line-height:1.5}
+@media (orientation:landscape) and (max-height:520px){
+#controls{position:absolute;inset:0;height:100%;background:transparent;border:none;pointer-events:none;padding:0}
+#controls > *{pointer-events:auto}
+#dpad{position:absolute;left:12px;bottom:12px;width:clamp(110px,22vh,150px);height:clamp(110px,22vh,150px)}
+#actionBtn{position:absolute;right:16px;bottom:20px;width:clamp(70px,15vh,95px);height:clamp(70px,15vh,95px)}
+}
 </style>
 </head>
 <body>
 
+<div id="testBadge">MODO TEST ACTIVO</div>
+
+<!-- PANTALLA 1: INTRO -->
 <div id="intro" class="overlay show">
 <h1 class="title">FIREWALL PERIODICO</h1>
-<h2 class="subtitle">ESCAPE ROOM C.Y.T.E. - SECTOR SUB-CUARTOS</h2>
+<h2 class="subtitle">ESCAPE ROOM C.Y.T.E. - EQUIPO 2</h2>
 <div class="story">
-<p class="alert">ALERTA DE NAVEGACION:</p>
-<p>Los sectores de prueba han sido bloqueados por divisiones estructurales y servidores corruptos. Para acceder a las terminales con las preguntas de <span class="hl">Carga Nuclear Efectiva</span>, deberas navegar por los pasillos y esquivar los obstaculos de los sub-cuartos.</p>
+<p class="alert">ALERTA CRITICA EN EL CENTRO DE COMPUTO.</p>
+<p>Una falla masiva ha corrompido la base de datos del centro de computo. Los registros de materiales aparecen <span class="warn">mal clasificados</span>, los valores periodicos fueron <span class="warn">alterados</span> y el sistema de <span class="warn">reciclaje electronico esta bloqueado</span>.</p>
+<p>Debes atravesar <span class="hl">5 camaras laberinticas</span> del sector de <span class="hl">CARGA NUCLEAR EFECTIVA (Z<sub>eff</sub>)</span>, encontrar las terminales ocultas en los sub-cuartos, esquivar <span class="warn">trampas de datos falsos</span> y reunir los <span class="hl">5 fragmentos</span> de la clave maestra.</p>
+<p class="warn">Tienes 15 minutos. Cada error resta 10 segundos. Cuidado con las consolas trampa.</p>
+<p style="color:#00ff88"><b>Objetivo:</b> restaurar el firewall periodico introduciendo la clave final ZEFF!</p>
 </div>
 <button class="btn" onclick="showSessionSetup()">INICIAR MISION</button>
+<button class="btn magenta small" onclick="showRequirements()">REQUISITOS DEL PRODUCTO</button>
+<button class="btn small" onclick="toggleTestMode()">MODO TEST</button>
 </div>
 
+<!-- REQUISITOS -->
+<div id="requirementsOverlay" class="overlay">
+<h1 class="title">PRODUCTO A CONSTRUIR</h1>
+<h2 class="subtitle">CHECKLIST DE REQUISITOS</h2>
+<div class="story" style="max-height:none">
+<p style="margin-bottom:12px">Escape room digital con 7-10 pantallas, historia coherente, 5 desafios y pantalla final. Subtema: <b>CARGA NUCLEAR EFECTIVA (Z<sub>eff</sub>)</b>.</p>
+<div class="req-list">
+<div class="item"><span class="check">[X]</span><span class="text">Cinco nodos o camaras conectados en una secuencia logica (HUB → CAM1 → CAM2 → CAM3 → CAM4 → CAM5 → FINAL).</span></div>
+<div class="item"><span class="check">[X]</span><span class="text">Minimo 8 preguntas distribuidas (tenemos 10: 2 por camara).</span></div>
+<div class="item"><span class="check">[X]</span><span class="text">Una pista interactiva por nodo que orienta sin revelar la respuesta.</span></div>
+<div class="item"><span class="check">[X]</span><span class="text">Retroalimentacion inmediata correcta/incorrecta.</span></div>
+<div class="item"><span class="check">[X]</span><span class="text">Fragmento de clave tras cada nodo. Clave final con 5 fragmentos.</span></div>
+<div class="item"><span class="check">[X]</span><span class="text">Retos de comparar/ordenar/interpretar/justificar en CAM3 y CAM4.</span></div>
+<div class="item"><span class="check">[X]</span><span class="text">Reto basado en datos/tabla en CAM2 (tabla de Slater) y CAM5 (grafica).</span></div>
+<div class="item"><span class="check">[X]</span><span class="text">Caso de aplicacion en ingenieria/materiales en CAM4 (wolframio, cobre).</span></div>
+<div class="item"><span class="check">[X]</span><span class="text">Sintesis final explicando el conocimiento que permitio obtener la clave.</span></div>
+<div class="item"><span class="check">[X]</span><span class="text">Navegacion funcional, textos legibles, contraste, controles visibles.</span></div>
+</div>
+</div>
+<button class="btn green" onclick="closeRequirements()">VOLVER</button>
+</div>
+
+<!-- SETUP -->
 <div id="sessionOverlay" class="overlay">
-<h1 class="title">SESION DE JUEGO</h1>
-<div class="form-group"><label>NOMBRE DEL EQUIPO</label><input type="text" id="cfgTeam" value="Equipo 2" maxlength="30"></div>
-<button class="btn green" onclick="startGame()">ENTRAR AL SECTOR</button>
+<h1 class="title">SESION DE CLASE</h1>
+<h2 class="subtitle">CONFIGURACION DEL EQUIPO</h2>
+<div class="form-group"><label>NOMBRE DEL EQUIPO</label><input type="text" id="cfgTeam" placeholder="Equipo 3" maxlength="30"></div>
+<div class="form-group"><label>ROL EN ESTA RONDA</label>
+<div class="radio-row">
+<label><input type="radio" name="cfgRole" value="host"><span>ANFITRION</span></label>
+<label><input type="radio" name="cfgRole" value="player" checked><span>JUGADOR</span></label>
+</div></div>
+<div class="form-group"><label>RONDA</label>
+<div class="radio-row">
+<label><input type="radio" name="cfgRound" value="1" checked><span>RONDA 1</span></label>
+<label><input type="radio" name="cfgRound" value="2"><span>RONDA 2</span></label>
+</div></div>
+<div class="form-group"><label>EQUIPO PAR</label><input type="text" id="cfgPair" placeholder="Equipo 4" maxlength="30"></div>
+<div class="form-group"><label>DURACION</label>
+<select id="cfgDuration">
+<option value="10">10 minutos</option>
+<option value="12">12 minutos</option>
+<option value="15" selected>15 minutos</option>
+</select></div>
+<button class="btn green" onclick="startGame()">COMENZAR JUEGO</button>
+<button class="btn small" onclick="backToIntro()">VOLVER</button>
 </div>
 
+<!-- DIALOGO -->
+<div id="dialogOverlay">
+<div class="dialog-box">
+<span class="name" id="dlgName">C.Y.T.E.</span>
+<div class="text" id="dlgText"></div>
+</div>
+</div>
+
+<!-- JUEGO -->
 <div id="gameWrap">
 <div id="hud">
-<div class="item">SALA: <b id="roomName">HUB CENTRAL</b></div>
+<div class="item">SALA: <b id="roomName">HUB</b></div>
 <div class="item">TIEMPO: <b id="timer">15:00</b></div>
 <div class="item">FRAG: <b><span id="fragCount">0</span>/5</b></div>
+<button id="soundBtn" onclick="toggleSound()">AUDIO</button>
 <button onclick="pauseGame()">PAUSA</button>
 </div>
 <div id="canvasWrap">
 <canvas id="gameCanvas" width="960" height="600"></canvas>
-<div id="prompt">Presiona E / Toca para interactuar</div>
+<div id="fragHud"></div>
+<div id="miniMap"></div>
+<div id="roleBadge"></div>
+<div id="prompt">Presiona E para interactuar</div>
 </div>
 <div id="controls">
 <div id="dpad">
@@ -113,392 +262,1214 @@ h2.subtitle{font-size:clamp(.75rem,3vw,1.1rem);color:var(--magenta);text-shadow:
 </div>
 </div>
 
+<!-- MODAL PREGUNTA -->
 <div id="modal">
 <div class="modal-box">
-<span class="tag" id="mTag">TERMINAL</span>
-<h3 id="mTitle" style="color:var(--cyan);margin-bottom:10px">Pregunta</h3>
+<span class="tag" id="mTag">CAMARA 1</span>
+<div class="progress-q" id="mProgress"></div>
+<h3 id="mTitle">Titulo</h3>
 <div class="question" id="mQuestion"></div>
 <div class="options" id="mOptions"></div>
 <div class="feedback" id="mFeedback"></div>
-<div style="display:flex;justify-content:flex-end;margin-top:10px">
+<div class="hint-box" id="mHint"></div>
+<div class="modal-actions">
+<button class="btn magenta small" onclick="showHint()" id="hintBtn">PISTA</button>
 <button class="btn small" onclick="closeModal()">CERRAR</button>
 </div>
 </div>
 </div>
 
+<!-- TRAMPA -->
+<div id="trapOverlay" class="overlay">
+<div class="trap-box">
+<h1>TRAMPA</h1>
+<p style="color:#ff8888;font-size:.78rem;letter-spacing:2px">DATOS FALSOS DETECTADOS</p>
+<div class="warn" id="trapWarn"></div>
+<div class="fake" id="trapFake"></div>
+<button class="btn red" style="margin-top:14px" onclick="closeTrap()">CONTINUAR</button>
+</div>
+</div>
+
+<!-- PAUSA -->
+<div id="pauseOverlay" class="overlay">
+<h1 class="title">PAUSA</h1>
+<h2 class="subtitle">SISTEMA EN ESPERA</h2>
+<button class="btn green" onclick="resumeGame()">CONTINUAR</button>
+<button class="btn magenta small" onclick="showBitacora()">VER BITACORA</button>
+<button class="btn red small" onclick="if(confirm('Reiniciar?')){clearProgress();location.reload()}">REINICIAR</button>
+</div>
+
+<!-- FINAL -->
 <div id="finalScreen" class="overlay">
 <h1 class="title">SISTEMA LIBERADO</h1>
 <h2 class="subtitle">INGRESA LA CLAVE FINAL</h2>
-<p style="margin-bottom:10px">Reuniste los 5 fragmentos al completar los sub-cuartos.</p>
-<input type="text" class="key-input" id="finalKey" maxlength="5" placeholder="_____" autocomplete="off">
+<div class="story" style="text-align:center;max-height:none">
+<p>Reuniste los <b>5 fragmentos reales</b>. El panel central te pide la clave completa para restaurar el firewall periodico.</p>
+<p class="warn">Pista: concepto quimico de 4 letras + un signo.</p>
+</div>
+<input type="text" class="key-input" id="finalKey" maxlength="6" placeholder="_____" autocomplete="off" autocapitalize="characters" spellcheck="false">
 <br>
 <button class="btn green" onclick="checkFinal()">DESBLOQUEAR</button>
-<p id="finalMsg" style="margin-top:14px;font-size:.95rem;min-height:26px"></p>
+<p id="finalMsg" style="margin-top:12px;font-size:.9rem;min-height:24px"></p>
+<button class="btn magenta" id="viewSintesisBtn" style="display:none;margin-top:14px" onclick="showSintesis()">VER SINTESIS FINAL</button>
+</div>
+
+<!-- SINTESIS -->
+<div id="sintesisOverlay" class="overlay">
+<h1 class="title">SINTESIS FINAL</h1>
+<h2 class="subtitle">QUE CONOCIMIENTO PERMITIO OBTENER LA CLAVE</h2>
+<div class="sintesis-box">
+<p>La clave final es <span class="hl">ZEFF!</span>, que corresponde al concepto de <b>Carga Nuclear Efectiva</b> del subtema del Equipo 2.</p>
+<h3>Por que ZEFF es la clave</h3>
+<p>Para reunir los 5 fragmentos (Z, E, F, F, !) fue necesario aplicar:</p>
+<ul>
+<li><b>Definicion de carga nuclear efectiva:</b> la carga positiva neta que siente un electron tras el apantallamiento (Z<sub>eff</sub> = Z - S).</li>
+<li><b>Reglas de Slater:</b> valores 0.35 (mismo grupo), 0.85 (n-1), 1.00 (n-2 o menor).</li>
+<li><b>Tendencias periodicas:</b> Z<sub>eff</sub> aumenta de izquierda a derecha en un periodo.</li>
+<li><b>Relacion con propiedades atomicas:</b> radio, energia de ionizacion y electronegatividad.</li>
+<li><b>Aplicacion en ingenieria:</b> seleccion de materiales (wolframio para filamentos, cobre para conductores).</li>
+</ul>
+<h3>Contexto</h3>
+<p>El escenario del <b>"Firewall periodico"</b> simula una falla en la base de datos de un centro de computo. Al resolver cada camara y cada sub-cuarto, aplicaste el conocimiento para interpretar datos, ordenar elementos, justificar decisiones y resolver casos reales de ingenieria.</p>
+<h3>Reflexion</h3>
+<p>La clave <span class="hl">ZEFF!</span> representa el conocimiento que permite comprender la estructura atomica y sus aplicaciones en la ingenieria y los sistemas computacionales. Sin Z<sub>eff</sub> no se pueden predecir tendencias periodicas ni justificar la seleccion de materiales en tecnologia.</p>
+</div>
+<button class="btn magenta" onclick="showBitacora()">VER BITACORA</button>
+<button class="btn green" onclick="closeSintesis()">CERRAR</button>
+</div>
+
+<!-- BITACORA -->
+<div id="bitacoraOverlay" class="overlay">
+<div class="bitacora-box" id="bitacoraContent"></div>
 </div>
 
 <script>
 const W = 960, H = 600;
-const TILE_SIZE = 40; // Rejilla de 24x15
+const TILE = 40;
+const COLS = 24, ROWS = 15;
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 
-// Matriz de mapa: 1 = Muro (Obstaculo), 0 = Suelo transitable
-// Sub-cuartos divididos con pasillos y puertas
-const ROOM_MAPS = {
-  hub: [
-    [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-    [1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1],
-    [1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1],
-    [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-    [1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1],
-    [1,1,1,0,1,1,1,1,1,1,0,0,0,0,1,1,1,1,1,1,0,1,1,1],
-    [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-    [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-    [1,1,1,0,1,1,1,1,1,1,0,0,0,0,1,1,1,1,1,1,0,1,1,1],
-    [1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1],
-    [1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1],
-    [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-    [1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1],
-    [1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1],
-    [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
-  ],
-  cam1: [ // Camara 1: Sub-cuartos divididos con servidores como obstaculos
-    [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-    [1,0,0,0,1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,1,0,0,0,1],
-    [1,0,0,0,1,0,1,1,1,0,1,0,0,1,0,1,1,1,0,1,0,0,0,1],
-    [1,0,0,0,1,0,1,0,1,0,1,0,0,1,0,1,0,1,0,1,0,0,0,1],
-    [1,0,0,0,0,0,1,0,1,0,0,0,0,0,0,1,0,1,0,0,0,0,0,1],
-    [1,1,1,1,1,0,1,0,1,1,1,0,0,1,1,1,0,1,0,1,1,1,1,1],
-    [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-    [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-    [1,1,1,1,1,0,1,0,1,1,1,0,0,1,1,1,0,1,0,1,1,1,1,1],
-    [1,0,0,0,0,0,1,0,1,0,0,0,0,0,0,1,0,1,0,0,0,0,0,1],
-    [1,0,0,0,1,0,1,0,1,0,1,0,0,1,0,1,0,1,0,1,0,0,0,1],
-    [1,0,0,0,1,0,1,1,1,0,1,0,0,1,0,1,1,1,0,1,0,0,0,1],
-    [1,0,0,0,1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,1,0,0,0,1],
-    [1,0,0,0,1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,1,0,0,0,1],
-    [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
-  ]
+const ROOM_THEMES = {
+hub:{primary:'#00f0ff',secondary:'#ff00aa',floor:'#0a0a1a',grid:'rgba(0,240,255,0.08)'},
+cam1:{primary:'#00f0ff',secondary:'#0088ff',floor:'#050f1e',grid:'rgba(0,240,255,0.10)'},
+cam2:{primary:'#00ff88',secondary:'#00cc66',floor:'#051a0f',grid:'rgba(0,255,136,0.10)'},
+cam3:{primary:'#ff00aa',secondary:'#cc0088',floor:'#1a0518',grid:'rgba(255,0,170,0.10)'},
+cam4:{primary:'#ffdd00',secondary:'#ff8800',floor:'#1a1405',grid:'rgba(255,221,0,0.10)'},
+cam5:{primary:'#ff3355',secondary:'#aa0022',floor:'#1a0508',grid:'rgba(255,51,85,0.10)'},
+trap1:{primary:'#ff8800',secondary:'#cc5500',floor:'#1a0a00',grid:'rgba(255,136,0,0.10)'},
+trap2:{primary:'#ff3355',secondary:'#aa0022',floor:'#1a0005',grid:'rgba(255,51,85,0.15)'},
+trap3:{primary:'#ff0055',secondary:'#aa0033',floor:'#1a0008',grid:'rgba(255,0,85,0.15)'}
 };
 
-// Preguntas y Fragmentos de Clave
-const QUESTIONS = {
-  q1: {
-    title: 'Sub-cuarto Alpha: Definicion Zeff',
-    question: '¿Cual es la expresion correcta para calcular la Carga Nuclear Efectiva (Zeff)?',
-    options: ['Zeff = Z + S', 'Zeff = Z - S', 'Zeff = S - Z', 'Zeff = Z / S'],
-    correct: 1,
-    fragment: 'Z'
-  },
-  q2: {
-    title: 'Sub-cuarto Beta: Reglas de Slater',
-    question: 'Segun las reglas de Slater, ¿cuanto contribuyen los electrones del mismo grupo (n) en orbitales s/p al apantallamiento S?',
-    options: ['1.00', '0.85', '0.35', '0.00'],
-    correct: 2,
-    fragment: 'E'
-  },
-  q3: {
-    title: 'Sub-cuarto Gamma: Tendencia Periodica',
-    question: 'A lo largo de un mismo periodo de izquierda a derecha, ¿como varia Zeff para los electrones de valencia?',
-    options: ['Disminuye', 'Permanece constante', 'Aumenta', 'Varia aleatoriamente'],
-    correct: 2,
-    fragment: 'F'
-  },
-  q4: {
-    title: 'Sub-cuarto Delta: Apantallamiento',
-    question: '¿Cual de los siguientes subniveles ejerce un mayor efecto de apantallamiento sobre los electrones externos?',
-    options: ['4f', '3d', '2p', '1s'],
-    correct: 3,
-    fragment: 'F'
-  },
-  q5: {
-    title: 'Sub-cuarto Epsilon: Aplicacion en Materiales',
-    question: '¿Por que el Wolframio (W) retiene fuertemente sus electrones internos frente a la ionizacion en semiconductores?',
-    options: ['Alta Carga Nuclear Efectiva (Zeff)', 'Bajo numero atomico', 'Apantallamiento total S=Z', 'Ausencia de protones'],
-    correct: 0,
-    fragment: '!'
-  }
+// ============ MAPAS LABERINTICOS 24x15 ============
+// 1 = muro, 0 = transitable
+const MAPS = {
+hub:[
+[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+[1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1],
+[1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1],
+[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+[1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1],
+[1,1,1,0,1,1,1,1,1,1,0,0,0,0,1,1,1,1,1,1,0,1,1,1],
+[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+[1,1,1,0,1,1,1,1,1,1,0,0,0,0,1,1,1,1,1,1,0,1,1,1],
+[1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1],
+[1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1],
+[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+[1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1],
+[1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1],
+[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+],
+cam1:[ // Laberinto complejo: sub-cuartos con obstaculos en cruz
+[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+[1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1],
+[1,0,0,0,1,0,1,1,1,1,0,1,1,1,1,0,1,0,1,0,1,1,0,1],
+[1,0,0,0,1,0,1,0,0,0,0,0,0,0,1,0,1,0,1,0,0,0,0,1],
+[1,0,0,0,0,0,1,0,1,1,1,1,1,0,1,0,1,0,1,1,1,1,0,1],
+[1,1,1,1,1,0,1,0,1,0,0,0,1,0,1,0,1,0,0,0,0,1,0,1],
+[1,0,0,0,0,0,1,0,1,0,1,0,1,0,1,0,1,1,1,1,0,1,0,1],
+[1,0,1,1,1,1,1,0,1,0,1,0,0,0,1,0,0,0,0,0,0,0,0,1],
+[1,0,1,0,0,0,0,0,1,0,1,1,1,1,1,1,1,1,1,1,1,1,0,1],
+[1,0,1,0,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+[1,0,0,0,1,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,1],
+[1,1,1,0,1,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+[1,0,0,0,1,0,1,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,1],
+[1,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+],
+cam2:[
+[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+[1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1],
+[1,0,1,1,1,0,1,0,1,1,1,1,1,1,1,1,0,0,1,0,1,1,0,1],
+[1,0,1,0,0,0,0,0,1,0,0,0,0,0,0,1,0,1,1,0,1,0,0,1],
+[1,0,1,0,1,1,1,1,1,0,1,1,1,1,0,1,0,0,0,0,1,0,1,1],
+[1,0,0,0,1,0,0,0,0,0,1,0,0,0,0,1,1,1,1,0,1,0,0,1],
+[1,1,1,0,1,0,1,1,1,1,1,0,1,1,0,0,0,0,1,0,1,1,0,1],
+[1,0,0,0,1,0,1,0,0,0,0,0,1,0,0,1,1,0,1,0,0,0,0,1],
+[1,0,1,1,1,0,1,0,1,1,1,1,1,0,1,1,0,0,1,1,1,1,0,1],
+[1,0,1,0,0,0,1,0,1,0,0,0,0,0,1,0,0,1,1,0,0,0,0,1],
+[1,0,1,0,1,1,1,0,1,0,1,1,1,0,1,0,1,1,0,0,1,1,0,1],
+[1,0,0,0,1,0,0,0,0,0,1,0,0,0,1,0,0,0,0,1,1,0,0,1],
+[1,1,1,1,1,0,1,1,1,1,1,0,1,1,1,1,1,1,0,1,0,0,1,1],
+[1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,1],
+[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+],
+cam3:[
+[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+[1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+[1,0,1,0,1,0,1,1,1,0,1,1,1,1,1,0,1,1,1,1,1,1,0,1],
+[1,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,1,0,0,0,0,0,0,1],
+[1,0,1,1,1,1,1,0,1,1,1,0,1,0,1,0,1,0,1,1,1,1,0,1],
+[1,0,0,0,0,0,1,0,1,0,0,0,1,0,0,0,1,0,1,0,0,0,0,1],
+[1,1,1,1,1,0,1,0,1,0,1,1,1,1,1,1,1,0,1,0,1,1,0,1],
+[1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1],
+[1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,0,1,1],
+[1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1],
+[1,0,1,0,1,1,1,1,1,1,1,1,1,0,1,1,1,1,0,1,1,1,0,1],
+[1,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,1],
+[1,1,1,0,1,0,1,1,1,1,1,0,1,1,1,1,1,1,0,1,0,1,0,1],
+[1,0,0,0,1,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1],
+[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+],
+cam4:[
+[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+[1,0,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1,1,0,1],
+[1,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,1],
+[1,0,1,0,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1,0,1,1,0,1],
+[1,0,1,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,1],
+[1,0,1,0,1,0,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1,0,1,1],
+[1,0,0,0,1,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,1],
+[1,1,1,1,1,0,1,0,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1,1],
+[1,0,0,0,0,0,1,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,1],
+[1,0,1,1,1,1,1,0,1,0,1,1,1,0,1,1,1,0,1,1,1,0,0,1],
+[1,0,1,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,1],
+[1,0,1,0,1,1,1,1,1,1,1,0,1,1,1,0,1,1,1,0,1,1,0,1],
+[1,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,1],
+[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+],
+cam5:[
+[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+[1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1],
+[1,0,1,1,1,1,1,1,1,0,1,0,1,1,1,1,1,1,1,1,1,1,0,1],
+[1,0,1,0,0,0,0,0,1,0,1,0,1,0,0,0,0,0,0,0,0,0,0,1],
+[1,0,1,0,1,1,1,0,1,0,1,0,1,0,1,1,1,1,1,1,1,1,0,1],
+[1,0,1,0,1,0,0,0,1,0,0,0,1,0,1,0,0,0,0,0,0,0,0,1],
+[1,0,1,0,1,0,1,1,1,1,1,1,1,0,1,0,1,1,1,1,1,1,0,1],
+[1,0,1,0,0,0,1,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,1],
+[1,0,1,1,1,1,1,0,1,1,1,1,1,1,1,0,1,0,1,1,1,1,0,1],
+[1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,1,0,0,0,0,1],
+[1,1,1,1,1,1,1,0,1,0,1,1,1,1,1,1,1,0,1,0,1,1,1,1],
+[1,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,1,0,1,0,0,1],
+[1,0,1,1,1,1,1,1,1,0,1,0,1,1,1,1,1,1,1,0,1,0,0,1],
+[1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,1],
+[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+],
+trap1:[
+[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+[1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1],
+[1,0,1,1,1,0,1,0,1,1,1,1,1,1,0,0,1,0,1,1,1,1,0,1],
+[1,0,1,0,0,0,0,0,1,0,0,0,0,0,0,1,1,0,1,0,0,0,0,1],
+[1,0,1,0,1,1,1,1,1,0,1,1,1,1,0,0,0,0,1,0,1,1,0,1],
+[1,0,0,0,1,0,0,0,0,0,1,0,0,0,1,1,1,1,1,0,1,0,0,1],
+[1,1,1,0,1,0,1,1,1,0,1,0,1,0,0,0,0,0,0,0,1,0,1,1],
+[1,0,0,0,1,0,1,0,0,0,0,0,1,1,1,1,1,1,1,0,1,0,0,1],
+[1,0,1,1,1,0,1,0,1,1,1,1,1,0,0,0,0,0,1,0,1,1,0,1],
+[1,0,1,0,0,0,1,0,1,0,0,0,0,0,1,0,0,0,1,0,0,0,0,1],
+[1,0,1,0,1,1,1,0,1,0,1,1,1,1,1,0,1,1,1,1,1,1,0,1],
+[1,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,1],
+[1,1,1,1,1,0,1,1,1,1,1,0,1,1,1,1,1,0,1,1,1,1,0,1],
+[1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,1],
+[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+],
+trap2:[
+[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+[1,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1],
+[1,0,1,1,1,0,1,0,1,1,1,1,1,0,1,0,1,1,1,1,1,1,0,1],
+[1,0,1,0,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,0,0,1],
+[1,0,1,0,1,1,1,1,1,0,1,0,1,1,1,1,1,0,1,1,1,1,0,1],
+[1,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,1],
+[1,1,1,0,1,0,1,1,1,0,1,1,1,1,1,1,1,1,1,0,1,1,0,1],
+[1,0,0,0,1,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,1],
+[1,0,1,1,1,0,1,0,1,1,1,0,1,1,1,1,1,1,1,1,1,0,1,1],
+[1,0,1,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,1,0,0,1],
+[1,0,1,0,1,1,1,1,1,0,1,1,1,0,1,1,1,1,1,0,1,1,0,1],
+[1,0,0,0,1,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,1],
+[1,1,1,0,1,0,1,1,1,1,1,0,1,1,1,0,1,1,1,1,1,1,0,1],
+[1,0,0,0,1,0,1,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,1],
+[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+],
+trap3:[
+[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+[1,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,1],
+[1,0,1,1,1,0,1,0,1,0,1,0,1,1,1,1,1,0,1,0,1,1,0,1],
+[1,0,1,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,1,0,1,0,0,1],
+[1,0,1,0,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,0,1,0,1,1],
+[1,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,1],
+[1,1,1,0,1,0,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,0,1],
+[1,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1],
+[1,0,1,1,1,0,1,0,1,1,1,1,1,1,1,1,1,0,1,1,1,1,0,1],
+[1,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,1,0,0,0,0,1],
+[1,0,1,0,1,1,1,1,1,0,1,1,1,1,1,0,1,0,1,0,1,1,0,1],
+[1,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,1],
+[1,1,1,1,1,0,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1],
+[1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1],
+[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+]
 };
 
-// Objetos e interactivos en los sub-cuartos
-const ROOM_OBJECTS = {
-  hub: [
-    { x: 3, y: 3, label: 'SECTOR ALPHA', target: 'cam1', type: 'door' }
-  ],
-  cam1: [
-    { x: 2, y: 2, type: 'terminal', qKey: 'q1', label: 'TERMINAL ALPHA' },
-    { x: 21, y: 2, type: 'terminal', qKey: 'q2', label: 'TERMINAL BETA' },
-    { x: 2, y: 12, type: 'terminal', qKey: 'q3', label: 'TERMINAL GAMMA' },
-    { x: 21, y: 12, type: 'terminal', qKey: 'q4', label: 'TERMINAL DELTA' },
-    { x: 12, y: 3, type: 'terminal', qKey: 'q5', label: 'TERMINAL EPSILON' },
-    { x: 12, y: 7, label: 'SALIDA A HUB', target: 'hub', type: 'door' }
-  ]
+// ============ SALAS ============
+const rooms = {
+hub:{id:'hub',name:'CENTRO DE CONTROL (HUB)',theme:'hub',map:'hub',
+doors:[
+{x:2,y:1,w:2,h:1,target:'cam1',label:'CAM 1',spawnAt:{x:12,y:12}},
+{x:6,y:1,w:2,h:1,target:'trap1',label:'LAB-0X',spawnAt:{x:12,y:12}},
+{x:10,y:1,w:2,h:1,target:'cam2',label:'CAM 2',spawnAt:{x:12,y:12}},
+{x:14,y:1,w:2,h:1,target:'trap2',label:'ARCH-2',spawnAt:{x:12,y:12}},
+{x:18,y:1,w:2,h:1,target:'cam3',label:'CAM 3',spawnAt:{x:12,y:12}},
+{x:2,y:13,w:2,h:1,target:'cam4',label:'CAM 4',spawnAt:{x:12,y:2}},
+{x:8,y:13,w:2,h:1,target:'trap3',label:'SERV-9',spawnAt:{x:12,y:2}},
+{x:16,y:13,w:2,h:1,target:'cam5',label:'CAM 5',spawnAt:{x:12,y:2}}
+],spawn:{x:12,y:7}},
+cam1:{id:'cam1',name:'CAMARA 1 - ACTIVACION',theme:'cam1',map:'cam1',
+doors:[{x:11,y:13,w:2,h:1,target:'hub',label:'HUB',spawnAt:{x:3,y:3}}],
+objects:[
+{x:2,y:1,type:'terminal',qKey:'q1',label:'TERMINAL ALFA'},
+{x:19,y:1,type:'terminal',qKey:'q2',label:'TERMINAL BETA'},
+{x:3,y:7,type:'decoy',label:'NODO?'},
+{x:20,y:10,type:'decoy',label:'NODO?'}
+],spawn:{x:12,y:12}},
+cam2:{id:'cam2',name:'CAMARA 2 - DIAGNOSTICO',theme:'cam2',map:'cam2',
+doors:[{x:11,y:13,w:2,h:1,target:'hub',label:'HUB',spawnAt:{x:11,y:3}}],
+objects:[
+{x:1,y:1,type:'terminal',qKey:'q3',label:'TERMINAL GAMMA'},
+{x:22,y:13,type:'terminal',qKey:'q4',label:'TERMINAL DELTA'},
+{x:5,y:8,type:'decoy',label:'NODO?'},
+{x:18,y:6,type:'decoy',label:'NODO?'}
+],spawn:{x:12,y:12}},
+cam3:{id:'cam3',name:'CAMARA 3 - ANALISIS',theme:'cam3',map:'cam3',
+doors:[{x:11,y:13,w:2,h:1,target:'hub',label:'HUB',spawnAt:{x:18,y:3}}],
+objects:[
+{x:1,y:1,type:'terminal',qKey:'q5',label:'TERMINAL EPSILON'},
+{x:22,y:1,type:'terminal',qKey:'q6',label:'TERMINAL ZETA'},
+{x:10,y:7,type:'decoy',label:'NODO?'},
+{x:3,y:11,type:'decoy',label:'NODO?'}
+],spawn:{x:12,y:12}},
+cam4:{id:'cam4',name:'CAMARA 4 - APLICACION',theme:'cam4',map:'cam4',
+doors:[{x:11,y:13,w:2,h:1,target:'hub',label:'HUB',spawnAt:{x:3,y:13}}],
+objects:[
+{x:1,y:1,type:'terminal',qKey:'q7',label:'TERMINAL ETA'},
+{x:22,y:7,type:'terminal',qKey:'q8',label:'TERMINAL THETA'},
+{x:10,y:4,type:'decoy',label:'NODO?'},
+{x:15,y:11,type:'decoy',label:'NODO?'}
+],spawn:{x:12,y:12}},
+cam5:{id:'cam5',name:'CAMARA 5 - VERIFICACION',theme:'cam5',map:'cam5',
+doors:[{x:11,y:13,w:2,h:1,target:'hub',label:'HUB',spawnAt:{x:17,y:13}}],
+objects:[
+{x:1,y:1,type:'terminal',qKey:'q9',label:'TERMINAL IOTA'},
+{x:22,y:13,type:'terminal',qKey:'q10',label:'TERMINAL KAPPA'},
+{x:11,y:4,type:'decoy',label:'NODO?'},
+{x:5,y:9,type:'decoy',label:'NODO?'}
+],spawn:{x:12,y:12}},
+trap1:{id:'trap1',name:'LAB-0X - TRAMPA',theme:'trap1',map:'trap1',
+doors:[{x:11,y:13,w:2,h:1,target:'hub',label:'HUB',spawnAt:{x:6,y:3}}],
+objects:[
+{x:11,y:7,type:'console',trap:'trap1',label:'CONSOLA SOSPECHOSA'},
+{x:2,y:1,type:'decoy',label:'?'},
+{x:20,y:12,type:'decoy',label:'?'}
+],spawn:{x:12,y:12}},
+trap2:{id:'trap2',name:'ARCH-2 - TRAMPA',theme:'trap2',map:'trap2',
+doors:[{x:11,y:13,w:2,h:1,target:'hub',label:'HUB',spawnAt:{x:14,y:3}}],
+objects:[
+{x:11,y:4,type:'console',trap:'trap2',label:'ARCHIVO CORRUPTO'},
+{x:2,y:7,type:'decoy',label:'?'},
+{x:20,y:7,type:'decoy',label:'?'}
+],spawn:{x:12,y:12}},
+trap3:{id:'trap3',name:'SERV-9 - TRAMPA',theme:'trap3',map:'trap3',
+doors:[{x:11,y:13,w:2,h:1,target:'hub',label:'HUB',spawnAt:{x:8,y:3}}],
+objects:[
+{x:11,y:7,type:'console',trap:'trap3',label:'SERVIDOR SOSPECHOSO'},
+{x:2,y:1,type:'decoy',label:'?'},
+{x:20,y:13,type:'decoy',label:'?'}
+],spawn:{x:12,y:12}}
 };
 
-let currentRoom = 'hub';
-let player = { x: 12 * TILE_SIZE, y: 7 * TILE_SIZE, speed: 4, radius: 14 };
-let keys = { up: false, down: false, left: false, right: false };
-let unlockedFragments = [];
-let solvedQuestions = {};
-let activeObject = null;
-let gameInterval, timerInterval, timeLeft = 900;
+// ============ PREGUNTAS ============
+const puzzles = {
+cam1:{tag:'CAMARA 1 - ACTIVACION',frag:'Z',
+questions:[
+{title:'Definicion de Zeff',
+question:'Cual afirmacion sobre la <b>carga nuclear efectiva (Z<sub>eff</sub>)</b> es <b>FALSA</b>?',
+options:['Es la carga positiva neta que siente un electron tras el apantallamiento.',
+'Se calcula como Z<sub>eff</sub> = Z - S.',
+'Es siempre igual al numero atomico Z.',
+'Aumenta de izquierda a derecha en un periodo.'],
+correct:2,
+hint:'Los electrones internos bloquean parte de la carga. El electron de valencia siente TODA la carga?',
+explanation:'Z<sub>eff</sub> NUNCA es igual a Z. El apantallamiento (S) reduce la carga: Z<sub>eff</sub> = Z - S.'},
+{title:'Calculo simple',
+question:'Si Z = 11 y la carga efectiva del electron de valencia es 2.20, cuanto vale S?',
+options:['S = 11.00','S = 2.20','S = 8.80','S = 13.20'],
+correct:2,
+hint:'Despeja S de la formula Z<sub>eff</sub> = Z - S.',
+explanation:'S = Z - Z<sub>eff</sub> = 11 - 2.20 = <b>8.80</b>.'}
+]},
+cam2:{tag:'CAMARA 2 - DIAGNOSTICO',frag:'E',
+questions:[
+{title:'Reglas de Slater (tabla)',
+question:'Observa la tabla de contribuciones al apantallamiento. Cual valor es <b>INCORRECTO</b>?<table><tr><th>Grupo</th><th>Valor S</th></tr><tr><td>Mismo grupo (ns,np)</td><td>0.35</td></tr><tr><td>Capa n-1</td><td>0.85</td></tr><tr><td>Capas n-2 o menores</td><td>0.85</td></tr><tr><td>1s - 1s</td><td>0.30</td></tr></table>',
+options:['Mismo grupo: 0.35','Capa n-1: 0.85','Capas n-2 o menores: 0.85','1s-1s: 0.30'],
+correct:2,
+hint:'Los electrones de capas muy internas apantallan mas que los de n-1.',
+explanation:'Capas n-2 o menores apantallan <b>1.00</b>, no 0.85. El 0.85 corresponde a n-1.'},
+{title:'Calculo aplicado',
+question:'Cual es la Z<sub>eff</sub> aproximada del electron 2p del fluor (Z = 9)? Config: 1s2 2s2 2p5. Aplica Slater: 6 x 0.35 + 2 x 0.85.',
+options:['Z<sub>eff</sub> = 9.00','Z<sub>eff</sub> = 5.20','Z<sub>eff</sub> = 2.20','Z<sub>eff</sub> = 7.00'],
+correct:1,
+hint:'S = (6 x 0.35) + (2 x 0.85).',
+explanation:'S = 2.10 + 1.70 = 3.80. Z<sub>eff</sub> = 9 - 3.80 = <b>5.20</b>.'}
+]},
+cam3:{tag:'CAMARA 3 - ANALISIS',frag:'F',
+questions:[
+{title:'Reto de ordenar',
+question:'Ordena de <b>MENOR a MAYOR</b> Z<sub>eff</sub>: <b>Na, Mg, Al, Si</b>',
+options:['Si < Al < Mg < Na','Na < Mg < Al < Si','Mg < Na < Si < Al','Al < Si < Na < Mg'],
+correct:1,
+hint:'Mismo periodo. Al ir a la derecha Z crece pero el apantallamiento entre electrones del mismo nivel es minimo.',
+explanation:'En un mismo periodo, Z<sub>eff</sub> aumenta de izquierda a derecha: <b>Na < Mg < Al < Si</b>.'},
+{title:'Reto de interpretar',
+question:'Si el radio atomico DISMINUYE de Li a F en un periodo, que explica mejor esta tendencia?',
+options:['El aumento del numero de neutrones.',
+'El aumento de Z<sub>eff</sub>, que atrae mas fuertemente al electron externo.',
+'La disminucion del apantallamiento total.',
+'El aumento del numero de capas electronicas.'],
+correct:1,
+hint:'El radio y Z<sub>eff</sub> estan inversamente relacionados dentro de un mismo periodo.',
+explanation:'Al crecer Z<sub>eff</sub>, el nucleo atrae mas fuertemente a los electrones de valencia, contrayendo el radio.'}
+]},
+cam4:{tag:'CAMARA 4 - APLICACION',frag:'F',
+questions:[
+{title:'Caso de ingenieria',
+question:'Que elemento elegirias para el <b>filamento de una bombilla incandescente</b> (punto de fusion mas alto)?',
+options:['Aluminio (Al), Tf=660 C','Plomo (Pb), Tf=327 C','Wolframio (W), Tf=3422 C','Mercurio (Hg), Tf=-39 C'],
+correct:2,
+hint:'Busca el metal con el punto de fusion mas alto (3422 C).',
+explanation:'El <b>wolframio (W)</b> tiene el punto de fusion mas alto (3422 C) y alta Z<sub>eff</sub>, reteniendo electrones a altas temperaturas.'},
+{title:'Materiales informaticos',
+question:'En una placa base se necesita un <b>excelente conductor electrico</b> y <b>resistente a la corrosion</b>. Cual elegirias?',
+options:['Hierro (Fe)','Cobre (Cu)','Azufre (S)','Carbono (C)'],
+correct:1,
+hint:'Es un metal de transicion rojizo que se usa en cables electricos.',
+explanation:'El <b>cobre (Cu)</b> combina alta conductividad con buena resistencia a la corrosion.'}
+]},
+cam5:{tag:'CAMARA 5 - VERIFICACION',frag:'!',
+questions:[
+{title:'Comparacion de elementos',
+question:'Por que el <b>K</b> tiene menor energia de ionizacion que el <b>Na</b>?',
+options:['El K tiene mayor Z<sub>eff</sub> que el Na.',
+'El electron de valencia del K esta mas lejos y siente MENOR Z<sub>eff</sub> por mas capas internas.',
+'El K tiene menos electrones internos que el Na.',
+'El K no tiene apantallamiento.'],
+correct:1,
+hint:'Aunque K tiene mas protones, tiene mas capas internas. Su electron 4s esta mas lejos que el 3s del Na.',
+explanation:'El K tiene mas capas internas que apantallan y su electron de valencia esta mas alejado del nucleo.'},
+{title:'Integracion final',
+question:'Que relacion correcta existe entre <b>Z<sub>eff</sub></b> y la <b>electronegatividad</b>?',
+options:['Mayor Z<sub>eff</sub> menor electronegatividad.','Mayor Z<sub>eff</sub> mayor electronegatividad.',
+'No existe relacion.','Depende solo de los neutrones.'],
+correct:1,
+hint:'La electronegatividad mide la tendencia a atraer electrones en un enlace.',
+explanation:'Mayor Z<sub>eff</sub> significa mayor atraccion por los electrones, por lo tanto <b>mayor electronegatividad</b>.'}
+]}
+};
 
-function showSessionSetup(){
-  document.getElementById('intro').classList.remove('show');
-  document.getElementById('sessionOverlay').classList.add('show');
+const trapsData = {
+trap1:{warn:'Laboratorio con <b>TABLA PERIODICA FALSIFICADA</b>.',
+fake:'"Z<sub>eff</sub> del sodio es 11 (toda la carga del nucleo)."<br><br><b>FALSO!</b> El apantallamiento de los 10 electrones internos reduce Z<sub>eff</sub> a ~2.20.'},
+trap2:{warn:'Archivos corruptos. Contienen una <b>FORMULA INVENTADA</b>.',
+fake:'"Formula oficial: Z<sub>eff</sub> = Z + S"<br><br><b>INCORRECTO!</b> La formula real es Z<sub>eff</sub> = Z - S.'},
+trap3:{warn:'Servidor con <b>DATOS INVERTIDOS</b>.',
+fake:'"Z<sub>eff</sub> disminuye al avanzar de izquierda a derecha."<br><br><b>FALSO!</b> Z<sub>eff</sub> AUMENTA de izquierda a derecha.'}
+};
+
+// ============ ESTADO ============
+const session={team:'Equipo sin nombre',role:'player',round:1,pair:'',duration:15,startedAt:null};
+const metrics={attemptsTotal:0,attemptsCorrect:0,attemptsWrong:0,hintsUsed:0,
+hintsPerCamera:{cam1:0,cam2:0,cam3:0,cam4:0,cam5:0},
+trapsVisited:{trap1:false,trap2:false,trap3:false},
+wrongByCam:{cam1:0,cam2:0,cam3:0,cam4:0,cam5:0},
+startTimer:null,finalKey:'',finalKeyCorrect:false};
+
+let currentRoom='hub';
+const player={x:480,y:280,w:26,h:26,speed:200,dir:'down',walkPhase:0,isWalking:false};
+const keys={up:false,down:false,left:false,right:false};
+let nearObject=null, transitionCooldown=0, gameActive=false, paused=false;
+let secondsLeft=15*60, timerInterval=null;
+let currentPuzzle=null, currentObject=null, currentQuestionIndex=0;
+let answeredCorrect=[], lastFootstep=0, screenTransition=0;
+let doorEntryFx=[];
+const fragments={cam1:false,cam2:false,cam3:false,cam4:false,cam5:false};
+const trapsVisited={trap1:false,trap2:false,trap3:false};
+const particles=[];
+let testMode=false, audioCtx=null, soundEnabled=true;
+
+const ambientParticles=[];
+for(let i=0;i<50;i++){ambientParticles.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*12,vy:-8-Math.random()*18,size:1+Math.random()*2,life:Math.random()*5,maxLife:5+Math.random()*5});}
+
+function spawnParticle(x,y,color,vx,vy,life){particles.push({x,y,vx,vy,life,maxLife:life,color});}
+
+// ============ AUDIO ============
+function ensureAudio(){if(!audioCtx){try{audioCtx=new (window.AudioContext||window.webkitAudioContext)();}catch(e){soundEnabled=false;}}if(audioCtx&&audioCtx.state==='suspended')audioCtx.resume();}
+function beep(freq,dur,type='sine',vol=0.15){if(!soundEnabled||!audioCtx)return;const o=audioCtx.createOscillator(),g=audioCtx.createGain();o.type=type;o.frequency.setValueAtTime(freq,audioCtx.currentTime);g.gain.setValueAtTime(vol,audioCtx.currentTime);g.gain.exponentialRampToValueAtTime(0.001,audioCtx.currentTime+dur);o.connect(g);g.connect(audioCtx.destination);o.start();o.stop(audioCtx.currentTime+dur);}
+function sfxClick(){beep(800,.06,'square',.08);}
+function sfxFootstep(){beep(120+Math.random()*40,.04,'triangle',.05);}
+function sfxSuccess(){beep(660,.12);setTimeout(()=>beep(880,.18),100);setTimeout(()=>beep(1320,.25),220);}
+function sfxError(){beep(180,.15,'sawtooth',.15);setTimeout(()=>beep(120,.25,'sawtooth',.15),120);}
+function sfxTrap(){beep(90,.4,'sawtooth',.2);setTimeout(()=>beep(70,.5,'sawtooth',.18),200);}
+function sfxUnlock(){beep(523,.1);setTimeout(()=>beep(784,.1),90);setTimeout(()=>beep(1046,.3),180);}
+function sfxDoor(){beep(220,.08);setTimeout(()=>beep(440,.12),60);}
+function toggleSound(){soundEnabled=!soundEnabled;document.getElementById('soundBtn').textContent=soundEnabled?'AUDIO':'MUTE';if(soundEnabled){ensureAudio();sfxClick();}}
+
+function toggleTestMode(){testMode=!testMode;document.getElementById('testBadge').classList.toggle('show',testMode);alert(testMode?'MODO TEST ACTIVADO':'MODO TEST DESACTIVADO');}
+
+// ============ UI ============
+function showRequirements(){document.getElementById('intro').classList.remove('show');document.getElementById('requirementsOverlay').classList.add('show');sfxClick();}
+function closeRequirements(){document.getElementById('requirementsOverlay').classList.remove('show');document.getElementById('intro').classList.add('show');sfxClick();}
+function showSessionSetup(){document.getElementById('intro').classList.remove('show');document.getElementById('sessionOverlay').classList.add('show');sfxClick();}
+function backToIntro(){document.getElementById('sessionOverlay').classList.remove('show');document.getElementById('intro').classList.add('show');sfxClick();}
+
+// ============ CANVAS ============
+function resizeCanvas(){
+const wrap=document.getElementById('canvasWrap');
+const s=Math.min(wrap.clientWidth/W,wrap.clientHeight/H);
+canvas.style.width=Math.floor(W*s)+'px';
+canvas.style.height=Math.floor(H*s)+'px';
+const dpr=Math.min(window.devicePixelRatio||1,2);
+canvas.width=Math.floor(W*dpr);canvas.height=Math.floor(H*dpr);
+ctx.setTransform(dpr,0,0,dpr,0,0);
+}
+window.addEventListener('resize',resizeCanvas);
+window.addEventListener('orientationchange',()=>setTimeout(resizeCanvas,250));
+
+// ============ COLISION ============
+function isWall(px,py){
+const r=rooms[currentRoom];
+const map=MAPS[r.map];
+const margin=6;
+const corners=[[px-margin,py-margin],[px+margin,py-margin],[px-margin,py+margin],[px+margin,py+margin]];
+for(const [cx,cy] of corners){
+const tx=Math.floor(cx/TILE),ty=Math.floor(cy/TILE);
+if(tx<0||tx>=COLS||ty<0||ty>=ROWS)return true;
+if(map[ty][tx]===1)return true;
+}
+return false;
+}
+function overlap(a,b){return a.x<b.x+b.w&&a.x+a.w>b.x&&a.y<b.y+b.h&&a.y+a.h>b.y;}
+
+// ============ ROOM ============
+function loadRoom(id){
+currentRoom=id;
+const r=rooms[id];
+player.x=(r.spawn.x+0.5)*TILE;player.y=(r.spawn.y+0.5)*TILE;
+transitionCooldown=.5;screenTransition=0.5;
+updateHUD();saveProgress();
+}
+function enterDoor(d){
+transitionCooldown=.9;sfxDoor();
+const theme=ROOM_THEMES[rooms[currentRoom].theme];
+doorEntryFx.push({x:(d.x+0.5)*TILE,y:(d.y+0.5)*TILE,r:0,alpha:1,color:theme.primary});
+currentRoom=d.target;
+const r=rooms[d.target];
+player.x=(d.spawnAt.x+0.5)*TILE;
+player.y=(d.spawnAt.y+0.5)*TILE;
+screenTransition=0.6;
+updateHUD();saveProgress();
 }
 
-function startGame(){
-  document.getElementById('sessionOverlay').classList.remove('show');
-  document.getElementById('gameWrap').classList.add('show');
-  resizeCanvas();
-  setupControls();
-  gameInterval = requestAnimationFrame(gameLoop);
-  startTimer();
+// ============ SAVE ============
+function saveProgress(){try{localStorage.setItem('cyte_save_v2',JSON.stringify({fragments,trapsVisited,secondsLeft,currentRoom,session,metrics}));}catch(e){}}
+function clearProgress(){try{localStorage.removeItem('cyte_save_v2');}catch(e){}}
+
+// ============ START ============
+async function startGame(){
+ensureAudio();
+session.team=document.getElementById('cfgTeam').value.trim()||'Equipo sin nombre';
+session.pair=document.getElementById('cfgPair').value.trim()||'-';
+session.duration=parseInt(document.getElementById('cfgDuration').value);
+const roleEl=document.querySelector('input[name="cfgRole"]:checked');
+session.role=roleEl?roleEl.value:'player';
+const roundEl=document.querySelector('input[name="cfgRound"]:checked');
+session.round=roundEl?parseInt(roundEl.value):1;
+session.startedAt=new Date();
+metrics.startTimer=performance.now();
+secondsLeft=session.duration*60;
+
+document.getElementById('sessionOverlay').classList.remove('show');
+document.getElementById('gameWrap').classList.add('show');
+resizeCanvas();
+
+const rb=document.getElementById('roleBadge');
+if(session.role==='host'){rb.textContent='ANFITRION - '+session.team;rb.classList.add('host');}
+else{rb.textContent=session.team+' - Ronda '+session.round;rb.classList.remove('host');}
+
+await showDialog('C.Y.T.E.','Bienvenido, '+session.team+'. Soy C.Y.T.E. El firewall periodico ha fallado. Debes restaurarlo atravesando 5 camaras laberinticas.');
+await showDialog('C.Y.T.E.','Cada camara es un laberinto con 2 terminales ocultas en los sub-cuartos. Encuentralas y responde AMBAS preguntas para obtener cada fragmento.');
+await showDialog('C.Y.T.E.','Cuidado con las salas LAB-0X, ARCH-2 y SERV-9. Contienen trampas con datos falsos que te restaran 10 segundos.');
+await showDialog('C.Y.T.E.','Duracion: '+session.duration+' minutos. Cada error resta 10 segundos. Comienza tu mision.');
+
+gameActive=true;
+loadRoom('hub');
+startTimer();
+requestAnimationFrame(loop);
 }
 
 function startTimer(){
-  timerInterval = setInterval(() => {
-    timeLeft--;
-    let m = Math.floor(timeLeft/60).toString().padStart(2,'0');
-    let s = (timeLeft%60).toString().padStart(2,'0');
-    document.getElementById('timer').textContent = `${m}:${s}`;
-    if(timeLeft <= 0){
-      clearInterval(timerInterval);
-      alert('¡TIEMPO AGOTADO! El firewall no pudo ser restaurado.');
-      location.reload();
-    }
-  }, 1000);
+if(timerInterval)clearInterval(timerInterval);
+timerInterval=setInterval(()=>{
+if(!gameActive||paused)return;
+secondsLeft--;
+if(secondsLeft<=0){clearInterval(timerInterval);alert('TIEMPO AGOTADO. Mostrando bitacora...');showBitacora();gameActive=false;return;}
+if(secondsLeft<=60&&secondsLeft>0&&secondsLeft%10===0){beep(440,.15,'sine',.1);}
+updateHUD();
+},1000);
 }
 
-// Colision con la matriz del mapa (muros y paredes de sub-cuartos)
-function isWall(x, y){
-  let map = ROOM_MAPS[currentRoom] || ROOM_MAPS.hub;
-  let tileX = Math.floor(x / TILE_SIZE);
-  let tileY = Math.floor(y / TILE_SIZE);
-  if(tileX < 0 || tileX >= 24 || tileY < 0 || tileY >= 15) return true;
-  return map[tileY][tileX] === 1;
+function updateHUD(){
+const m=String(Math.floor(secondsLeft/60)).padStart(2,'0');
+const s=String(secondsLeft%60).padStart(2,'0');
+const t=document.getElementById('timer');
+t.textContent=m+':'+s;
+t.style.color=secondsLeft<=60?'#ff3355':'#ffdd00';
+document.getElementById('fragCount').textContent=Object.values(fragments).filter(Boolean).length;
+document.getElementById('roomName').textContent=rooms[currentRoom].name;
+updateFragHud();updateMiniMap();
 }
 
-function checkMoveCollision(newX, newY){
-  let r = player.radius;
-  return isWall(newX - r, newY - r) ||
-         isWall(newX + r, newY - r) ||
-         isWall(newX - r, newY + r) ||
-         isWall(newX + r, newY + r);
+function updateFragHud(){
+const wrap=document.getElementById('fragHud');wrap.innerHTML='';
+const order=['cam1','cam2','cam3','cam4','cam5'];
+const frags=['Z','E','F','F','!'];
+order.forEach((k,i)=>{
+const d=document.createElement('div');
+d.className='f'+(fragments[k]?' unlocked':'');
+d.textContent=fragments[k]?frags[i]:'?';
+wrap.appendChild(d);
+});
 }
 
-function updatePlayer(){
-  let dx = 0, dy = 0;
-  if(keys.up) dy -= player.speed;
-  if(keys.down) dy += player.speed;
-  if(keys.left) dx -= player.speed;
-  if(keys.right) dx += player.speed;
-
-  // Movimiento independiente por ejes para deslizamiento suave sobre muros
-  if(dx !== 0 && !checkMoveCollision(player.x + dx, player.y)){
-    player.x += dx;
-  }
-  if(dy !== 0 && !checkMoveCollision(player.x, player.y + dy)){
-    player.y += dy;
-  }
-
-  // Verificar proximidad con objetos interactivos
-  let objs = ROOM_OBJECTS[currentRoom] || [];
-  activeObject = null;
-  for(let obj of objs){
-    let ox = obj.x * TILE_SIZE + TILE_SIZE/2;
-    let oy = obj.y * TILE_SIZE + TILE_SIZE/2;
-    let dist = Math.hypot(player.x - ox, player.y - oy);
-    if(dist < TILE_SIZE * 1.2){
-      activeObject = obj;
-      break;
-    }
-  }
-
-  const promptEl = document.getElementById('prompt');
-  if(activeObject){
-    promptEl.classList.add('show');
-    promptEl.textContent = `Presiona E para [${activeObject.label}]`;
-  } else {
-    promptEl.classList.remove('show');
-  }
+function updateMiniMap(){
+const mm=document.getElementById('miniMap');mm.innerHTML='';
+const nameMap={cam1:'C1',cam2:'C2',cam3:'C3',cam4:'C4',cam5:'C5',trap1:'T1',trap2:'T2',trap3:'T3',hub:'H'};
+const rows=[['hub','cam1','trap1','cam2'],['trap2','cam3','trap3','cam4'],['cam5','','','']];
+rows.forEach(row=>{
+const r=document.createElement('div');r.className='mm-row';
+row.forEach(k=>{
+if(!k){r.appendChild(document.createElement('span'));return;}
+const span=document.createElement('span');
+span.className='mm-room';
+if(k.startsWith('trap')&&trapsVisited[k])span.classList.add('trap');
+if(k.startsWith('cam')&&fragments[k])span.classList.add('done');
+if(currentRoom===k)span.classList.add('cur');
+span.textContent=nameMap[k];
+r.appendChild(span);
+});
+mm.appendChild(r);
+});
 }
 
-function render(){
-  ctx.clearRect(0, 0, W, H);
-  let map = ROOM_MAPS[currentRoom] || ROOM_MAPS.hub;
+// ============ DIALOGO ============
+let dialogResolve=null;
+function showDialog(name,text){
+return new Promise(resolve=>{
+dialogResolve=resolve;
+document.getElementById('dlgName').textContent=name;
+document.getElementById('dialogOverlay').classList.add('show');
+const el=document.getElementById('dlgText');
+el.innerHTML='';let i=0;
+function type(){
+if(i<text.length){el.textContent+=text[i++];if(Math.random()<0.4)beep(1400+Math.random()*200,.012,'square',.02);setTimeout(type,18);}
+else{el.innerHTML=text+'<span class="cursor">&nbsp;</span>';}
+}
+type();
+});
+}
+function closeDialog(){if(dialogResolve){document.getElementById('dialogOverlay').classList.remove('show');const r=dialogResolve;dialogResolve=null;sfxClick();r();}}
+document.getElementById('dialogOverlay').addEventListener('click',closeDialog);
 
-  // Dibujar mapa (Suelo y Muros/Obstaculos)
-  for(let r=0; r<15; r++){
-    for(let c=0; c<24; c++){
-      let x = c * TILE_SIZE;
-      let y = r * TILE_SIZE;
-      if(map[r][c] === 1){ // Obstaculo / Muro
-        ctx.fillStyle = '#1f1f35';
-        ctx.fillRect(x, y, TILE_SIZE, TILE_SIZE);
-        ctx.strokeStyle = '#00f0ff';
-        ctx.strokeRect(x+1, y+1, TILE_SIZE-2, TILE_SIZE-2);
-      } else { // Suelo
-        ctx.fillStyle = '#0a0a1a';
-        ctx.fillRect(x, y, TILE_SIZE, TILE_SIZE);
-        ctx.strokeStyle = 'rgba(0,240,255,0.05)';
-        ctx.strokeRect(x, y, TILE_SIZE, TILE_SIZE);
-      }
-    }
-  }
+// ============ CONTROLES ============
+document.addEventListener('keydown',e=>{
+if(document.getElementById('dialogOverlay').classList.contains('show')){if(e.key===' '||e.key==='Enter'||e.key.toLowerCase()==='e')closeDialog();return;}
+const k=e.key.toLowerCase();
+if(k==='w'||k==='arrowup')keys.up=true;
+if(k==='s'||k==='arrowdown')keys.down=true;
+if(k==='a'||k==='arrowleft')keys.left=true;
+if(k==='d'||k==='arrowright')keys.right=true;
+if(['arrowup','arrowdown','arrowleft','arrowright',' '].includes(k))e.preventDefault();
+if(k==='e'&&gameActive&&!paused&&!document.getElementById('modal').classList.contains('show'))interact();
+if(k==='escape'&&gameActive){paused?resumeGame():pauseGame();}
+if(k==='t'&&!gameActive)toggleTestMode();
+});
+document.addEventListener('keyup',e=>{
+const k=e.key.toLowerCase();
+if(k==='w'||k==='arrowup')keys.up=false;
+if(k==='s'||k==='arrowdown')keys.down=false;
+if(k==='a'||k==='arrowleft')keys.left=false;
+if(k==='d'||k==='arrowright')keys.right=false;
+});
 
-  // Dibujar objetos interactivos (Terminales y Puertas)
-  let objs = ROOM_OBJECTS[currentRoom] || [];
-  for(let obj of objs){
-    let x = obj.x * TILE_SIZE;
-    let y = obj.y * TILE_SIZE;
-    if(obj.type === 'terminal'){
-      let solved = solvedQuestions[obj.qKey];
-      ctx.fillStyle = solved ? '#00ff88' : '#ff00aa';
-      ctx.fillRect(x+8, y+8, TILE_SIZE-16, TILE_SIZE-16);
-      ctx.shadowColor = solved ? '#00ff88' : '#ff00aa';
-      ctx.shadowBlur = 10;
-      ctx.fillStyle = '#ffffff';
-      ctx.font = '10px monospace';
-      ctx.fillText('TERM', x+6, y+24);
-      ctx.shadowBlur = 0;
-    } else if(obj.type === 'door'){
-      ctx.fillStyle = '#ffdd00';
-      ctx.fillRect(x+4, y+4, TILE_SIZE-8, TILE_SIZE-8);
-    }
-  }
+(function bindDpad(){
+document.querySelectorAll('#dpad button').forEach(btn=>{
+const dir=btn.dataset.dir;
+const press=on=>{keys[dir]=on;btn.classList.toggle('pressed',on);};
+btn.addEventListener('touchstart',e=>{e.preventDefault();press(true);},{passive:false});
+btn.addEventListener('touchend',e=>{e.preventDefault();press(false);},{passive:false});
+btn.addEventListener('touchcancel',()=>press(false));
+btn.addEventListener('mousedown',()=>press(true));
+btn.addEventListener('mouseup',()=>press(false));
+btn.addEventListener('mouseleave',()=>press(false));
+btn.addEventListener('contextmenu',e=>e.preventDefault());
+});
+const ab=document.getElementById('actionBtn');
+const trigger=e=>{
+e.preventDefault();
+ab.classList.add('pressed');
+setTimeout(()=>ab.classList.remove('pressed'),120);
+if(document.getElementById('dialogOverlay').classList.contains('show')){closeDialog();return;}
+if(gameActive&&!paused&&!document.getElementById('modal').classList.contains('show'))interact();
+};
+ab.addEventListener('touchstart',trigger,{passive:false});
+ab.addEventListener('click',e=>{if(e.detail===0)trigger(e);});
+ab.addEventListener('contextmenu',e=>e.preventDefault());
+})();
 
-  // Dibujar jugador
-  ctx.fillStyle = '#00f0ff';
-  ctx.beginPath();
-  ctx.arc(player.x, player.y, player.radius, 0, Math.PI * 2);
-  ctx.fill();
-  ctx.shadowColor = '#00f0ff';
-  ctx.shadowBlur = 15;
-  ctx.stroke();
-  ctx.shadowBlur = 0;
+// ============ UPDATE ============
+function update(dt){
+if(!gameActive||paused)return;
+if(transitionCooldown>0)transitionCooldown-=dt;
+if(screenTransition>0)screenTransition-=dt;
+
+let vx=0,vy=0;
+if(keys.up)vy-=1;
+if(keys.down)vy+=1;
+if(keys.left)vx-=1;
+if(keys.right)vx+=1;
+const len=Math.hypot(vx,vy);
+player.isWalking=len>0;
+if(len>0){
+vx/=len;vy/=len;
+if(vy<0)player.dir='up';else if(vy>0)player.dir='down';else if(vx<0)player.dir='left';else if(vx>0)player.dir='right';
+player.walkPhase+=dt*10;
+const now=performance.now();
+if(now-lastFootstep>320){sfxFootstep();lastFootstep=now;spawnParticle(player.x+player.w/2+(Math.random()-.5)*20,player.y+player.h,'rgba(0,240,255,0.6)',(Math.random()-.5)*20,-20-Math.random()*20,0.5);}
+}else{player.walkPhase=0;}
+
+const step=player.speed*dt;
+const nx=player.x+vx*step;
+const ny=player.y+vy*step;
+if(!isWall(nx,player.y))player.x=nx;
+if(!isWall(player.x,ny))player.y=ny;
+player.x=Math.max(TILE,Math.min(W-TILE,player.x));
+player.y=Math.max(TILE,Math.min(H-TILE,player.y));
+
+if(transitionCooldown<=0){
+for(const d of rooms[currentRoom].doors){
+const dx=d.x*TILE,dy=d.y*TILE,dw=d.w*TILE,dh=d.h*TILE;
+if(overlap({x:player.x-13,y:player.y-13,w:26,h:26},{x:dx,y:dy,w:dw,h:dh})){enterDoor(d);return;}
+}
 }
 
-function gameLoop(){
-  updatePlayer();
-  render();
-  requestAnimationFrame(gameLoop);
+nearObject=null;
+const objs=rooms[currentRoom].objects||[];
+for(const o of objs){
+const ox=(o.x+0.5)*TILE,oy=(o.y+0.5)*TILE;
+if(Math.hypot(player.x-ox,player.y-oy)<TILE*1.3){nearObject=o;break;}
+}
+document.getElementById('prompt').classList.toggle('show',!!nearObject&&!fragments[nearObject.qKey]);
+
+for(let i=particles.length-1;i>=0;i--){const p=particles[i];p.x+=p.vx*dt;p.y+=p.vy*dt;p.vy+=30*dt;p.life-=dt;if(p.life<=0)particles.splice(i,1);}
+for(const p of ambientParticles){p.x+=p.vx*dt;p.y+=p.vy*dt;p.life-=dt;if(p.life<=0||p.y<-20){p.x=Math.random()*W;p.y=H+10;p.life=p.maxLife;}}
+for(let i=doorEntryFx.length-1;i>=0;i--){doorEntryFx[i].r+=3;doorEntryFx[i].alpha-=0.03;if(doorEntryFx[i].alpha<=0)doorEntryFx.splice(i,1);}
 }
 
+// ============ INTERACT ============
 function interact(){
-  if(!activeObject) return;
-  if(activeObject.type === 'door'){
-    currentRoom = activeObject.target;
-    document.getElementById('roomName').textContent = currentRoom.toUpperCase();
-    player.x = 12 * TILE_SIZE;
-    player.y = 7 * TILE_SIZE;
-  } else if(activeObject.type === 'terminal'){
-    openQuestionModal(activeObject.qKey);
-  }
+if(!nearObject)return;
+if(nearObject.type==='terminal'){
+if(fragments[nearObject.qKey.replace('q','cam')])return;
+openPuzzle(nearObject);
+}else if(nearObject.type==='console'){
+showTrap(nearObject.trap);
+}else if(nearObject.type==='decoy'){
+showDecoyMessage();
+}
 }
 
-function openQuestionModal(qKey){
-  let q = QUESTIONS[qKey];
-  if(!q) return;
-  document.getElementById('mTag').textContent = q.title;
-  document.getElementById('mQuestion').innerHTML = q.question;
-  let optContainer = document.getElementById('mOptions');
-  optContainer.innerHTML = '';
-  document.getElementById('mFeedback').className = 'feedback';
-  document.getElementById('mFeedback').style.display = 'none';
-
-  q.options.forEach((opt, idx) => {
-    let btn = document.createElement('button');
-    btn.className = 'option';
-    btn.textContent = `${String.fromCharCode(65+idx)}) ${opt}`;
-    btn.onclick = () => handleAnswer(qKey, idx, btn);
-    optContainer.appendChild(btn);
-  });
-
-  document.getElementById('modal').classList.add('show');
+function showDecoyMessage(){
+const mensajes=['SISTEMA BLOQUEADO','TERMINAL SIN ENERGIA','DATOS CORRUPTOS','ACCESO DENEGADO','CONEXION PERDIDA','ERROR 404','NODO INACTIVO','SIN RESPUESTA...'];
+const msg=mensajes[Math.floor(Math.random()*mensajes.length)];
+showToast(msg);
+beep(200,.15,'sawtooth',.12);
+setTimeout(()=>beep(150,.2,'sawtooth',.12),100);
+if(navigator.vibrate)navigator.vibrate(80);
 }
 
-function handleAnswer(qKey, selected, btnEl){
-  let q = QUESTIONS[qKey];
-  let fb = document.getElementById('mFeedback');
-  fb.style.display = 'block';
+function showToast(text){
+const toast=document.createElement('div');
+toast.textContent=text;
+toast.style.cssText='position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(20,10,20,0.95);color:#ff8800;border:2px solid #ff8800;padding:14px 24px;border-radius:8px;font-family:Courier New,monospace;font-size:1rem;font-weight:bold;letter-spacing:3px;z-index:500;box-shadow:0 0 30px rgba(255,136,0,0.6);animation:toastAnim 1.8s ease forwards;pointer-events:none;';
+document.body.appendChild(toast);
+setTimeout(()=>toast.remove(),1900);
+}
 
-  if(selected === q.correct){
-    fb.className = 'feedback ok show';
-    fb.innerHTML = `<b>¡CORRECTO!</b> Fragmento recuperado: [<b>${q.fragment}</b>]`;
-    btnEl.classList.add('correct');
-    if(!solvedQuestions[qKey]){
-      solvedQuestions[qKey] = true;
-      unlockedFragments.push(q.fragment);
-      document.getElementById('fragCount').textContent = unlockedFragments.length;
-      if(unlockedFragments.length === 5){
-        setTimeout(triggerFinalPhase, 1500);
-      }
-    }
-  } else {
-    fb.className = 'feedback err show';
-    fb.textContent = 'RESPUESTA INCORRECTA. Revisa los conceptos de Carga Nuclear Efectiva.';
-    btnEl.classList.add('wrong');
-  }
+// ============ PUZZLES ============
+function openPuzzle(obj){
+currentObject=obj;
+const camId='cam'+(obj.qKey.match(/\d+/)[0]<=2?'1':obj.qKey.match(/\d+/)[0]<=4?'2':obj.qKey.match(/\d+/)[0]<=6?'3':obj.qKey.match(/\d+/)[0]<=8?'4':'5');
+currentPuzzle=puzzles[camId];
+currentPuzzle._camId=camId;
+const qIdx=(parseInt(obj.qKey.match(/\d+/)[0])-1)%2;
+currentQuestionIndex=qIdx;
+answeredCorrect=[false,false];
+gameActive=false;sfxClick();
+const hb=document.getElementById('hintBtn');
+if(session.role==='host'){hb.disabled=true;hb.textContent='PISTA (ANFITRION)';}
+else{hb.disabled=false;hb.textContent='PISTA';}
+renderQuestion();
+document.getElementById('modal').classList.add('show');
+}
+
+function renderQuestion(){
+const p=currentPuzzle;
+const q=p.questions[currentQuestionIndex];
+document.getElementById('mTag').textContent=p.tag;
+document.getElementById('mTitle').textContent=q.title;
+const prog=document.getElementById('mProgress');
+prog.innerHTML='';
+p.questions.forEach((_,i)=>{
+const d=document.createElement('div');
+d.className='q';
+if(answeredCorrect[i])d.classList.add('done');
+else if(i===currentQuestionIndex)d.classList.add('cur');
+prog.appendChild(d);
+});
+document.getElementById('mQuestion').innerHTML=q.question;
+const opts=document.getElementById('mOptions');
+opts.innerHTML='';
+q.options.forEach((o,i)=>{
+const b=document.createElement('button');
+b.className='option';
+b.innerHTML=o+(testMode&&i===q.correct?'<span class="test-mark">CORRECTA</span>':'');
+b.onclick=()=>selectOption(i,b);
+opts.appendChild(b);
+});
+const fb=document.getElementById('mFeedback');
+fb.className='feedback';fb.innerHTML='';
+document.getElementById('mHint').className='hint-box';
+document.getElementById('mHint').innerHTML='<b>PISTA:</b> '+q.hint;
+}
+
+function selectOption(i,btn){
+if(btn.classList.contains('disabled'))return;
+const p=currentPuzzle;
+const q=p.questions[currentQuestionIndex];
+const fb=document.getElementById('mFeedback');
+const opts=document.querySelectorAll('#mOptions .option');
+metrics.attemptsTotal++;
+
+if(i===q.correct){
+opts.forEach(o=>o.classList.add('disabled'));
+btn.classList.add('correct');
+answeredCorrect[currentQuestionIndex]=true;
+metrics.attemptsCorrect++;
+sfxSuccess();
+if(navigator.vibrate)navigator.vibrate([60,40,60]);
+if(currentQuestionIndex<p.questions.length-1&&!answeredCorrect[1-currentQuestionIndex]){
+fb.className='feedback ok show';
+fb.innerHTML='CORRECTO.<br>'+q.explanation+'<br><br><i>Pregunta '+(currentQuestionIndex+1)+'/'+p.questions.length+' superada.</i>';
+const nextIdx=1-currentQuestionIndex;
+setTimeout(()=>{currentQuestionIndex=nextIdx;renderQuestion();},1400);
+}else{
+fb.className='feedback ok show';
+fb.innerHTML='CORRECTO.<br>'+q.explanation+
+'<div class="frag">Fragmento obtenido: <b>'+p.frag+'</b></div>'+
+'<div style="margin-top:6px;color:#88ffbb;font-size:.82rem">Camara resuelta por completo.</div>';
+fragments[p._camId]=true;
+updateHUD();saveProgress();checkWin();
+}
+}else{
+btn.classList.add('wrong','disabled');
+secondsLeft=Math.max(0,secondsLeft-10);
+metrics.attemptsWrong++;
+metrics.wrongByCam[p._camId]++;
+updateHUD();
+sfxError();
+if(navigator.vibrate)navigator.vibrate(200);
+fb.className='feedback err show';
+fb.innerHTML='ACCESO DENEGADO.<br>La opcion es incorrecta. <b>NO se revelara la correcta.</b><br>Reintenta o pide una pista.<br><i style="color:#ff8888">Penalizacion: -10 segundos.</i>';
+const wrap=document.getElementById('canvasWrap');
+wrap.style.animation='shake .4s';
+setTimeout(()=>wrap.style.animation='',400);
+}
+}
+
+function showHint(){
+if(session.role==='host'){alert('Los anfitriones solo dan pistas oralmente.');return;}
+document.getElementById('mHint').classList.add('show');
+metrics.hintsUsed++;
+metrics.hintsPerCamera[currentPuzzle._camId]++;
+beep(880,.08,'sine',.1);
 }
 
 function closeModal(){
-  document.getElementById('modal').classList.remove('show');
+document.getElementById('modal').classList.remove('show');
+gameActive=true;
+currentObject=null;currentPuzzle=null;currentQuestionIndex=0;
 }
 
-function triggerFinalPhase(){
-  closeModal();
-  document.getElementById('finalScreen').classList.add('show');
+// ============ TRAMPAS ============
+function showTrap(id){
+if(!trapsVisited[id]){
+trapsVisited[id]=true;
+metrics.trapsVisited[id]=true;
+secondsLeft=Math.max(0,secondsLeft-10);
+updateHUD();saveProgress();
+}
+const t=trapsData[id];
+document.getElementById('trapWarn').innerHTML=t.warn;
+document.getElementById('trapFake').innerHTML=t.fake;
+gameActive=false;sfxTrap();
+if(navigator.vibrate)navigator.vibrate([100,60,100,60,200]);
+document.getElementById('trapOverlay').classList.add('show');
+updateHUD();
+}
+function closeTrap(){document.getElementById('trapOverlay').classList.remove('show');gameActive=true;}
+
+// ============ PAUSA ============
+function pauseGame(){if(!gameActive)return;paused=true;document.getElementById('pauseOverlay').classList.add('show');sfxClick();}
+function resumeGame(){paused=false;document.getElementById('pauseOverlay').classList.remove('show');sfxClick();}
+
+// ============ WIN ============
+function checkWin(){
+if(Object.values(fragments).every(Boolean)){
+setTimeout(async()=>{
+gameActive=false;clearInterval(timerInterval);sfxUnlock();
+await showDialog('C.Y.T.E.','Lo lograste. Introduce la clave final para restaurar el firewall periodico.');
+document.getElementById('finalScreen').classList.add('show');
+document.getElementById('viewSintesisBtn').style.display='inline-block';
+},900);
+}
 }
 
 function checkFinal(){
-  let val = document.getElementById('finalKey').value.trim().toUpperCase();
-  let msg = document.getElementById('finalMsg');
-  if(val === 'ZEFF!'){
-    msg.style.color = 'var(--green)';
-    msg.textContent = '¡SISTEMA RESTAURADO! Clave Zeff! verificada con exito.';
-  } else {
-    msg.style.color = 'var(--red)';
-    msg.textContent = 'CLAVE INCORRECTA. Asegurate de unir todos los fragmentos.';
-  }
+const v=document.getElementById('finalKey').value.trim().toUpperCase();
+const msg=document.getElementById('finalMsg');
+metrics.finalKey=v;
+if(v==='ZEFF!'){
+metrics.finalKeyCorrect=true;
+msg.style.color='#00ff88';
+msg.innerHTML='CLAVE CORRECTA. C.Y.T.E. ha sido liberado.';
+sfxUnlock();confetti();
+document.getElementById('viewSintesisBtn').style.display='inline-block';
+}else{
+msg.style.color='#ff3355';
+msg.innerHTML='Clave incorrecta. Revisa tus fragmentos: concepto quimico de 4 letras + un signo.';
+sfxError();
+}
 }
 
-function setupControls(){
-  window.addEventListener('keydown', e => {
-    if(e.key === 'ArrowUp' || e.key === 'w') keys.up = true;
-    if(e.key === 'ArrowDown' || e.key === 's') keys.down = true;
-    if(e.key === 'ArrowLeft' || e.key === 'a') keys.left = true;
-    if(e.key === 'ArrowRight' || e.key === 'd') keys.right = true;
-    if(e.key === 'e' || e.key === 'E') interact();
-  });
-  window.addEventListener('keyup', e => {
-    if(e.key === 'ArrowUp' || e.key === 'w') keys.up = false;
-    if(e.key === 'ArrowDown' || e.key === 's') keys.down = false;
-    if(e.key === 'ArrowLeft' || e.key === 'a') keys.left = false;
-    if(e.key === 'ArrowRight' || e.key === 'd') keys.right = false;
-  });
-
-  document.querySelectorAll('#dpad button').forEach(btn => {
-    let dir = btn.dataset.dir;
-    btn.addEventListener('touchstart', (e)=>{ e.preventDefault(); keys[dir] = true; });
-    btn.addEventListener('touchend', (e)=>{ e.preventDefault(); keys[dir] = false; });
-    btn.addEventListener('mousedown', ()=> keys[dir] = true);
-    btn.addEventListener('mouseup', ()=> keys[dir] = false);
-  });
-
-  let actBtn = document.getElementById('actionBtn');
-  actBtn.addEventListener('click', interact);
-  actBtn.addEventListener('touchstart', (e)=>{ e.preventDefault(); interact(); });
+function confetti(){
+const colors=['#00f0ff','#ff00aa','#00ff88','#ffdd00','#ff3355'];
+for(let i=0;i<120;i++){
+const c=document.createElement('div');
+c.className='confetti';
+c.style.left=Math.random()*100+'vw';
+c.style.background=colors[Math.floor(Math.random()*colors.length)];
+c.style.animationDuration=(2+Math.random()*2.5)+'s';
+c.style.animationDelay=Math.random()*0.8+'s';
+document.body.appendChild(c);
+setTimeout(()=>c.remove(),6000);
+}
 }
 
-function resizeCanvas(){
-  const wrap = document.getElementById('canvasWrap');
-  let s = Math.min(wrap.clientWidth / W, wrap.clientHeight / H);
-  canvas.style.width = Math.floor(W * s) + 'px';
-  canvas.style.height = Math.floor(H * s) + 'px';
+function showSintesis(){document.getElementById('finalScreen').classList.remove('show');document.getElementById('sintesisOverlay').classList.add('show');sfxUnlock();}
+function closeSintesis(){document.getElementById('sintesisOverlay').classList.remove('show');document.getElementById('finalScreen').classList.add('show');sfxClick();}
+
+// ============ BITACORA ============
+function showBitacora(){
+const dur=metrics.startTimer?Math.round((performance.now()-metrics.startTimer)/1000):0;
+const mm=String(Math.floor(dur/60)).padStart(2,'0');
+const ss=String(dur%60).padStart(2,'0');
+const frags=Object.values(fragments).filter(Boolean).length;
+const trapsHit=Object.values(metrics.trapsVisited).filter(Boolean).length;
+const cameras=[{id:'cam1',name:'Camara 1 - Activacion'},{id:'cam2',name:'Camara 2 - Diagnostico'},{id:'cam3',name:'Camara 3 - Analisis'},{id:'cam4',name:'Camara 4 - Aplicacion'},{id:'cam5',name:'Camara 5 - Verificacion'}];
+let camerasHTML='';
+cameras.forEach(c=>{
+const solved=fragments[c.id];const hints=metrics.hintsPerCamera[c.id]||0;const wrong=metrics.wrongByCam[c.id]||0;
+camerasHTML+='<div class="bit-row"><span class="lbl">'+c.name+'</span><span class="val '+(solved?'green':'red')+'">'+(solved?'RESUELTA':'NO RESUELTA')+(hints?' - Pistas: '+hints:'')+(wrong?' - Errores: '+wrong:'')+'</span></div>';
+});
+let trapsHTML='';
+['trap1','trap2','trap3'].forEach(t=>{const v=metrics.trapsVisited[t];trapsHTML+='<span class="bit-tag '+(v?'trap':'')+'">'+t.toUpperCase()+' '+(v?'(visitada)':'(no visitada)')+'</span>';});
+const html='<h2>BITACORA DEL ESCAPE ROOM</h2>'+
+'<h3>Datos de la sesion</h3>'+
+'<div class="bit-row"><span class="lbl">Equipo</span><span class="val">'+session.team+'</span></div>'+
+'<div class="bit-row"><span class="lbl">Rol</span><span class="val">'+(session.role==='host'?'Anfitrion':'Jugador')+'</span></div>'+
+'<div class="bit-row"><span class="lbl">Ronda</span><span class="val">'+session.round+'</span></div>'+
+'<div class="bit-row"><span class="lbl">Equipo par</span><span class="val">'+session.pair+'</span></div>'+
+'<div class="bit-row"><span class="lbl">Duracion total</span><span class="val yellow">'+mm+':'+ss+'</span></div>'+
+'<h3>Resultado</h3>'+
+'<div class="bit-row"><span class="lbl">Fragmentos obtenidos</span><span class="val '+(frags===5?'green':'yellow')+'">'+frags+'/5</span></div>'+
+'<div class="bit-row"><span class="lbl">Clave final</span><span class="val '+(metrics.finalKeyCorrect?'green':'red')+'">'+(metrics.finalKey||'(no ingresada)')+'</span></div>'+
+'<div class="bit-row"><span class="lbl">Intentos totales</span><span class="val">'+metrics.attemptsTotal+'</span></div>'+
+'<div class="bit-row"><span class="lbl">Aciertos / Errores</span><span class="val"><span style="color:#00ff88">'+metrics.attemptsCorrect+'</span> / <span style="color:#ff3355">'+metrics.attemptsWrong+'</span></span></div>'+
+'<div class="bit-row"><span class="lbl">Pistas utilizadas</span><span class="val yellow">'+metrics.hintsUsed+'</span></div>'+
+'<div class="bit-row"><span class="lbl">Camaras trampa visitadas</span><span class="val yellow">'+trapsHit+'/3</span></div>'+
+'<h3>Detalle por camara</h3>'+camerasHTML+
+'<h3>Trampas visitadas</h3><div style="padding:6px 0">'+trapsHTML+'</div>'+
+'<h3>Retroalimentacion oral (3 min)</h3>'+
+'<div class="feedback-q">Que concepto quimico te costo mas y por que?</div>'+
+'<div class="feedback-q">Las pistas fueron suficientes o ambiguas?</div>'+
+'<div class="feedback-q">La navegacion por los laberintos fue clara?</div>'+
+'<div class="feedback-q">Que mejorarias del escape room que jugaste?</div>'+
+'<h3>Mejora aplicada a nuestro producto</h3>'+
+'<textarea id="bitImprovement" placeholder="Ejemplo: agregar temporizador visual mas claro..." style="width:100%;min-height:70px;padding:10px;background:#12121f;border:2px solid #1f1f35;color:#00f0ff;font-family:Courier New,monospace;font-size:.85rem;border-radius:6px;resize:vertical"></textarea>'+
+'<div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:16px">'+
+'<button class="btn green small" onclick="copyBitacora()">COPIAR</button>'+
+'<button class="btn magenta small" onclick="downloadBitacora()">DESCARGAR</button>'+
+'<button class="btn small" onclick="closeBitacora()">CERRAR</button>'+
+'</div>';
+document.getElementById('bitacoraContent').innerHTML=html;
+document.getElementById('bitacoraOverlay').classList.add('show');
+sfxClick();
 }
-window.addEventListener('resize', resizeCanvas);
+function closeBitacora(){document.getElementById('bitacoraOverlay').classList.remove('show');sfxClick();}
+function bitacoraAsText(){
+const dur=metrics.startTimer?Math.round((performance.now()-metrics.startTimer)/1000):0;
+const mm=String(Math.floor(dur/60)).padStart(2,'0');
+const ss=String(dur%60).padStart(2,'0');
+const frags=Object.values(fragments).filter(Boolean).length;
+const improvement=document.getElementById('bitImprovement')?document.getElementById('bitImprovement').value:'';
+let t='=== BITACORA DEL ESCAPE ROOM "C.Y.T.E." ===\n';
+t+='Equipo: '+session.team+'\nRol: '+(session.role==='host'?'Anfitrion':'Jugador')+'\nRonda: '+session.round+'\n';
+t+='Duracion: '+mm+':'+ss+'\nFragmentos: '+frags+'/5\n';
+t+='Clave final: '+(metrics.finalKey||'-')+' - '+(metrics.finalKeyCorrect?'CORRECTA':'INCORRECTA')+'\n';
+t+='Intentos: '+metrics.attemptsTotal+' | Aciertos: '+metrics.attemptsCorrect+' | Errores: '+metrics.attemptsWrong+'\n';
+t+='Pistas: '+metrics.hintsUsed+'\nTrampas: '+Object.values(metrics.trapsVisited).filter(Boolean).length+'/3\n';
+t+='Mejora: '+(improvement||'(no escrita)')+'\n';
+return t;
+}
+function copyBitacora(){
+const text=bitacoraAsText();
+navigator.clipboard.writeText(text).then(()=>alert('Bitacora copiada.')).catch(()=>{const ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove();alert('Bitacora copiada.');});
+}
+function downloadBitacora(){
+const text=bitacoraAsText();
+const blob=new Blob([text],{type:'text/plain'});
+const url=URL.createObjectURL(blob);
+const a=document.createElement('a');
+a.href=url;a.download='bitacora_'+session.team.replace(/\s+/g,'_')+'.txt';a.click();
+URL.revokeObjectURL(url);
+}
+
+// ============ RENDER ============
+function drawFloor(theme){
+const grad=ctx.createRadialGradient(W/2,H/2,100,W/2,H/2,W*0.8);
+grad.addColorStop(0,theme.floor);grad.addColorStop(1,'#000000');
+ctx.fillStyle=grad;ctx.fillRect(0,0,W,H);
+ctx.strokeStyle=theme.grid;ctx.lineWidth=1;
+for(let x=0;x<W;x+=40){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}
+for(let y=0;y<H;y+=40){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
+}
+
+function drawMap(room,theme){
+const map=MAPS[room.map];
+const time=Date.now()/1000;
+for(let r=0;r<ROWS;r++){
+for(let c=0;c<COLS;c++){
+const x=c*TILE,y=r*TILE;
+if(map[r][c]===1){
+const grad=ctx.createLinearGradient(x,y,x,y+TILE);
+grad.addColorStop(0,'#1a1a2e');
+grad.addColorStop(0.5,'#0f0f1e');
+grad.addColorStop(1,'#0a0a15');
+ctx.fillStyle=grad;ctx.fillRect(x,y,TILE,TILE);
+ctx.strokeStyle=theme.primary+'90';ctx.lineWidth=2;
+ctx.beginPath();ctx.moveTo(x,y+0.5);ctx.lineTo(x+TILE,y+0.5);ctx.stroke();
+ctx.strokeStyle=theme.primary+'50';ctx.lineWidth=1;
+ctx.strokeRect(x+0.5,y+0.5,TILE-1,TILE-1);
+const pulse=0.5+0.5*Math.sin(time*2+c*0.3+r*0.3);
+ctx.fillStyle=theme.primary+Math.floor(pulse*120).toString(16).padStart(2,'0');
+ctx.beginPath();ctx.arc(x+TILE/2,y+TILE/2,1.5,0,Math.PI*2);ctx.fill();
+}else{
+ctx.fillStyle='rgba(0,0,0,0.15)';ctx.fillRect(x,y,TILE,TILE);
+}
+}
+}
+}
+
+function drawDoors(room,theme){
+const time=Date.now()/300;
+for(const d of room.doors){
+const dx=d.x*TILE,dy=d.y*TILE,dw=d.w*TILE,dh=d.h*TILE;
+const pulse=0.6+0.4*Math.sin(time);
+const grad=ctx.createRadialGradient(dx+dw/2,dy+dh/2,0,dx+dw/2,dy+dh/2,dw*0.8);
+grad.addColorStop(0,'rgba(0,255,136,'+(0.3+pulse*0.2)+')');
+grad.addColorStop(1,'rgba(0,255,136,0)');
+ctx.fillStyle=grad;ctx.fillRect(dx-15,dy-15,dw+30,dh+30);
+const gradDoor=ctx.createLinearGradient(dx,dy,dx,dy+dh);
+gradDoor.addColorStop(0,'rgba(0,255,136,'+(0.25+pulse*0.15)+')');
+gradDoor.addColorStop(1,'rgba(0,255,136,'+(0.12+pulse*0.08)+')');
+ctx.fillStyle=gradDoor;ctx.fillRect(dx+2,dy+2,dw-4,dh-4);
+ctx.strokeStyle='#00ff88';ctx.lineWidth=2;ctx.strokeRect(dx+2,dy+2,dw-4,dh-4);
+ctx.fillStyle='#00ff88';
+ctx.font='bold 11px monospace';ctx.textAlign='center';
+ctx.shadowColor='#00ff88';ctx.shadowBlur=8;
+ctx.fillText(d.label,dx+dw/2,dy+dh/2+4);
+ctx.shadowBlur=0;
+}
+}
+
+function drawObjects(room,theme){
+const time=Date.now()/1000;
+for(const o of room.objects||[]){
+const ox=o.x*TILE,oy=o.y*TILE,ow=TILE,oh=TILE;
+if(o.type==='decoy'){
+const decoyPulse=0.3+0.2*Math.sin(time*1.5);
+const grad=ctx.createRadialGradient(ox+ow/2,oy+oh/2,0,ox+ow/2,oy+oh/2,ow*0.9);
+grad.addColorStop(0,'rgba(255,136,0,'+decoyPulse*0.35+')');
+grad.addColorStop(1,'rgba(255,136,0,0)');
+ctx.fillStyle=grad;ctx.fillRect(ox-15,oy-15,ow+30,oh+30);
+ctx.fillStyle='#2a2a35';ctx.fillRect(ox+4,oy+4,ow-8,oh-8);
+ctx.strokeStyle='#555';ctx.lineWidth=1.5;ctx.strokeRect(ox+4,oy+4,ow-8,oh-8);
+ctx.fillStyle='#888';ctx.font='bold 18px monospace';ctx.textAlign='center';
+ctx.fillText('?',ox+ow/2,oy+oh/2+6);
+continue;
+}
+const isTrap=o.type==='console';
+const qKeyCam=isTrap?null:(o.qKey.match(/\d+/)[0]<=2?'cam1':o.qKey.match(/\d+/)[0]<=4?'cam2':o.qKey.match(/\d+/)[0]<=6?'cam3':o.qKey.match(/\d+/)[0]<=8?'cam4':'cam5');
+const solved=qKeyCam&&fragments[qKeyCam];
+const baseColor=isTrap?'#ff8800':(solved?'#00ff88':theme.primary);
+const pulse=0.5+0.5*Math.sin(time*2);
+const grad=ctx.createRadialGradient(ox+ow/2,oy+oh/2,0,ox+ow/2,oy+oh/2,ow*0.9);
+grad.addColorStop(0,baseColor+'60');
+grad.addColorStop(1,baseColor+'00');
+ctx.fillStyle=grad;ctx.fillRect(ox-20,oy-20,ow+40,oh+40);
+const gradBase=ctx.createLinearGradient(ox,oy,ox,oy+oh);
+gradBase.addColorStop(0,'#1a1a2e');gradBase.addColorStop(0.5,'#0d0d1a');gradBase.addColorStop(1,'#15152a');
+ctx.fillStyle=gradBase;ctx.fillRect(ox+3,oy+3,ow-6,oh-6);
+ctx.strokeStyle=baseColor;ctx.lineWidth=2.5;
+ctx.shadowColor=baseColor;ctx.shadowBlur=10+pulse*6;
+ctx.strokeRect(ox+3,oy+3,ow-6,oh-6);
+ctx.shadowBlur=0;
+ctx.fillStyle=baseColor;
+ctx.beginPath();
+ctx.arc(ox+8,oy+8,2,0,Math.PI*2);ctx.arc(ox+ow-8,oy+8,2,0,Math.PI*2);
+ctx.arc(ox+8,oy+oh-8,2,0,Math.PI*2);ctx.arc(ox+ow-8,oy+oh-8,2,0,Math.PI*2);
+ctx.fill();
+ctx.fillStyle=solved?'#00ff88':(isTrap?'#ff8800':theme.primary);
+ctx.font='bold 8px monospace';ctx.textAlign='center';
+ctx.fillText(solved?'OK':(isTrap?'!':'ACT'),ox+ow/2,oy+oh/2+3);
+}
+}
+
+function drawPlayer(){
+const {x,y,w,h}=player;
+const time=Date.now()/1000;
+const pulse=0.5+0.5*Math.sin(time*3);
+const walkBob=player.isWalking?Math.abs(Math.sin(player.walkPhase))*3:0;
+const px=x-w/2,py=y-h/2-walkBob;
+ctx.fillStyle='rgba(0,0,0,0.4)';
+ctx.beginPath();ctx.ellipse(x,y+h/2+2,w*0.8,4,0,0,Math.PI*2);ctx.fill();
+const grad=ctx.createRadialGradient(x,y,0,x,y,45);
+grad.addColorStop(0,'rgba(0,240,255,'+(0.2+pulse*0.15)+')');
+grad.addColorStop(1,'rgba(0,240,255,0)');
+ctx.fillStyle=grad;ctx.beginPath();ctx.arc(x,y,45,0,Math.PI*2);ctx.fill();
+const bodyGrad=ctx.createLinearGradient(px,py,px,py+h);
+bodyGrad.addColorStop(0,'#00ffff');bodyGrad.addColorStop(0.5,'#00f0ff');bodyGrad.addColorStop(1,'#0088cc');
+ctx.fillStyle=bodyGrad;ctx.fillRect(px,py,w,h);
+ctx.strokeStyle='#ffffff';ctx.lineWidth=2;
+ctx.shadowColor='#00f0ff';ctx.shadowBlur=8+pulse*4;
+ctx.strokeRect(px,py,w,h);ctx.shadowBlur=0;
+ctx.fillStyle='rgba(255,255,255,0.5)';ctx.fillRect(px+3,py+3,w-6,3);
+ctx.fillStyle='rgba(0,0,0,0.3)';ctx.fillRect(px+3,py+h*0.5,w-6,2);
+ctx.fillStyle='#050510';
+ctx.fillRect(px+5,py+6,4,4);
+ctx.fillRect(px+w-9,py+6,4,4);
+}
+
+function drawParticles(){
+for(const p of particles){
+ctx.fillStyle=p.color;ctx.globalAlpha=p.life/p.maxLife;
+ctx.beginPath();ctx.arc(p.x,p.y,2.5,0,Math.PI*2);ctx.fill();
+}
+ctx.globalAlpha=1;
+}
+
+function drawAmbient(theme){
+for(const p of ambientParticles){
+ctx.fillStyle=theme.primary;ctx.globalAlpha=(p.life/p.maxLife)*0.5;
+ctx.beginPath();ctx.arc(p.x,p.y,p.size,0,Math.PI*2);ctx.fill();
+}
+ctx.globalAlpha=1;
+}
+
+function drawTrapAmbient(room){
+if(!room.id.startsWith('trap'))return;
+const time=Date.now()/200;
+ctx.fillStyle='rgba(255,0,50,'+(0.05+0.08*Math.abs(Math.sin(time)))+')';
+ctx.fillRect(0,0,W,H);
+}
+
+function drawDoorFx(){
+for(const fx of doorEntryFx){
+ctx.strokeStyle=fx.color;ctx.globalAlpha=fx.alpha*0.6;ctx.lineWidth=3;
+ctx.beginPath();ctx.arc(fx.x,fx.y,fx.r,0,Math.PI*2);ctx.stroke();
+}
+ctx.globalAlpha=1;
+}
+
+function drawTransition(){
+if(screenTransition>0){
+const a=screenTransition/0.6;
+ctx.fillStyle='rgba(0,240,255,'+(a*0.4)+')';
+ctx.fillRect(0,0,W,H);
+}
+}
+
+function draw(){
+const room=rooms[currentRoom];
+const theme=ROOM_THEMES[room.theme];
+drawFloor(theme);
+drawAmbient(theme);
+drawMap(room,theme);
+drawDoors(room,theme);
+drawObjects(room,theme);
+drawTrapAmbient(room);
+drawParticles();
+drawDoorFx();
+const vg=ctx.createRadialGradient(player.x,player.y,60,player.x,player.y,420);
+vg.addColorStop(0,'rgba(0,0,0,0)');
+vg.addColorStop(1,'rgba(0,0,0,0.6)');
+ctx.fillStyle=vg;ctx.fillRect(0,0,W,H);
+drawPlayer();
+drawTransition();
+}
+
+// ============ LOOP ============
+let last=performance.now();
+function loop(t){
+const dt=Math.min((t-last)/1000,.05);
+last=t;
+if(gameActive&&!paused)update(dt);
+draw();
+requestAnimationFrame(loop);
+}
+
+document.addEventListener('gesturestart',e=>e.preventDefault());
+document.addEventListener('contextmenu',e=>{if(e.target.closest('#dpad, #actionBtn, #gameWrap'))e.preventDefault();});
+
+resizeCanvas();
 </script>
 </body>
 </html>
