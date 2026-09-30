@@ -95,7 +95,7 @@ animation:hudGlow 3s infinite}
 padding:4px 8px;border-radius:4px;font-family:'Courier New',monospace;
 font-size:inherit;cursor:pointer;min-height:32px}
 #canvasWrap{flex:1;position:relative;display:flex;align-items:center;justify-content:center;
-background:#000;overflow:hidden;min-height:0}
+background:#050510;overflow:hidden;min-height:0}
 #gameCanvas{display:block;max-width:100%;max-height:100%;width:auto;height:auto;
 object-fit:contain;touch-action:none}
 #fragHud{position:absolute;top:10px;left:10px;z-index:5;display:flex;gap:5px;pointer-events:none}
@@ -105,26 +105,18 @@ justify-content:center;font-weight:bold;color:#444;font-size:.85rem;transition:a
 #fragHud .f.unlocked{border-style:solid;border-color:var(--green);color:var(--green);
 background:rgba(0,255,136,.15);box-shadow:0 0 10px var(--green)}
 #miniMap{position:absolute;top:10px;right:10px;z-index:5;
-width:130px;height:110px;background:rgba(18,18,31,.85);
+width:118px;height:96px;background:rgba(18,18,31,.85);
 border:1px solid var(--border);border-radius:6px;pointer-events:none;
-font-size:.55rem;padding:5px;font-weight:bold}
-#miniMap .mm-room{display:inline-block;width:16px;height:16px;margin:2px;
-background:#1f1f35;border:1px solid #333;border-radius:2px;transition:all .3s;
-line-height:16px;text-align:center;color:#666}
-#miniMap .mm-room.cur{border-color:var(--cyan);background:rgba(0,240,255,.3);box-shadow:0 0 8px var(--cyan);color:var(--cyan)}
-#miniMap .mm-room.done{border-color:var(--green);background:rgba(0,255,136,.2);color:var(--green)}
-#miniMap .mm-room.trap{border-color:#ff8800;background:rgba(255,136,0,.2);color:#ff8800}
-#miniMap .mm-room.danger{border-color:var(--red);background:rgba(255,51,85,.25);animation:mmDanger 1s infinite}
-@keyframes mmDanger{0%,100%{opacity:.65}50%{opacity:1}}
+font-size:.5rem;padding:4px}
+#miniMap .mm-room{display:inline-block;width:14px;height:14px;margin:2px;
+background:#1f1f35;border:1px solid #333;border-radius:2px;transition:all .3s}
+#miniMap .mm-room.cur{border-color:var(--cyan);background:rgba(0,240,255,.3);box-shadow:0 0 8px var(--cyan)}
+#miniMap .mm-room.done{border-color:var(--green);background:rgba(0,255,136,.2)}
+#miniMap .mm-room.trap{border-color:#ff8800;background:rgba(255,136,0,.2)}
 #roleBadge{position:absolute;bottom:10px;left:10px;z-index:5;
 padding:4px 12px;border-radius:4px;font-size:.7rem;letter-spacing:1px;
 background:rgba(255,0,170,.2);border:1px solid var(--magenta);color:#ff66cc}
 #roleBadge.host{background:rgba(0,255,136,.15);border-color:var(--green);color:var(--green)}
-#staminaWrap{position:absolute;bottom:44px;left:10px;z-index:5;width:130px;pointer-events:none}
-#staminaWrap .lbl{font-size:.55rem;color:var(--cyan);letter-spacing:2px;margin-bottom:2px;text-shadow:0 0 6px var(--cyan)}
-#staminaBar{width:100%;height:8px;background:rgba(0,0,0,.6);border:1px solid var(--cyan);border-radius:4px;overflow:hidden;box-shadow:0 0 8px rgba(0,240,255,.4)}
-#staminaFill{height:100%;background:linear-gradient(90deg,var(--magenta),var(--cyan));width:100%;transition:width .08s linear}
-#staminaFill.low{background:linear-gradient(90deg,#ff3355,#ff8800)}
 #prompt{position:absolute;left:50%;bottom:12px;transform:translateX(-50%);
 padding:8px 16px;background:rgba(0,240,255,.18);
 border:2px solid var(--cyan);color:var(--cyan);font-weight:bold;
@@ -134,7 +126,7 @@ display:none;animation:pulse 1s infinite;pointer-events:none;white-space:nowrap}
 @keyframes pulse{0%,100%{opacity:.6}50%{opacity:1}}
 #controls{flex-shrink:0;height:clamp(150px,26vh,200px);
 background:linear-gradient(180deg,#0d0d1a,#0a0a12);
-border-top:1px solid var(--border);display:flex;justify-content:space-between;
+border-top:1px solid var(--border);display:flex;justify-space:space-between;
 align-items:center;padding:8px 14px;gap:10px;
 padding-bottom:calc(8px + env(safe-area-inset-bottom,0px))}
 #dpad{position:relative;width:clamp(130px,34vw,170px);aspect-ratio:1;flex-shrink:0}
@@ -148,16 +140,6 @@ touch-action:none;font-family:'Courier New',monospace;font-weight:bold;padding:0
 #dpad .down{bottom:0;left:28%}
 #dpad .left{top:28%;left:0}
 #dpad .right{top:28%;right:0}
-#centerControls{display:flex;flex-direction:column;gap:8px;align-items:center;flex-shrink:0}
-#dashBtn{width:clamp(70px,18vw,90px);height:clamp(50px,12vw,64px);
-background:radial-gradient(circle,rgba(255,221,0,.22),rgba(255,221,0,.05));
-border:2px solid var(--yellow);color:var(--yellow);border-radius:12px;
-font-size:clamp(.7rem,2.6vw,.85rem);font-family:'Courier New',monospace;
-font-weight:bold;letter-spacing:1px;cursor:pointer;
-display:flex;align-items:center;justify-content:center;touch-action:none;
-text-transform:uppercase;padding:0;transition:transform .1s}
-#dashBtn:active,#dashBtn.pressed{background:var(--yellow);color:#000;box-shadow:0 0 20px var(--yellow);transform:scale(.94)}
-#dashBtn.cooling{opacity:.4;cursor:not-allowed}
 #actionBtn{width:clamp(80px,22vw,110px);height:clamp(80px,22vw,110px);
 background:radial-gradient(circle,rgba(255,0,170,.2),rgba(255,0,170,.05));
 border:3px solid var(--magenta);color:var(--magenta);
@@ -284,9 +266,6 @@ border-radius:6px;max-height:55vh;overflow-y:auto;margin-bottom:18px}
 .sintesis-box .hl{color:var(--cyan);font-weight:bold}
 .sintesis-box ul{margin-left:20px;margin-bottom:10px}
 .sintesis-box li{margin-bottom:6px;line-height:1.55}
-#damageFlash{position:fixed;inset:0;background:rgba(255,0,50,.35);z-index:180;
-pointer-events:none;opacity:0;transition:opacity .25s}
-#damageFlash.show{opacity:1}
 @media (orientation:landscape) and (max-height:520px){
 #controls{position:absolute;inset:0;height:100%;background:transparent;
 border:none;pointer-events:none;padding:0}
@@ -295,16 +274,12 @@ border:none;pointer-events:none;padding:0}
 width:clamp(120px,22vh,160px);height:clamp(120px,22vh,160px);aspect-ratio:1}
 #actionBtn{position:absolute;right:16px;bottom:20px;
 width:clamp(76px,16vh,100px);height:clamp(76px,16vh,100px)}
-#centerControls{position:absolute;right:16px;bottom:130px}
-#staminaWrap{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);width:100px}
-#roleBadge{bottom:auto;top:6px;left:6px;font-size:.6rem;padding:2px 8px}
 }
 </style>
 </head>
 <body>
 
 <div id="testBadge">MODO TEST ACTIVO</div>
-<div id="damageFlash"></div>
 
 <div id="intro" class="overlay show">
 <h1 class="title">FIREWALL PERIODICO</h1>
@@ -314,7 +289,7 @@ width:clamp(76px,16vh,100px);height:clamp(76px,16vh,100px)}
 <p>Una falla ha corrompido la base de datos que controla los materiales del centro de computo. Los elementos aparecen <span class="warn">mal clasificados</span>, los valores periodicos fueron <span class="warn">alterados</span> y el sistema de <span class="warn">reciclaje electronico esta bloqueado</span>.</p>
 <p>Cada equipo actuara como un <span class="hl">modulo especializado</span> y recuperara uno de los seis sectores del sistema. En tu caso, el sector asignado es <span class="hl">CARGA NUCLEAR EFECTIVA</span>.</p>
 <p>Dentro de tu subtema deberas superar <b>5 camaras</b>, reunir <b>5 fragmentos</b> y formar la <b>clave final</b> para liberar el sistema.</p>
-<p class="warn">NUEVO: los pasillos estan a oscuras, hay <b>drones de seguridad patrullando</b> y <b>barreras laser</b> que se activan y desactivan. Usa el <b>DASH</b> (SHIFT o boton amarillo) para escapar. Cada impacto cuesta <b>15 segundos</b>.</p>
+<p class="warn">Tu mision: caminar por las instalaciones de C.Y.T.E., esquivar laberintos, evitar terminales trampa y resolver los acertijos antes de que se agote el tiempo.</p>
 </div>
 <button class="btn" onclick="showSessionSetup()">INICIAR MISION</button>
 <button class="btn magenta small" onclick="showRequirements()">REQUISITOS DEL PRODUCTO</button>
@@ -389,10 +364,6 @@ width:clamp(76px,16vh,100px);height:clamp(76px,16vh,100px)}
 <div id="fragHud"></div>
 <div id="miniMap"></div>
 <div id="roleBadge"></div>
-<div id="staminaWrap">
-<div class="lbl">ESTAMINA</div>
-<div id="staminaBar"><div id="staminaFill"></div></div>
-</div>
 <div id="prompt">Presiona E para interactuar</div>
 </div>
 <div id="controls">
@@ -401,9 +372,6 @@ width:clamp(76px,16vh,100px);height:clamp(76px,16vh,100px)}
 <button class="left" data-dir="left">&lt;</button>
 <button class="right" data-dir="right">&gt;</button>
 <button class="down" data-dir="down">v</button>
-</div>
-<div id="centerControls">
-<button id="dashBtn">DASH</button>
 </div>
 <button id="actionBtn">E</button>
 </div>
@@ -491,15 +459,15 @@ const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 
 const ROOM_THEMES = {
-hub:{primary:'#00f0ff',secondary:'#ff00aa',floor:'#0a0a1a',grid:'rgba(0,240,255,0.08)'},
-cam1:{primary:'#00f0ff',secondary:'#0088ff',floor:'#050f1e',grid:'rgba(0,240,255,0.10)'},
-cam2:{primary:'#00ff88',secondary:'#00cc66',floor:'#051a0f',grid:'rgba(0,255,136,0.10)'},
-cam3:{primary:'#ff00aa',secondary:'#cc0088',floor:'#1a0518',grid:'rgba(255,0,170,0.10)'},
-cam4:{primary:'#ffdd00',secondary:'#ff8800',floor:'#1a1405',grid:'rgba(255,221,0,0.10)'},
-cam5:{primary:'#ff3355',secondary:'#aa0022',floor:'#1a0508',grid:'rgba(255,51,85,0.10)'},
-trap1:{primary:'#ff8800',secondary:'#cc5500',floor:'#1a0a00',grid:'rgba(255,136,0,0.10)'},
-trap2:{primary:'#ff3355',secondary:'#aa0022',floor:'#1a0005',grid:'rgba(255,51,85,0.15)'},
-trap3:{primary:'#ff0055',secondary:'#aa0033',floor:'#1a0008',grid:'rgba(255,0,85,0.15)'}
+hub:{primary:'#00f0ff',secondary:'#ff00aa',floor:'#0a0a1a',accent:'#1a1a3a',grid:'rgba(0,240,255,0.08)',ambient:'rgba(0,240,255,0.5)'},
+cam1:{primary:'#00f0ff',secondary:'#0088ff',floor:'#050f1e',accent:'#0a1e3a',grid:'rgba(0,240,255,0.10)',ambient:'rgba(0,200,255,0.6)'},
+cam2:{primary:'#00ff88',secondary:'#00cc66',floor:'#051a0f',accent:'#0a2e1e',grid:'rgba(0,255,136,0.10)',ambient:'rgba(0,255,136,0.55)'},
+cam3:{primary:'#ff00aa',secondary:'#cc0088',floor:'#1a0518',accent:'#2e0a2e',grid:'rgba(255,0,170,0.10)',ambient:'rgba(255,0,170,0.55)'},
+cam4:{primary:'#ffdd00',secondary:'#ff8800',floor:'#1a1405',accent:'#2e240a',grid:'rgba(255,221,0,0.10)',ambient:'rgba(255,221,0,0.5)'},
+cam5:{primary:'#ff3355',secondary:'#aa0022',floor:'#1a0508',accent:'#2e0a12',grid:'rgba(255,51,85,0.10)',ambient:'rgba(255,51,85,0.55)'},
+trap1:{primary:'#ff8800',secondary:'#cc5500',floor:'#1a0a00',accent:'#2e1400',grid:'rgba(255,136,0,0.10)',ambient:'rgba(255,100,0,0.55)'},
+trap2:{primary:'#ff3355',secondary:'#aa0022',floor:'#1a0005',accent:'#2e0008',grid:'rgba(255,51,85,0.15)',ambient:'rgba(255,51,85,0.6)'},
+trap3:{primary:'#ff0055',secondary:'#aa0033',floor:'#1a0008',accent:'#2e000f',grid:'rgba(255,0,85,0.15)',ambient:'rgba(255,0,85,0.6)'}
 };
 
 const ambientParticles = [];
@@ -510,6 +478,7 @@ vx: (Math.random()-.5)*15, vy: -10 - Math.random()*20,
 size: 1 + Math.random()*2, life: Math.random()*5, maxLife: 5 + Math.random()*5
 });
 }
+
 const dataStreams = [];
 for (let i = 0; i < 8; i++) {
 dataStreams.push({x: 100 + i*110, offset: Math.random()*H, speed: 20 + Math.random()*40, chars: '01'});
@@ -529,14 +498,12 @@ if(audioCtx && audioCtx.state==='suspended') audioCtx.resume();
 }
 function beep(freq,dur,type='sine',vol=0.15){
 if(!soundEnabled||!audioCtx) return;
-try{
 const o=audioCtx.createOscillator(),g=audioCtx.createGain();
 o.type=type; o.frequency.setValueAtTime(freq,audioCtx.currentTime);
 g.gain.setValueAtTime(vol,audioCtx.currentTime);
 g.gain.exponentialRampToValueAtTime(0.001,audioCtx.currentTime+dur);
 o.connect(g); g.connect(audioCtx.destination);
 o.start(); o.stop(audioCtx.currentTime+dur);
-}catch(e){}
 }
 function sfxClick(){beep(800,.06,'square',.08)}
 function sfxFootstep(){beep(120+Math.random()*40,.04,'triangle',.05)}
@@ -545,8 +512,6 @@ function sfxError(){beep(180,.15,'sawtooth',.15);setTimeout(()=>beep(120,.25,'sa
 function sfxTrap(){beep(90,.4,'sawtooth',.2);setTimeout(()=>beep(70,.5,'sawtooth',.18),200)}
 function sfxUnlock(){beep(523,.1);setTimeout(()=>beep(784,.1),90);setTimeout(()=>beep(1046,.3),180)}
 function sfxDoor(){beep(220,.08);setTimeout(()=>beep(440,.12),60)}
-function sfxDash(){beep(1200,.06,'sawtooth',.1);setTimeout(()=>beep(1600,.08,'sine',.08),40)}
-function sfxHit(){beep(80,.25,'sawtooth',.22);setTimeout(()=>beep(50,.4,'sawtooth',.2),120)}
 function toggleSound(){
 soundEnabled=!soundEnabled;
 document.getElementById('soundBtn').textContent=soundEnabled?'AUDIO ON':'AUDIO OFF';
@@ -555,7 +520,6 @@ if(soundEnabled){ensureAudio();sfxClick()}
 
 function resizeCanvas(){
 const wrap=document.getElementById('canvasWrap');
-if(!wrap) return;
 const s=Math.min(wrap.clientWidth/W, wrap.clientHeight/H);
 canvas.style.width=Math.floor(W*s)+'px';
 canvas.style.height=Math.floor(H*s)+'px';
@@ -679,10 +643,11 @@ walls:[
 {x:0,y:H-T,w:120,h:T},{x:210,y:H-T,w:120,h:T},{x:420,y:H-T,w:120,h:T},
 {x:630,y:H-T,w:120,h:T},{x:840,y:H-T,w:120,h:T},
 {x:0,y:0,w:T,h:H},{x:W-T,y:0,w:T,h:H},
-{x:200,y:180,w:40,h:40},{x:720,y:180,w:40,h:40},
-{x:200,y:380,w:40,h:40},{x:720,y:380,w:40,h:40},
-{x:460,y:180,w:40,h:40},{x:460,y:380,w:40,h:40},
-{x:300,y:280,w:80,h:40},{x:580,y:280,w:80,h:40}
+// Laberinto interno en HUB
+{x:120,y:140,w:20,h:160},{x:120,y:300,w:180,h:20},
+{x:820,y:140,w:20,h:160},{x:660,y:300,w:180,h:20},
+{x:300,y:140,w:360,h:20},{x:420,y:250,w:120,h:20},{x:420,y:330,w:120,h:20},
+{x:250,y:420,w:20,h:120},{x:690,y:420,w:20,h:120}
 ],
 doors:[
 {x:120,y:0,w:90,h:55,target:'cam1',label:'CAM 1'},
@@ -694,187 +659,124 @@ doors:[
 {x:540,y:H-55,w:90,h:55,target:'cam4',label:'CAM 4'},
 {x:750,y:H-55,w:90,h:55,target:'cam5',label:'CAM 5'}
 ],
-enemies:[{ax:150,ay:290, bx:800,by:290, speed:80, t:0.2, dir:1, x:150, y:290}],
-lasers:[],
-objects:[], spawn:{x:450,y:290}
+objects:[], spawn:{x:480,y:290}
 },
 cam1:{id:'cam1',name:'CAMARA 1 - ACTIVACION',theme:'cam1',
 walls:[
 ...simpleWalls(),
-{x:180,y:120,w:40,h:40},{x:380,y:120,w:40,h:40},{x:580,y:120,w:40,h:40},{x:760,y:120,w:40,h:40},
-{x:180,y:480,w:40,h:40},{x:380,y:480,w:40,h:40},{x:580,y:480,w:40,h:40},{x:760,y:480,w:40,h:40},
-{x:280,y:240,w:40,h:40},{x:480,y:240,w:40,h:40},{x:680,y:240,w:40,h:40},
-{x:280,y:360,w:40,h:40},{x:480,y:360,w:40,h:40},{x:680,y:360,w:40,h:40},
-{x:80,y:290,w:40,h:40},{x:880,y:290,w:40,h:40}
+// Laberinto complejo Camara 1
+{x:100,y:100,w:20,h:320},{x:100,y:420,w:250,h:20},
+{x:220,y:20,w:20,h:300},{x:220,y:320,w:200,h:20},
+{x:320,y:100,w:200,h:20},{x:520,y:100,w:20,h:240},
+{x:420,y:220,w:20,h:200},{x:520,y:420,w:220,h:20},
+{x:640,y:20,w:20,h:300},{x:740,y:100,w:120,h:20},{x:740,y:220,w:20,h:220}
 ],
 doors:[{x:430,y:H-55,w:100,h:55,target:'hub',label:'VOLVER',returnIdx:0}],
-enemies:[
-{ax:200,ay:200, bx:750,by:200, speed:120, t:0, dir:1, x:200, y:200},
-{ax:200,ay:440, bx:750,by:440, speed:130, t:0.5, dir:-1, x:200, y:440}
-],
-lasers:[
-{x:100,y:290,w:80,h:8,period:2.4,phase:0,duty:0.55},
-{x:750,y:290,w:100,h:8,period:2,phase:0.4,duty:0.5}
-],
 objects:[
-{x:400,y:400,w:140,h:100,type:'terminal',puzzle:'cam1',label:'TERMINAL 1'},
-{x:60,y:60,w:90,h:70,type:'decoy',label:'TERMINAL?'},
-{x:810,y:60,w:90,h:70,type:'decoy',label:'TERMINAL?'}
-],spawn:{x:60,y:530}},
+{x:445,y:40,w:65,h:50,type:'terminal',puzzle:'cam1',label:'TERMINAL 1'},
+{x:130,y:130,w:60,h:50,type:'decoy',label:'TERMINAL?'},
+{x:780,y:300,w:60,h:50,type:'decoy',label:'TERMINAL?'}
+],spawn:{x:50,y:520}},
 cam2:{id:'cam2',name:'CAMARA 2 - DIAGNOSTICO',theme:'cam2',
 walls:[
 ...simpleWalls(),
-{x:200,y:140,w:40,h:40},{x:400,y:140,w:40,h:40},{x:600,y:140,w:40,h:40},{x:760,y:140,w:40,h:40},
-{x:200,y:440,w:40,h:40},{x:400,y:440,w:40,h:40},{x:600,y:440,w:40,h:40},{x:760,y:440,w:40,h:40},
-{x:100,y:290,w:40,h:40},{x:300,y:290,w:40,h:40},{x:500,y:290,w:40,h:40},{x:700,y:290,w:40,h:40},
-{x:400,y:290,w:40,h:40},{x:600,y:290,w:40,h:40}
+// Laberinto intrincado Camara 2
+{x:100,y:100,w:740,h:20},{x:100,y:200,w:600,h:20},
+{x:240,y:300,w:600,h:20},{x:100,y:400,w:600,h:20},
+{x:820,y:100,w:20,h:120},{x:100,y:200,w:20,h:120},
+{x:820,y:300,w:20,h:120},{x:100,y:400,w:20,h:120}
 ],
 doors:[{x:430,y:H-55,w:100,h:55,target:'hub',label:'VOLVER',returnIdx:2}],
-enemies:[
-{ax:200,ay:220, bx:750,by:220, speed:140, t:0, dir:1, x:200, y:220},
-{ax:200,ay:400, bx:750,by:400, speed:130, t:0.5, dir:-1, x:200, y:400}
-],
-lasers:[
-{x:100,y:220,w:80,h:8,period:2.2,phase:0,duty:0.5},
-{x:750,y:400,w:100,h:8,period:2.6,phase:0.3,duty:0.55}
-],
 objects:[
-{x:400,y:180,w:140,h:100,type:'terminal',puzzle:'cam2',label:'TERMINAL 2'},
-{x:60,y:60,w:90,h:70,type:'decoy',label:'TERMINAL?'},
-{x:810,y:520,w:90,h:70,type:'decoy',label:'TERMINAL?'}
-],spawn:{x:60,y:530}},
+{x:450,y:335,w:70,h:50,type:'terminal',puzzle:'cam2',label:'TERMINAL 2'},
+{x:450,y:135,w:60,h:50,type:'decoy',label:'TERMINAL?'},
+{x:450,y:235,w:60,h:50,type:'decoy',label:'TERMINAL?'}
+],spawn:{x:50,y:50}},
 cam3:{id:'cam3',name:'CAMARA 3 - ANALISIS',theme:'cam3',
 walls:[
 ...simpleWalls(),
-{x:140,y:140,w:40,h:40},{x:340,y:140,w:40,h:40},{x:540,y:140,w:40,h:40},{x:740,y:140,w:40,h:40},
-{x:140,y:440,w:40,h:40},{x:340,y:440,w:40,h:40},{x:540,y:440,w:40,h:40},{x:740,y:440,w:40,h:40},
-{x:240,y:290,w:40,h:40},{x:440,y:290,w:40,h:40},{x:640,y:290,w:40,h:40},
-{x:800,y:290,w:40,h:40},{x:80,y:290,w:40,h:40}
+// Laberinto tipo Zig-Zag Vertical
+{x:160,y:20,w:20,h:440},{x:320,y:120,w:20,h:440},
+{x:480,y:20,w:20,h:440},{x:640,y:120,w:20,h:440},
+{x:800,y:20,w:20,h:440}
 ],
 doors:[{x:430,y:H-55,w:100,h:55,target:'hub',label:'VOLVER',returnIdx:4}],
-enemies:[
-{ax:200,ay:200, bx:720,by:200, speed:150, t:0, dir:1, x:200, y:200},
-{ax:200,ay:400, bx:720,by:400, speed:140, t:0.5, dir:-1, x:200, y:400}
-],
-lasers:[
-{x:100,y:240,w:100,h:8,period:2.4,phase:0.2,duty:0.55},
-{x:760,y:360,w:120,h:8,period:2,phase:0.5,duty:0.5}
-],
 objects:[
-{x:760,y:180,w:140,h:100,type:'terminal',puzzle:'cam3',label:'TERMINAL 3'},
-{x:60,y:60,w:90,h:70,type:'decoy',label:'TERMINAL?'},
-{x:60,y:520,w:90,h:70,type:'decoy',label:'TERMINAL?'}
-],spawn:{x:60,y:530}},
+{x:860,y:60,w:70,h:55,type:'terminal',puzzle:'cam3',label:'TERMINAL 3'},
+{x:220,y:60,w:60,h:50,type:'decoy',label:'TERMINAL?'},
+{x:540,y:480,w:60,h:50,type:'decoy',label:'TERMINAL?'}
+],spawn:{x:50,y:60}},
 cam4:{id:'cam4',name:'CAMARA 4 - APLICACION',theme:'cam4',
 walls:[
 ...simpleWalls(),
-{x:160,y:160,w:40,h:40},{x:360,y:160,w:40,h:40},{x:560,y:160,w:40,h:40},{x:760,y:160,w:40,h:40},
-{x:160,y:440,w:40,h:40},{x:360,y:440,w:40,h:40},{x:560,y:440,w:40,h:40},{x:760,y:440,w:40,h:40},
-{x:260,y:290,w:40,h:40},{x:460,y:290,w:40,h:40},{x:660,y:290,w:40,h:40},
-{x:80,y:290,w:40,h:40},{x:860,y:290,w:40,h:40}
+// Anillos concentricos / Espiral
+{x:120,y:100,w:720,h:20},{x:820,y:100,w:20,h:380},
+{x:220,y:460,w:620,h:20},{x:220,y:200,w:20,h:280},
+{x:220,y:200,w:520,h:20},{x:720,y:200,w:20,h:180},
+{x:340,y:360,w:400,h:20},{x:340,y:280,w:20,h:100}
 ],
 doors:[{x:430,y:H-55,w:100,h:55,target:'hub',label:'VOLVER',returnIdx:6}],
-enemies:[
-{ax:200,ay:220, bx:400,by:220, speed:140, t:0, dir:1, x:200, y:220},
-{ax:560,ay:220, bx:720,by:220, speed:160, t:0.5, dir:-1, x:560, y:220},
-{ax:200,ay:400, bx:400,by:400, speed:130, t:0.2, dir:-1, x:200, y:400},
-{ax:560,ay:400, bx:720,by:400, speed:150, t:0.7, dir:1, x:560, y:400}
-],
-lasers:[
-{x:100,y:290,w:80,h:8,period:2,phase:0,duty:0.5},
-{x:800,y:290,w:80,h:8,period:2.4,phase:0.3,duty:0.55}
-],
 objects:[
-{x:400,y:330,w:160,h:100,type:'terminal',puzzle:'cam4',label:'TERMINAL 4'},
-{x:60,y:60,w:90,h:70,type:'decoy',label:'TERMINAL?'},
-{x:810,y:520,w:90,h:70,type:'decoy',label:'TERMINAL?'}
-],spawn:{x:60,y:530}},
+{x:480,y:290,w:70,h:55,type:'terminal',puzzle:'cam4',label:'TERMINAL 4'},
+{x:450,y:50,w:60,h:45,type:'decoy',label:'TERMINAL?'},
+{x:450,y:140,w:60,h:45,type:'decoy',label:'TERMINAL?'},
+{x:450,y:400,w:60,h:45,type:'decoy',label:'TERMINAL?'}
+],spawn:{x:50,y:520}},
 cam5:{id:'cam5',name:'CAMARA 5 - VERIFICACION',theme:'cam5',
 walls:[
 ...simpleWalls(),
-{x:140,y:140,w:40,h:40},{x:340,y:140,w:40,h:40},{x:540,y:140,w:40,h:40},{x:740,y:140,w:40,h:40},
-{x:140,y:440,w:40,h:40},{x:340,y:440,w:40,h:40},{x:540,y:440,w:40,h:40},{x:740,y:440,w:40,h:40},
-{x:240,y:290,w:40,h:40},{x:440,y:290,w:40,h:40},{x:640,y:290,w:40,h:40},
-{x:80,y:290,w:40,h:40},{x:840,y:290,w:40,h:40},
-{x:440,y:200,w:40,h:40},{x:440,y:380,w:40,h:40}
+// Matriz multiseccion de bloques
+{x:150,y:20,w:20,h:200},{x:150,y:300,w:20,h:260},
+{x:300,y:100,w:20,h:360},{x:450,y:20,w:20,h:220},
+{x:450,y:320,w:20,h:240},{x:600,y:100,w:20,h:360},
+{x:750,y:20,w:20,h:220},{x:750,y:320,w:20,h:240},
+{x:150,y:200,w:170,h:20},{x:450,y:320,w:170,h:20}
 ],
 doors:[{x:430,y:H-55,w:100,h:55,target:'hub',label:'VOLVER',returnIdx:7}],
-enemies:[
-{ax:200,ay:200, bx:720,by:200, speed:170, t:0, dir:1, x:200, y:200},
-{ax:200,ay:400, bx:720,by:400, speed:150, t:0.5, dir:-1, x:200, y:400},
-{ax:400,ay:300, bx:520,by:300, speed:180, t:0, dir:1, x:400, y:300}
-],
-lasers:[
-{x:100,y:240,w:100,h:8,period:2,phase:0.1,duty:0.5},
-{x:760,y:360,w:100,h:8,period:2.4,phase:0.4,duty:0.55},
-{x:340,y:290,w:80,h:8,period:2,phase:0.7,duty:0.5}
-],
 objects:[
-{x:400,y:480,w:140,h:80,type:'terminal',puzzle:'cam5',label:'TERMINAL 5'},
-{x:60,y:60,w:90,h:70,type:'decoy',label:'TERMINAL?'},
-{x:810,y:60,w:90,h:70,type:'decoy',label:'TERMINAL?'}
-],spawn:{x:60,y:530}},
+{x:830,y:260,w:70,h:55,type:'terminal',puzzle:'cam5',label:'TERMINAL 5'},
+{x:50,y:260,w:60,h:50,type:'decoy',label:'TERMINAL?'},
+{x:350,y:50,w:60,h:50,type:'decoy',label:'TERMINAL?'},
+{x:650,y:480,w:60,h:50,type:'decoy',label:'TERMINAL?'}
+],spawn:{x:50,y:520}},
 trap1:{id:'trap1',name:'LAB-0X - TRAMPA',theme:'trap1',
 walls:[
 ...simpleWalls(),
-{x:200,y:160,w:40,h:40},{x:400,y:160,w:40,h:40},{x:600,y:160,w:40,h:40},
-{x:200,y:420,w:40,h:40},{x:400,y:420,w:40,h:40},{x:600,y:420,w:40,h:40},
-{x:300,y:290,w:40,h:40},{x:500,y:290,w:40,h:40},{x:700,y:290,w:40,h:40}
+{x:150,y:100,w:20,h:380},{x:300,y:20,w:20,h:380},
+{x:450,y:100,w:20,h:380},{x:600,y:20,w:20,h:380},
+{x:750,y:100,w:20,h:380}
 ],
 doors:[{x:430,y:H-55,w:100,h:55,target:'hub',label:'VOLVER',returnIdx:1}],
-enemies:[
-{ax:280,ay:220, bx:700,by:220, speed:130, t:0, dir:1, x:280, y:220},
-{ax:280,ay:380, bx:700,by:380, speed:140, t:0.5, dir:-1, x:280, y:380}
-],
-lasers:[{x:100,y:290,w:100,h:8,period:2.2,phase:0.3,duty:0.5}],
 objects:[
-{x:400,y:250,w:140,h:100,type:'console',trap:'trap1',label:'CONSOLA SOSPECHOSA'},
-{x:60,y:60,w:90,h:70,type:'decoy',label:'?'},
-{x:810,y:520,w:90,h:70,type:'decoy',label:'?'},
-{x:60,y:520,w:90,h:70,type:'decoy',label:'?'}
-],spawn:{x:60,y:530}},
+{x:830,y:260,w:70,h:55,type:'console',trap:'trap1',label:'CONSOLA SOSPECHOSA'},
+{x:210,y:260,w:60,h:50,type:'decoy',label:'?'},
+{x:510,y:260,w:60,h:50,type:'decoy',label:'?'}
+],spawn:{x:50,y:520}},
 trap2:{id:'trap2',name:'ARCH-2 - TRAMPA',theme:'trap2',
 walls:[
 ...simpleWalls(),
-{x:160,y:140,w:40,h:40},{x:360,y:140,w:40,h:40},{x:560,y:140,w:40,h:40},{x:760,y:140,w:40,h:40},
-{x:160,y:440,w:40,h:40},{x:360,y:440,w:40,h:40},{x:560,y:440,w:40,h:40},{x:760,y:440,w:40,h:40},
-{x:260,y:290,w:40,h:40},{x:460,y:290,w:40,h:40},{x:660,y:290,w:40,h:40}
+{x:100,y:120,w:600,h:20},{x:260,y:240,w:600,h:20},
+{x:100,y:360,w:600,h:20},{x:260,y:480,w:600,h:20}
 ],
 doors:[{x:430,y:H-55,w:100,h:55,target:'hub',label:'VOLVER',returnIdx:3}],
-enemies:[
-{ax:180,ay:220, bx:780,by:220, speed:160, t:0, dir:1, x:180, y:220},
-{ax:180,ay:400, bx:780,by:400, speed:170, t:0.4, dir:-1, x:180, y:400}
-],
-lasers:[
-{x:100,y:290,w:100,h:8,period:2,phase:0.2,duty:0.5},
-{x:760,y:290,w:100,h:8,period:2.4,phase:0.5,duty:0.55}
-],
 objects:[
-{x:400,y:180,w:140,h:100,type:'console',trap:'trap2',label:'ARCHIVO CORRUPTO'},
-{x:60,y:60,w:90,h:70,type:'decoy',label:'?'},
-{x:810,y:520,w:90,h:70,type:'decoy',label:'?'}
-],spawn:{x:60,y:530}},
+{x:870,y:515,w:70,h:55,type:'console',trap:'trap2',label:'ARCHIVO CORRUPTO'},
+{x:150,y:170,w:60,h:50,type:'decoy',label:'?'},
+{x:750,y:290,w:60,h:50,type:'decoy',label:'?'}
+],spawn:{x:50,y:50}},
 trap3:{id:'trap3',name:'SERV-9 - TRAMPA',theme:'trap3',
 walls:[
 ...simpleWalls(),
-{x:180,y:140,w:40,h:40},{x:380,y:140,w:40,h:40},{x:580,y:140,w:40,h:40},
-{x:180,y:440,w:40,h:40},{x:380,y:440,w:40,h:40},{x:580,y:440,w:40,h:40},
-{x:280,y:290,w:40,h:40},{x:480,y:290,w:40,h:40},{x:680,y:290,w:40,h:40}
+{x:120,y:100,w:720,h:20},{x:120,y:100,w:20,h:380},
+{x:120,y:460,w:720,h:20},{x:820,y:100,w:20,h:380},
+{x:240,y:200,w:480,h:20},{x:240,y:360,w:480,h:20}
 ],
 doors:[{x:430,y:H-55,w:100,h:55,target:'hub',label:'VOLVER',returnIdx:5}],
-enemies:[
-{ax:200,ay:220, bx:620,by:220, speed:160, t:0, dir:1, x:200, y:220},
-{ax:200,ay:400, bx:620,by:400, speed:150, t:0.5, dir:-1, x:200, y:400}
-],
-lasers:[
-{x:100,y:290,w:100,h:8,period:2.2,phase:0.3,duty:0.5},
-{x:760,y:290,w:100,h:8,period:2.4,phase:0.6,duty:0.5}
-],
 objects:[
-{x:400,y:280,w:160,h:100,type:'console',trap:'trap3',label:'SERVIDOR SOSPECHOSO'},
-{x:60,y:60,w:90,h:70,type:'decoy',label:'?'},
-{x:810,y:520,w:90,h:70,type:'decoy',label:'?'}
-],spawn:{x:60,y:530}}
+{x:450,y:275,w:70,h:55,type:'console',trap:'trap3',label:'SERVIDOR SOSPECHOSO'},
+{x:170,y:140,w:60,h:45,type:'decoy',label:'?'},
+{x:730,y:400,w:60,h:45,type:'decoy',label:'?'}
+],spawn:{x:50,y:520}}
 };
 
 const session={team:'Equipo sin nombre',role:'player',round:1,pair:'',duration:15,startedAt:null,endedAt:null};
@@ -882,15 +784,10 @@ const metrics={attemptsTotal:0,attemptsCorrect:0,attemptsWrong:0,hintsUsed:0,
 hintsPerCamera:{cam1:0,cam2:0,cam3:0,cam4:0,cam5:0},
 trapsVisited:{trap1:false,trap2:false,trap3:false},
 wrongByCam:{cam1:0,cam2:0,cam3:0,cam4:0,cam5:0},
-startTimer:null,finalKey:'',finalKeyCorrect:false,difficulties:[],
-dronesHit:0,laserHits:0,dashes:0};
+startTimer:null,finalKey:'',finalKeyCorrect:false,difficulties:[]};
 
 let currentRoom='hub';
-const player={
-x:450,y:280,w:30,h:30,speed:4.2,dir:'down',walkPhase:0,isWalking:false,
-stamina:100,maxStamina:100,dashCooldown:0,dashTime:0,invuln:0,
-dashVx:0,dashVy:0,hurtFlash:0
-};
+const player={x:450,y:280,w:34,h:34,speed:4.2,dir:'down',walkPhase:0,isWalking:false};
 const keys={up:false,down:false,left:false,right:false};
 let nearObject=null, transitionCooldown=0, gameActive=false, paused=false;
 let secondsLeft=15*60, timerInterval=null;
@@ -898,8 +795,6 @@ let currentPuzzle=null, currentObject=null, currentQuestionIndex=0;
 let answeredCorrect=[], lastFootstep=0;
 let screenTransition=0;
 let doorEntryFx=[];
-let shakeTime=0, shakeMag=0;
-let roomTime=0;
 
 const fragments={cam1:false,cam2:false,cam3:false,cam4:false,cam5:false};
 const trapsVisited={trap1:false,trap2:false,trap3:false};
@@ -907,10 +802,22 @@ const particles=[];
 function spawnParticle(x,y,color,vx,vy,life){
 particles.push({x,y,vx,vy,life,maxLife:life,color});
 }
-function shakeScreen(mag,time){shakeMag=mag;shakeTime=time;}
 
 function saveProgress(){
 try{ localStorage.setItem('cyte_save',JSON.stringify({fragments,trapsVisited,secondsLeft,currentRoom,session,metrics})); }catch(e){}
+}
+function loadProgress(){
+try{
+const s=localStorage.getItem('cyte_save'); if(!s) return false;
+const d=JSON.parse(s);
+Object.assign(fragments,d.fragments||{});
+Object.assign(trapsVisited,d.trapsVisited||{});
+if(d.session) Object.assign(session,d.session);
+if(d.metrics) Object.assign(metrics,d.metrics);
+secondsLeft=d.secondsLeft||15*60;
+if(d.currentRoom) currentRoom=d.currentRoom;
+return true;
+}catch(e){ return false; }
 }
 function clearProgress(){ try{ localStorage.removeItem('cyte_save'); }catch(e){} }
 
@@ -925,7 +832,6 @@ document.getElementById('intro').classList.add('show');
 sfxClick();
 }
 function showSessionSetup(){
-ensureAudio();
 document.getElementById('intro').classList.remove('show');
 document.getElementById('sessionOverlay').classList.add('show');
 sfxClick();
@@ -938,9 +844,9 @@ sfxClick();
 
 async function startGame(){
 ensureAudio();
-session.team=(document.getElementById('cfgTeam').value||'').trim()||'Equipo sin nombre';
-session.pair=(document.getElementById('cfgPair').value||'').trim()||'-';
-session.duration=parseInt(document.getElementById('cfgDuration').value)||15;
+session.team=document.getElementById('cfgTeam').value.trim()||'Equipo sin nombre';
+session.pair=document.getElementById('cfgPair').value.trim()||'-';
+session.duration=parseInt(document.getElementById('cfgDuration').value);
 const roleEl=document.querySelector('input[name="cfgRole"]:checked');
 session.role=roleEl?roleEl.value:'player';
 const roundEl=document.querySelector('input[name="cfgRound"]:checked');
@@ -957,10 +863,9 @@ const rb=document.getElementById('roleBadge');
 if(session.role==='host'){ rb.textContent='ANFITRION - '+session.team; rb.classList.add('host'); }
 else { rb.textContent=session.team+' - Ronda '+session.round; rb.classList.remove('host'); }
 
-await showDialog('C.Y.T.E.','Bienvenido, '+session.team+'. Soy C.Y.T.E. El firewall periodico ha fallado. Debes restaurar 5 camaras en la oscuridad.');
-await showDialog('C.Y.T.E.','Los pasillos estan a oscuras. Hay DRONES DE SEGURIDAD patrullando y BARRERAS LASER que se activan y desactivan. Esquivalos.');
-await showDialog('C.Y.T.E.','Usa el DASH (tecla SHIFT o boton amarillo) para escapar rapido. Cada impacto cuesta 15 segundos y consume estamina.');
-await showDialog('C.Y.T.E.','Duracion: '+session.duration+' minutos. Cada error en preguntas resta 10 segundos. Comienza.');
+await showDialog('C.Y.T.E.','Bienvenido, '+session.team+'. Soy C.Y.T.E. El firewall periodico del centro de computo ha fallado. Debes restaurarlo atravesando 5 camaras.');
+await showDialog('C.Y.T.E.','Cada camara tiene laberintos, 2 preguntas y varios obstaculos. Debes acertar AMBAS preguntas para obtener el fragmento. Cuidado con las terminales trampa.');
+await showDialog('C.Y.T.E.','Duracion: '+session.duration+' minutos. Cada error resta 10 segundos. Comienza tu mision.');
 
 gameActive=true;
 loadRoom('hub');
@@ -993,19 +898,8 @@ const t=document.getElementById('timer');
 t.textContent=m+':'+s;
 t.style.color = secondsLeft<=60 ? '#ff3355' : '#ffdd00';
 document.getElementById('fragCount').textContent=Object.values(fragments).filter(Boolean).length;
-const rn=document.getElementById('roomName');
-if(rn) rn.textContent=rooms[currentRoom].name;
-updateFragHud(); updateMiniMap(); updateStamina();
-}
-
-function updateStamina(){
-const fill=document.getElementById('staminaFill');
-if(!fill) return;
-const pct=Math.max(0,player.stamina/player.maxStamina*100);
-fill.style.width=pct+'%';
-fill.classList.toggle('low',pct<30);
-const db=document.getElementById('dashBtn');
-db.classList.toggle('cooling',player.dashCooldown>0||player.stamina<30);
+document.getElementById('roomName').textContent=rooms[currentRoom].name;
+updateFragHud(); updateMiniMap();
 }
 
 function updateFragHud(){
@@ -1038,8 +932,6 @@ span.className='mm-room';
 if(k.startsWith('trap') && trapsVisited[k]) span.classList.add('trap');
 if(k.startsWith('cam') && fragments[k]) span.classList.add('done');
 if(currentRoom===k) span.classList.add('cur');
-const rm=rooms[k];
-if(rm && ((rm.enemies&&rm.enemies.length>0)||(rm.lasers&&rm.lasers.length>0)) && !fragments[k]) span.classList.add('danger');
 span.textContent=nameMap[k]; r.appendChild(span);
 });
 mm.appendChild(r);
@@ -1087,7 +979,6 @@ if(k==='a'||k==='arrowleft') keys.left=true;
 if(k==='d'||k==='arrowright') keys.right=true;
 if(['arrowup','arrowdown','arrowleft','arrowright',' '].includes(k)) e.preventDefault();
 if(k==='e'&&gameActive&&!paused&&!document.getElementById('modal').classList.contains('show')) interact();
-if((k==='shift'||k===' ')&&gameActive&&!paused&&!document.getElementById('modal').classList.contains('show')) tryDash();
 if(k==='escape'&&gameActive){ paused?resumeGame():pauseGame(); }
 if(k==='t'&&!gameActive){ toggleTestMode(); }
 });
@@ -1122,28 +1013,14 @@ if(gameActive&&!paused&&!document.getElementById('modal').classList.contains('sh
 ab.addEventListener('touchstart',trigger,{passive:false});
 ab.addEventListener('click',e=>{if(e.detail===0) trigger(e)});
 ab.addEventListener('contextmenu',e=>e.preventDefault());
-
-const db=document.getElementById('dashBtn');
-const dtrigger=e=>{
-e.preventDefault();
-db.classList.add('pressed');
-setTimeout(()=>db.classList.remove('pressed'),120);
-if(gameActive&&!paused&&!document.getElementById('modal').classList.contains('show')) tryDash();
-};
-db.addEventListener('touchstart',dtrigger,{passive:false});
-db.addEventListener('click',e=>{if(e.detail===0) dtrigger(e)});
-db.addEventListener('contextmenu',e=>e.preventDefault());
 })();
 
 function loadRoom(id){
 currentRoom=id;
 const r=rooms[id];
 player.x=r.spawn.x; player.y=r.spawn.y;
-player.dashTime=0; player.dashCooldown=0;
 transitionCooldown=.5;
 screenTransition=0.6;
-roomTime=0;
-if(r.enemies){r.enemies.forEach(e=>{e.t=Math.random()*0.5;e.dir=Math.random()<0.5?1:-1;});}
 updateHUD(); saveProgress();
 }
 
@@ -1156,103 +1033,10 @@ for(const w of rooms[currentRoom].walls) if(overlap(r,w)) return true;
 return false;
 }
 
-function tryDash(){
-if(!gameActive||paused) return;
-if(player.dashCooldown>0) return;
-if(player.stamina<30) { beep(200,.1,'square',.08); return; }
-player.stamina-=30;
-player.dashCooldown=1.2;
-player.dashTime=0.22;
-player.invuln=Math.max(player.invuln,0.35);
-metrics.dashes++;
-let dx=0,dy=0;
-if(keys.up) dy=-1; else if(keys.down) dy=1;
-if(keys.left) dx=-1; else if(keys.right) dx=1;
-if(dx===0&&dy===0){
-if(player.dir==='up') dy=-1;
-else if(player.dir==='down') dy=1;
-else if(player.dir==='left') dx=-1;
-else dx=1;
-}
-const len=Math.hypot(dx,dy);
-player.dashVx=dx/len*3.4;
-player.dashVy=dy/len*3.4;
-sfxDash();
-for(let i=0;i<12;i++){
-spawnParticle(player.x+player.w/2,player.y+player.h/2,'#ffdd00',
- (Math.random()-.5)*220,(Math.random()-.5)*220,0.4);
-}
-}
-
-function playerHit(source){
-if(player.invuln>0) return;
-player.invuln=1.8;
-player.hurtFlash=0.6;
-secondsLeft=Math.max(0,secondsLeft-15);
-updateHUD();
-if(source==='drone'){metrics.dronesHit++;sfxHit();}
-else {metrics.laserHits++;sfxHit();}
-if(navigator.vibrate) navigator.vibrate([80,40,80,40,150]);
-shakeScreen(14,0.4);
-const flash=document.getElementById('damageFlash');
-flash.classList.add('show');
-setTimeout(()=>flash.classList.remove('show'),200);
-let dx=Math.random()-0.5, dy=Math.random()-0.5;
-const l=Math.hypot(dx,dy)||1; dx/=l; dy/=l;
-const nx=player.x+dx*70;
-const ny=player.y+dy*70;
-if(!collides(nx,player.y)) player.x=nx;
-if(!collides(player.x,ny)) player.y=ny;
-for(let i=0;i<20;i++){
-spawnParticle(player.x+player.w/2,player.y+player.h/2,'#ff3355',
- (Math.random()-.5)*280,(Math.random()-.5)*280,0.7);
-}
-}
-
-function updateEnemies(dt){
-const r=rooms[currentRoom];
-if(!r.enemies) return;
-const px=player.x+player.w/2, py=player.y+player.h/2;
-for(const e of r.enemies){
-const dx=e.bx-e.ax, dy=e.by-e.ay;
-const dist=Math.hypot(dx,dy)||1;
-e.t += (e.speed*e.dir*dt)/dist;
-if(e.t>=1){e.t=1;e.dir=-1;}
-else if(e.t<=0){e.t=0;e.dir=1;}
-e.x = e.ax+dx*e.t;
-e.y = e.ay+dy*e.t;
-const pdx=px-e.x, pdy=py-e.y;
-const pd=Math.hypot(pdx,pdy);
-if(pd<22) playerHit('drone');
-}
-}
-
-function updateLasers(dt){
-const r=rooms[currentRoom];
-if(!r.lasers) return;
-const now=performance.now()/1000;
-const pr={x:player.x,y:player.y,w:player.w,h:player.h};
-for(const l of r.lasers){
-const phase=((now/l.period)+l.phase)%1;
-const isOn = phase < l.duty;
-l._on = isOn;
-if(isOn && overlap(pr,l)) playerHit('laser');
-}
-}
-
 function update(dt){
 if(!gameActive||paused) return;
-roomTime+=dt;
 if(transitionCooldown>0) transitionCooldown-=dt;
 if(screenTransition>0) screenTransition-=dt;
-if(shakeTime>0) shakeTime-=dt;
-if(player.invuln>0) player.invuln-=dt;
-if(player.hurtFlash>0) player.hurtFlash-=dt;
-if(player.dashCooldown>0) player.dashCooldown-=dt;
-
-if(player.dashTime<=0){
-player.stamina=Math.min(player.maxStamina, player.stamina+dt*22);
-}
 
 let vx=0,vy=0;
 if(keys.up) vy-=1;
@@ -1278,25 +1062,13 @@ spawnParticle(player.x+player.w/2+(Math.random()-.5)*20,player.y+player.h,'rgba(
 player.walkPhase = 0;
 }
 
-let speedMult=1;
-if(player.dashTime>0){
-player.dashTime-=dt;
-vx=player.dashVx; vy=player.dashVy;
-speedMult=1;
-spawnParticle(player.x+player.w/2,player.y+player.h/2,'rgba(255,221,0,.8)',
- (Math.random()-.5)*80,(Math.random()-.5)*80,0.35);
-}
-
-const step=player.speed*speedMult*(dt*60);
+const step=player.speed*(dt*60);
 const nx=player.x+vx*step;
 const ny=player.y+vy*step;
 if(!collides(nx,player.y)) player.x=nx;
 if(!collides(player.x,ny)) player.y=ny;
 player.x=Math.max(0,Math.min(W-player.w,player.x));
 player.y=Math.max(0,Math.min(H-player.h,player.y));
-
-updateEnemies(dt);
-updateLasers(dt);
 
 if(transitionCooldown<=0){
 for(const d of rooms[currentRoom].doors){
@@ -1308,7 +1080,7 @@ nearObject=null;
 const cx=player.x+player.w/2,cy=player.y+player.h/2;
 for(const o of rooms[currentRoom].objects){
 const ox=o.x+o.w/2,oy=o.y+o.h/2;
-if(Math.hypot(cx-ox,cy-oy)<70){nearObject=o;break;}
+if(Math.hypot(cx-ox,cy-oy)<110){nearObject=o;break;}
 }
 document.getElementById('prompt').classList.toggle('show',!!nearObject);
 
@@ -1328,7 +1100,11 @@ p.y = H + 10;
 p.life = p.maxLife;
 }
 }
-for(const s of dataStreams){ s.offset = (s.offset + s.speed * dt) % H; }
+
+for(const s of dataStreams){
+s.offset = (s.offset + s.speed * dt) % H;
+}
+
 for(let i=doorEntryFx.length-1;i>=0;i--){
 doorEntryFx[i].r += 3;
 doorEntryFx[i].alpha -= 0.03;
@@ -1346,7 +1122,6 @@ currentRoom='hub';
 if(hd.y<100){ player.x=hd.x+hd.w/2-player.w/2; player.y=hd.y+hd.h+25; }
 else { player.x=hd.x+hd.w/2-player.w/2; player.y=hd.y-player.h-25; }
 screenTransition = 0.5;
-roomTime=0;
 } else loadRoom(d.target);
 updateHUD();
 }
@@ -1364,8 +1139,16 @@ showDecoyMessage();
 }
 
 function showDecoyMessage(){
-const mensajes = ['SISTEMA BLOQUEADO','TERMINAL SIN ENERGIA','DATOS CORRUPTOS','ACCESO DENEGADO',
-'CONEXION PERDIDA','ERROR 404','NODO INACTIVO','SIN RESPUESTA...'];
+const mensajes = [
+'SISTEMA BLOQUEADO',
+'TERMINAL SIN ENERGIA',
+'DATOS CORRUPTOS',
+'ACCESO DENEGADO',
+'CONEXION PERDIDA',
+'ERROR 404',
+'NODO INACTIVO',
+'SIN RESPUESTA...'
+];
 const msg = mensajes[Math.floor(Math.random() * mensajes.length)];
 showToast(msg);
 beep(200, 0.15, 'sawtooth', 0.12);
@@ -1377,12 +1160,23 @@ function showToast(text){
 const toast = document.createElement('div');
 toast.textContent = text;
 toast.style.cssText =
-'position: fixed;top: 50%;left: 50%;transform: translate(-50%, -50%);' +
-'background: rgba(20,10,20,0.95);color: #ff8800;border: 2px solid #ff8800;' +
-'padding: 16px 28px;border-radius: 8px;font-family: Courier New, monospace;' +
-'font-size: 1.05rem;font-weight: bold;letter-spacing: 3px;z-index: 500;' +
+'position: fixed;' +
+'top: 50%;' +
+'left: 50%;' +
+'transform: translate(-50%, -50%);' +
+'background: rgba(20,10,20,0.95);' +
+'color: #ff8800;' +
+'border: 2px solid #ff8800;' +
+'padding: 16px 28px;' +
+'border-radius: 8px;' +
+'font-family: Courier New, monospace;' +
+'font-size: 1.05rem;' +
+'font-weight: bold;' +
+'letter-spacing: 3px;' +
+'z-index: 500;' +
 'box-shadow: 0 0 30px rgba(255,136,0,0.6), inset 0 0 20px rgba(255,136,0,0.2);' +
-'animation: toastAnim 1.8s ease forwards;pointer-events: none;' +
+'animation: toastAnim 1.8s ease forwards;' +
+'pointer-events: none;' +
 'text-shadow: 0 0 10px #ff8800;';
 document.body.appendChild(toast);
 setTimeout(() => toast.remove(), 1900);
@@ -1590,6 +1384,7 @@ const mm = String(Math.floor(dur/60)).padStart(2,'0');
 const ss = String(dur%60).padStart(2,'0');
 const frags = Object.values(fragments).filter(Boolean).length;
 const trapsHit = Object.values(metrics.trapsVisited).filter(Boolean).length;
+
 const cameras = [
 {id:'cam1', name:'Camara 1 - Activacion'},
 {id:'cam2', name:'Camara 2 - Diagnostico'},
@@ -1597,6 +1392,7 @@ const cameras = [
 {id:'cam4', name:'Camara 4 - Aplicacion'},
 {id:'cam5', name:'Camara 5 - Verificacion'}
 ];
+
 let camerasHTML='';
 cameras.forEach(c=>{
 const solved = fragments[c.id];
@@ -1610,11 +1406,13 @@ camerasHTML += '<div class="bit-row">'+
 (wrong?' - Errores: '+wrong:'')+
 '</span></div>';
 });
+
 let trapsHTML='';
 ['trap1','trap2','trap3'].forEach(t=>{
 const v=metrics.trapsVisited[t];
 trapsHTML+='<span class="bit-tag '+(v?'trap':'')+'">'+t.toUpperCase()+' '+(v?'(visitada)':'(no visitada)')+'</span>';
 });
+
 const html=
 '<h2>BITACORA DEL ESCAPE ROOM</h2>'+
 '<h3>Datos de la sesion</h3>'+
@@ -1629,9 +1427,6 @@ const html=
 '<div class="bit-row"><span class="lbl">Intentos totales</span><span class="val">'+metrics.attemptsTotal+'</span></div>'+
 '<div class="bit-row"><span class="lbl">Aciertos / Errores</span><span class="val"><span style="color:#00ff88">'+metrics.attemptsCorrect+'</span> / <span style="color:#ff3355">'+metrics.attemptsWrong+'</span></span></div>'+
 '<div class="bit-row"><span class="lbl">Pistas utilizadas</span><span class="val yellow">'+metrics.hintsUsed+'</span></div>'+
-'<div class="bit-row"><span class="lbl">Impactos de drones</span><span class="val red">'+metrics.dronesHit+'</span></div>'+
-'<div class="bit-row"><span class="lbl">Impactos de laser</span><span class="val red">'+metrics.laserHits+'</span></div>'+
-'<div class="bit-row"><span class="lbl">Dashes usados</span><span class="val yellow">'+metrics.dashes+'</span></div>'+
 '<div class="bit-row"><span class="lbl">Camaras trampa visitadas</span><span class="val yellow">'+trapsHit+'/3</span></div>'+
 '<h3>Detalle por camara</h3>'+camerasHTML+
 '<h3>Trampas visitadas</h3><div style="padding:6px 0">'+trapsHTML+'</div>'+
@@ -1647,6 +1442,7 @@ const html=
 '<button class="btn magenta small" onclick="downloadBitacora()">DESCARGAR</button>'+
 '<button class="btn small" onclick="closeBitacora()">CERRAR</button>'+
 '</div>';
+
 document.getElementById('bitacoraContent').innerHTML=html;
 document.getElementById('bitacoraOverlay').classList.add('show');
 sfxClick();
@@ -1670,35 +1466,25 @@ t+='Fragmentos: '+frags+'/5\n';
 t+='Clave final: '+(metrics.finalKey||'-')+' - '+(metrics.finalKeyCorrect?'CORRECTA':'INCORRECTA')+'\n';
 t+='Intentos: '+metrics.attemptsTotal+' | Aciertos: '+metrics.attemptsCorrect+' | Errores: '+metrics.attemptsWrong+'\n';
 t+='Pistas: '+metrics.hintsUsed+'\n';
-t+='Drones golpearon: '+metrics.dronesHit+' | Lasers golpearon: '+metrics.laserHits+'\n';
-t+='Dashes: '+metrics.dashes+'\n';
 t+='Trampas: '+Object.values(metrics.trapsVisited).filter(Boolean).length+'/3\n';
 t+='Mejora: '+(improvement||'(no escrita)')+'\n';
 return t;
 }
 function copyBitacora(){
 const text=bitacoraAsText();
-if(navigator.clipboard){
 navigator.clipboard.writeText(text).then(()=>{ alert('Bitacora copiada.'); })
-.catch(()=>{ fallbackCopy(text); });
-} else { fallbackCopy(text); }
-}
-function fallbackCopy(text){
-const ta=document.createElement('textarea'); ta.value=text;
-document.body.appendChild(ta); ta.select();
-try{document.execCommand('copy');alert('Bitacora copiada.');}catch(e){alert('No se pudo copiar.');}
-ta.remove();
+.catch(()=>{ const ta=document.createElement('textarea'); ta.value=text;
+document.body.appendChild(ta); ta.select(); document.execCommand('copy');
+ta.remove(); alert('Bitacora copiada.'); });
 }
 function downloadBitacora(){
 const text=bitacoraAsText();
 const blob=new Blob([text],{type:'text/plain'});
 const url=URL.createObjectURL(blob);
 const a=document.createElement('a');
-a.href=url; a.download='bitacora_'+(session.team||'equipo').replace(/\s+/g,'_')+'.txt'; a.click();
+a.href=url; a.download='bitacora_'+session.team.replace(/\s+/g,'_')+'.txt'; a.click();
 URL.revokeObjectURL(url);
 }
-
-/* ================== DRAWING ================== */
 
 function drawFloor(theme){
 const grad = ctx.createRadialGradient(W/2, H/2, 100, W/2, H/2, W*0.8);
@@ -1713,11 +1499,11 @@ ctx.lineWidth = 1;
 for(let x=0; x<W; x+=40){ ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke(); }
 for(let y=0; y<H; y+=40){ ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke(); }
 
+ctx.fillStyle = theme.primary + '40';
 for(let x=0; x<W; x+=80){
 for(let y=0; y<H; y+=80){
 const pulse = 0.5 + 0.5 * Math.sin(time * 2 + x * 0.01 + y * 0.01);
 ctx.globalAlpha = pulse * 0.3;
-ctx.fillStyle = theme.primary;
 ctx.beginPath();
 ctx.arc(x, y, 2, 0, Math.PI * 2);
 ctx.fill();
@@ -1775,11 +1561,15 @@ ctx.lineWidth = 2;
 ctx.strokeRect(d.x, d.y, d.w, d.h);
 
 ctx.fillStyle = '#00ff88';
-const cs=6;
-ctx.fillRect(d.x, d.y, cs, 2); ctx.fillRect(d.x, d.y, 2, cs);
-ctx.fillRect(d.x + d.w - cs, d.y, cs, 2); ctx.fillRect(d.x + d.w - 2, d.y, 2, cs);
-ctx.fillRect(d.x, d.y + d.h - 2, cs, 2); ctx.fillRect(d.x, d.y + d.h - cs, 2, cs);
-ctx.fillRect(d.x + d.w - cs, d.y + d.h - 2, cs, 2); ctx.fillRect(d.x + d.w - 2, d.y + d.h - cs, 2, cs);
+const cornerSize = 6;
+ctx.fillRect(d.x, d.y, cornerSize, 2);
+ctx.fillRect(d.x, d.y, 2, cornerSize);
+ctx.fillRect(d.x + d.w - cornerSize, d.y, cornerSize, 2);
+ctx.fillRect(d.x + d.w - 2, d.y, 2, cornerSize);
+ctx.fillRect(d.x, d.y + d.h - 2, cornerSize, 2);
+ctx.fillRect(d.x, d.y + d.h - cornerSize, 2, cornerSize);
+ctx.fillRect(d.x + d.w - cornerSize, d.y + d.h - 2, cornerSize, 2);
+ctx.fillRect(d.x + d.w - 2, d.y + d.h - cornerSize, 2, cornerSize);
 
 ctx.fillStyle = '#00ff88';
 ctx.font = 'bold 13px monospace';
@@ -1788,6 +1578,11 @@ ctx.shadowColor = '#00ff88';
 ctx.shadowBlur = 8;
 ctx.fillText(d.label, d.x + d.w/2, d.y + d.h/2 + 5);
 ctx.shadowBlur = 0;
+
+const arrowBob = Math.sin(time * 2) * 3;
+ctx.fillStyle = '#00ff88';
+ctx.font = '10px monospace';
+ctx.fillText('v', d.x + d.w/2, d.y + d.h - 8 + arrowBob);
 }
 }
 
@@ -1810,17 +1605,32 @@ gradBase.addColorStop(0.5, '#15151d');
 gradBase.addColorStop(1, '#1e1e28');
 ctx.fillStyle = gradBase;
 ctx.fillRect(o.x, o.y, o.w, o.h);
-ctx.strokeStyle = '#555'; ctx.lineWidth = 2;
+
+ctx.strokeStyle = '#555';
+ctx.lineWidth = 2;
 ctx.strokeRect(o.x, o.y, o.w, o.h);
+
+ctx.fillStyle = '#444';
+ctx.beginPath();
+ctx.arc(o.x + 5, o.y + 5, 2, 0, Math.PI*2);
+ctx.arc(o.x + o.w - 5, o.y + 5, 2, 0, Math.PI*2);
+ctx.arc(o.x + 5, o.y + o.h - 5, 2, 0, Math.PI*2);
+ctx.arc(o.x + o.w - 5, o.y + o.h - 5, 2, 0, Math.PI*2);
+ctx.fill();
 
 ctx.fillStyle = 'rgba(0,0,0,0.6)';
 ctx.fillRect(o.x + 10, o.y + 12, o.w - 20, o.h * 0.5);
-ctx.fillStyle = '#666'; ctx.font = 'bold 32px monospace';
+
+ctx.fillStyle = '#666';
+ctx.font = 'bold 32px monospace';
 ctx.textAlign = 'center';
-ctx.shadowColor = '#ff8800'; ctx.shadowBlur = 6 + 4 * Math.sin(time * 2);
+ctx.shadowColor = '#ff8800';
+ctx.shadowBlur = 6 + 4 * Math.sin(time * 2);
 ctx.fillText('?', o.x + o.w/2, o.y + o.h * 0.45);
 ctx.shadowBlur = 0;
-ctx.fillStyle = '#444'; ctx.font = '10px monospace';
+
+ctx.fillStyle = '#444';
+ctx.font = '10px monospace';
 ctx.fillText(o.label || 'TERMINAL?', o.x + o.w/2, o.y + o.h + 14);
 continue;
 }
@@ -1845,240 +1655,181 @@ gradBase.addColorStop(1, '#15152a');
 ctx.fillStyle = gradBase;
 ctx.fillRect(o.x, o.y, o.w, o.h);
 
-ctx.strokeStyle = glowColor; ctx.lineWidth = 2.5;
-ctx.shadowColor = glowColor; ctx.shadowBlur = 12 + haloPulse * 8;
+ctx.strokeStyle = glowColor;
+ctx.lineWidth = 2.5;
+ctx.shadowColor = glowColor;
+ctx.shadowBlur = 12 + haloPulse * 8;
 ctx.strokeRect(o.x, o.y, o.w, o.h);
 ctx.shadowBlur = 0;
 
-const screenY = o.y + 15, screenH = o.h * 0.5;
+ctx.fillStyle = glowColor;
+ctx.beginPath();
+ctx.arc(o.x + 6, o.y + 6, 3, 0, Math.PI*2);
+ctx.arc(o.x + o.w - 6, o.y + 6, 3, 0, Math.PI*2);
+ctx.arc(o.x + 6, o.y + o.h - 6, 3, 0, Math.PI*2);
+ctx.arc(o.x + o.w - 6, o.y + o.h - 6, 3, 0, Math.PI*2);
+ctx.fill();
+
+const screenY = o.y + 15;
+const screenH = o.h * 0.5;
 const gradScreen = ctx.createLinearGradient(o.x, screenY, o.x, screenY + screenH);
 if(isTrap){
 gradScreen.addColorStop(0, 'rgba(255,136,0,' + (0.3 + haloPulse * 0.15) + ')');
-gradScreen.addColorStop(1, 'rgba(255,60,0,' + (0.15 + haloPulse * 0.1) + ')');
+gradScreen.addColorStop(1, 'rgba(255,51,85,0.1)');
 } else if(solved){
-gradScreen.addColorStop(0, 'rgba(0,255,136,' + (0.3 + haloPulse * 0.15) + ')');
-gradScreen.addColorStop(1, 'rgba(0,200,100,' + (0.15 + haloPulse * 0.1) + ')');
+gradScreen.addColorStop(0, 'rgba(0,255,136,0.35)');
+gradScreen.addColorStop(1, 'rgba(0,200,100,0.1)');
 } else {
-gradScreen.addColorStop(0, theme.primary + '55');
-gradScreen.addColorStop(1, theme.secondary + '30');
+gradScreen.addColorStop(0, theme.primary + '40');
+gradScreen.addColorStop(1, theme.secondary + '10');
 }
 ctx.fillStyle = gradScreen;
 ctx.fillRect(o.x + 10, screenY, o.w - 20, screenH);
+ctx.strokeStyle = glowColor;
+ctx.lineWidth = 1;
+ctx.strokeRect(o.x + 10, screenY, o.w - 20, screenH);
 
-ctx.strokeStyle = 'rgba(0,0,0,0.35)'; ctx.lineWidth = 1;
-for(let y = screenY + 2; y < screenY + screenH; y += 4){
-ctx.beginPath(); ctx.moveTo(o.x + 10, y); ctx.lineTo(o.x + o.w - 10, y); ctx.stroke();
+ctx.fillStyle = glowColor;
+ctx.font = 'bold 11px monospace';
+ctx.textAlign = 'center';
+ctx.shadowColor = glowColor;
+ctx.shadowBlur = 6;
+
+if(solved){
+ctx.fillText('[OK]', o.x + o.w/2, screenY + screenH/2 + 4);
+} else if(isTrap){
+ctx.fillText('ALERT', o.x + o.w/2, screenY + screenH/2 + 4);
+} else {
+const textPulse = Math.floor(time * 3) % 4;
+ctx.fillText('BUSY' + '.'.repeat(textPulse), o.x + o.w/2, screenY + screenH/2 + 4);
 }
-
-const scanY = screenY + ((time * 60) % screenH);
-ctx.strokeStyle = 'rgba(255,255,255,0.5)'; ctx.lineWidth = 1;
-ctx.beginPath(); ctx.moveTo(o.x + 10, scanY); ctx.lineTo(o.x + o.w - 10, scanY); ctx.stroke();
-
-ctx.fillStyle = solved ? '#00ff88' : (isTrap ? '#ff8800' : theme.primary);
-ctx.font = 'bold 13px monospace'; ctx.textAlign = 'center';
-ctx.shadowColor = ctx.fillStyle; ctx.shadowBlur = 6;
-const txt = solved ? 'RESUELTO' : (isTrap ? 'SOSPECHOSO' : 'ACTIVO');
-ctx.fillText(txt, o.x + o.w/2, o.y + o.h * 0.42);
 ctx.shadowBlur = 0;
 
-const barY = o.y + o.h - 22, barW = o.w - 20;
-ctx.fillStyle = 'rgba(0,0,0,0.5)';
-ctx.fillRect(o.x + 10, barY, barW, 6);
-const progress = solved ? 1 : (0.3 + 0.3 * Math.sin(time * 3) + 0.3);
 ctx.fillStyle = glowColor;
-ctx.fillRect(o.x + 10, barY, barW * progress, 6);
-
-ctx.fillStyle = '#888'; ctx.font = '10px monospace';
-ctx.fillText(o.label, o.x + o.w/2, o.y + o.h + 16);
+ctx.font = '10px monospace';
+ctx.fillText(o.label, o.x + o.w/2, o.y + o.h + 14);
 }
 }
 
 function drawWalls(room, theme){
+ctx.fillStyle = theme.accent;
+ctx.strokeStyle = theme.primary;
+ctx.lineWidth = 1.5;
 for(const w of room.walls){
-const grad = ctx.createLinearGradient(w.x, w.y, w.x, w.y + w.h);
-grad.addColorStop(0, '#1a1a2e');
-grad.addColorStop(0.5, '#0f0f1e');
-grad.addColorStop(1, '#0a0a15');
-ctx.fillStyle = grad;
 ctx.fillRect(w.x, w.y, w.w, w.h);
+ctx.strokeRect(w.x, w.y, w.w, w.h);
 
-ctx.strokeStyle = theme.primary + '90';
-ctx.lineWidth = 2;
-ctx.beginPath(); ctx.moveTo(w.x, w.y + 0.5); ctx.lineTo(w.x + w.w, w.y + 0.5); ctx.stroke();
+ctx.fillStyle = theme.primary + '30';
+ctx.fillRect(w.x + 2, w.y + 2, Math.max(0, w.w - 4), Math.max(0, w.h - 4));
+ctx.fillStyle = theme.accent;
+}
+}
 
-ctx.strokeStyle = theme.primary + '70';
-ctx.lineWidth = 1;
-ctx.strokeRect(w.x + 0.5, w.y + 0.5, w.w - 1, w.h - 1);
+function drawPlayer(theme){
+const px = player.x, py = player.y, pw = player.w, ph = player.h;
 
-if(w.w > 80 && w.h > 15){
-const panelCount = Math.floor(w.w / 60);
-for(let i = 0; i < panelCount; i++){
-const px = w.x + 10 + i * 60, py = w.y + 4, pw = 50, ph = w.h - 8;
-if(ph > 6){
-ctx.strokeStyle = theme.primary + '40'; ctx.lineWidth = 1;
-ctx.strokeRect(px, py, pw, ph);
-const ledPulse = 0.5 + 0.5 * Math.sin(Date.now()/400 + i);
+const gradShadow = ctx.createRadialGradient(px + pw/2, py + ph - 2, 2, px + pw/2, py + ph - 2, pw * 0.7);
+gradShadow.addColorStop(0, 'rgba(0,0,0,0.6)');
+gradShadow.addColorStop(1, 'rgba(0,0,0,0)');
+ctx.fillStyle = gradShadow;
+ctx.fillRect(px - 10, py + ph - 8, pw + 20, 12);
+
+const legOffset = player.isWalking ? Math.sin(player.walkPhase) * 4 : 0;
+ctx.fillStyle = '#111122';
+ctx.fillRect(px + 6, py + ph - 10 + legOffset, 8, 10);
+ctx.fillRect(px + pw - 14, py + ph - 10 - legOffset, 8, 10);
+
 ctx.fillStyle = theme.primary;
-ctx.globalAlpha = ledPulse;
-ctx.beginPath(); ctx.arc(px + pw/2, py + ph/2, 1.5, 0, Math.PI*2); ctx.fill();
-ctx.globalAlpha = 1;
-}
-}
-}
-}
-}
+ctx.fillRect(px + 4, py + 12, pw - 8, ph - 18);
+ctx.strokeStyle = '#ffffff';
+ctx.lineWidth = 1;
+ctx.strokeRect(px + 4, py + 12, pw - 8, ph - 18);
 
-function drawHologram(room){
-const cx = W/2, cy = H/2 - 20;
-const time = Date.now() / 1000;
-if(!room.objects || room.objects.length === 0){
-const theme = ROOM_THEMES[room.theme];
-ctx.save();
-ctx.translate(cx, cy);
-const basePulse = 0.4 + 0.3 * Math.sin(time * 3);
-const grad = ctx.createRadialGradient(0, 0, 0, 0, 0, 60);
-grad.addColorStop(0, theme.primary);
-grad.addColorStop(1, 'transparent');
-ctx.globalAlpha = basePulse;
-ctx.fillStyle = grad;
-ctx.beginPath(); ctx.arc(0, 0, 60, 0, Math.PI * 2); ctx.fill();
-ctx.globalAlpha = 1;
-ctx.rotate(time * 0.8);
-ctx.strokeStyle = theme.primary + '80'; ctx.lineWidth = 2;
-for(let i = 0; i < 3; i++){
-ctx.beginPath(); ctx.arc(0, 0, 20 + i * 8, 0, Math.PI * 1.5); ctx.stroke();
-}
-ctx.restore();
-}
-}
+ctx.fillStyle = '#1a1a2e';
+ctx.beginPath();
+ctx.arc(px + pw/2, py + 10, 11, 0, Math.PI * 2);
+ctx.fill();
+ctx.strokeStyle = theme.primary;
+ctx.lineWidth = 2;
+ctx.stroke();
 
-function drawTrapAmbient(room){
-if(!room.id.startsWith('trap')) return;
-const time = Date.now() / 200;
-const alpha = 0.05 + 0.08 * Math.abs(Math.sin(time));
-ctx.fillStyle = 'rgba(255,0,50,' + alpha + ')';
-ctx.fillRect(0, 0, W, H);
+ctx.fillStyle = theme.primary;
+ctx.shadowColor = theme.primary;
+ctx.shadowBlur = 8;
+if(player.dir === 'down'){
+ctx.fillRect(px + pw/2 - 6, py + 8, 12, 4);
+} else if(player.dir === 'up'){
+ctx.fillRect(px + pw/2 - 4, py + 6, 8, 3);
+} else if(player.dir === 'left'){
+ctx.fillRect(px + pw/2 - 8, py + 8, 6, 4);
+} else if(player.dir === 'right'){
+ctx.fillRect(px + pw/2 + 2, py + 8, 6, 4);
+}
+ctx.shadowBlur = 0;
 }
 
 function drawParticles(){
 for(const p of particles){
+const alpha = Math.max(0, p.life / p.maxLife);
 ctx.fillStyle = p.color;
-ctx.globalAlpha = p.life / p.maxLife;
+ctx.globalAlpha = alpha;
 ctx.beginPath();
-ctx.arc(p.x, p.y, 2.5, 0, Math.PI * 2);
+ctx.arc(p.x, p.y, 2.5, 0, Math.PI*2);
 ctx.fill();
 }
 ctx.globalAlpha = 1;
 }
 
-function drawAmbientParticles(theme){
-for(const p of ambientParticles){
-ctx.fillStyle = theme.primary;
-ctx.globalAlpha = (p.life / p.maxLife) * 0.6;
+function drawTransitions(){
+if(screenTransition > 0){
+ctx.fillStyle = 'rgba(5,5,15,' + (screenTransition / 0.6) + ')';
+ctx.fillRect(0, 0, W, H);
+}
+
+for(const fx of doorEntryFx){
+ctx.strokeStyle = fx.color;
+ctx.lineWidth = 3;
+ctx.globalAlpha = fx.alpha;
 ctx.beginPath();
-ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-ctx.fill();
+ctx.arc(fx.x, fx.y, fx.r, 0, Math.PI * 2);
+ctx.stroke();
 }
 ctx.globalAlpha = 1;
 }
 
-function drawEnemies(room){
-if(!room.enemies) return;
-const time = Date.now()/200;
-for(const e of room.enemies){
-const ex = e.x, ey = e.y;
-const grd = ctx.createRadialGradient(ex, ey, 0, ex, ey, 40);
-grd.addColorStop(0, 'rgba(255,51,85,0.45)');
-grd.addColorStop(1, 'rgba(255,51,85,0)');
-ctx.fillStyle = grd;
-ctx.beginPath(); ctx.arc(ex, ey, 40, 0, Math.PI*2); ctx.fill();
-ctx.fillStyle = '#ff3355';
-ctx.shadowColor = '#ff3355'; ctx.shadowBlur = 15;
-ctx.beginPath(); ctx.arc(ex, ey, 12, 0, Math.PI*2); ctx.fill();
-ctx.shadowBlur = 0;
-ctx.fillStyle = '#ffffff';
-ctx.beginPath(); ctx.arc(ex, ey, 5, 0, Math.PI*2); ctx.fill();
-ctx.fillStyle = '#000';
-const lookAng = Math.atan2(player.y+player.h/2 - ey, player.x+player.w/2 - ex);
-ctx.beginPath(); ctx.arc(ex + Math.cos(lookAng)*1.5, ey + Math.sin(lookAng)*1.5, 3, 0, Math.PI*2); ctx.fill();
-ctx.strokeStyle = 'rgba(255,51,85,' + (0.4 + 0.3*Math.sin(time)) + ')';
-ctx.lineWidth = 2;
-ctx.beginPath(); ctx.arc(ex, ey, 18 + Math.sin(time)*2, 0, Math.PI*2); ctx.stroke();
-}
+let lastTime = performance.now();
+function loop(now){
+const dt = Math.min((now - lastTime) / 1000, 0.1);
+lastTime = now;
+
+if(gameActive && !paused){
+update(dt);
 }
 
-function drawLasers(room){
-if(!room.lasers) return;
-for(const l of room.lasers){
-const on = l._on;
-if(on){
-const grad = ctx.createLinearGradient(l.x, l.y, l.x, l.y + l.h);
-grad.addColorStop(0, 'rgba(255,51,85,0.9)');
-grad.addColorStop(0.5, 'rgba(255,200,200,1)');
-grad.addColorStop(1, 'rgba(255,51,85,0.9)');
-ctx.fillStyle = grad;
-ctx.shadowColor = '#ff3355'; ctx.shadowBlur = 20;
-ctx.fillRect(l.x, l.y, l.w, l.h);
-ctx.shadowBlur = 0;
-ctx.fillStyle = '#ff3355';
-ctx.fillRect(l.x - 3, l.y - 3, 6, l.h + 6);
-ctx.fillRect(l.x + l.w - 3, l.y - 3, 6, l.h + 6);
-} else {
-ctx.fillStyle = 'rgba(255,51,85,0.4)';
-ctx.fillRect(l.x - 3, l.y + l.h/2 - 2, 6, 4);
-ctx.fillRect(l.x + l.w - 3, l.y + l.h/2 - 2, 6, 4);
-ctx.strokeStyle = 'rgba(255,51,85,0.25)';
-ctx.setLineDash([6,8]);
-ctx.beginPath(); ctx.moveTo(l.x, l.y + l.h/2); ctx.lineTo(l.x + l.w, l.y + l.h/2); ctx.stroke();
-ctx.setLineDash([]);
-}
-}
+const room = rooms[currentRoom];
+const theme = ROOM_THEMES[room.theme];
+
+ctx.clearRect(0, 0, W, H);
+drawFloor(theme);
+drawDataStreams(theme);
+drawDoors(room, theme);
+drawWalls(room, theme);
+drawTerminals(room, theme);
+drawPlayer(theme);
+drawParticles();
+drawTransitions();
+
+requestAnimationFrame(loop);
 }
 
-function drawPlayer(){
-const {x, y, w, h} = player;
-const time = Date.now() / 1000;
-const pulse = 0.5 + 0.5 * Math.sin(time * 3);
-const walkBob = player.isWalking ? Math.abs(Math.sin(player.walkPhase)) * 3 : 0;
-const px = x;
-const py = y - walkBob;
-
-ctx.fillStyle = 'rgba(0,0,0,0.4)';
-ctx.beginPath();
-ctx.ellipse(x + w/2, y + h + 2, w * 0.7, 4, 0, 0, Math.PI * 2);
-ctx.fill();
-
-if(player.invuln>0 && Math.floor(performance.now()/80)%2===0) return;
-
-const grad = ctx.createRadialGradient(px + w/2, py + h/2, 0, px + w/2, py + h/2, 40);
-grad.addColorStop(0, 'rgba(0,240,255,' + (0.15 + pulse * 0.1) + ')');
-grad.addColorStop(1, 'rgba(0,240,255,0)');
-ctx.fillStyle = grad;
-ctx.beginPath(); ctx.arc(px + w/2, py + h/2, 40, 0, Math.PI * 2); ctx.fill();
-
-const bodyGrad = ctx.createLinearGradient(px, py, px, py + h);
-bodyGrad.addColorStop(0, '#00ffff');
-bodyGrad.addColorStop(0.5, '#00f0ff');
-bodyGrad.addColorStop(1, '#0088cc');
-ctx.fillStyle = bodyGrad;
-ctx.fillRect(px, py, w, h);
-
-ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 2;
-ctx.shadowColor = '#00f0ff'; ctx.shadowBlur = 8 + pulse * 4;
-ctx.strokeRect(px, py, w, h);
-ctx.shadowBlur = 0;
-
-ctx.fillStyle = 'rgba(255,255,255,0.5)';
-ctx.fillRect(px + 4, py + 4, w - 8, 3);
-
-const cx = px + w/2, cy = py + h/2;
-const es = 5;
-let e1x, e1y, e2x, e2y;
-if(player.dir === 'up'){ e1x=cx-7; e1y=cy-6; e2x=cx+7; e2y=cy-6; }
-else if(player.dir === 'down'){ e1x=cx-7; e1y=cy+4; e2x=cx+7; e2y=cy+4; }
-else if(player.dir === 'left'){ e1x=cx-8; e1y=cy-4; e2x=cx-8; e2y=cy+4; }
-else { e1x=cx+8; e1y=cy-4; e2x=cx+8; e2y=cy+4; }
-
-ctx.fillStyle = '#050510';
-ctx.fillRect(e1x - es/2, e1y - es/2, es, es);
-ctx.fillRect(e2x - es/2, e2y -
+if(loadProgress()){
+document.getElementById('intro').classList.remove('show');
+document.getElementById('gameWrap').classList.add('show');
+resizeCanvas();
+gameActive=true;
+startTimer();
+requestAnimationFrame(loop);
+}
+</script>
+</body>
+</html>
