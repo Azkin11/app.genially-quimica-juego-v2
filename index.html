@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -2073,4 +2074,168 @@ ctx.fillRect(l.x, l.y, l.w, l.h);
 ctx.shadowBlur = 0;
 // Emitters
 ctx.fillStyle = '#ff3355';
-ctx
+ctx.fillRect(l.x - 3, l.y - 3, 6, l.h + 6);
+ctx.fillRect(l.x + l.w - 3, l.y - 3, 6, l.h + 6);
+} else {
+// Warning emitters
+ctx.fillStyle = 'rgba(255,51,85,0.4)';
+ctx.fillRect(l.x - 3, l.y + l.h/2 - 2, 6, 4);
+ctx.fillRect(l.x + l.w - 3, l.y + l.h/2 - 2, 6, 4);
+ctx.strokeStyle = 'rgba(255,51,85,0.25)';
+ctx.setLineDash([6,8]);
+ctx.beginPath(); ctx.moveTo(l.x, l.y + l.h/2); ctx.lineTo(l.x + l.w, l.y + l.h/2); ctx.stroke();
+ctx.setLineDash([]);
+}
+}
+}
+
+function drawPlayer(){
+const {x, y, w, h} = player;
+const time = Date.now() / 1000;
+const pulse = 0.5 + 0.5 * Math.sin(time * 3);
+const walkBob = player.isWalking ? Math.abs(Math.sin(player.walkPhase)) * 3 : 0;
+const px = x;
+const py = y - walkBob;
+
+ctx.fillStyle = 'rgba(0,0,0,0.4)';
+ctx.beginPath();
+ctx.ellipse(x + w/2, y + h + 2, w * 0.7, 4, 0, 0, Math.PI * 2);
+ctx.fill();
+
+// invuln blink
+if(player.invuln>0 && Math.floor(performance.now()/80)%2===0) return;
+
+const grad = ctx.createRadialGradient(px + w/2, py + h/2, 0, px + w/2, py + h/2, 40);
+grad.addColorStop(0, 'rgba(0,240,255,' + (0.15 + pulse * 0.1) + ')');
+grad.addColorStop(1, 'rgba(0,240,255,0)');
+ctx.fillStyle = grad;
+ctx.beginPath(); ctx.arc(px + w/2, py + h/2, 40, 0, Math.PI * 2); ctx.fill();
+
+const bodyGrad = ctx.createLinearGradient(px, py, px, py + h);
+bodyGrad.addColorStop(0, '#00ffff');
+bodyGrad.addColorStop(0.5, '#00f0ff');
+bodyGrad.addColorStop(1, '#0088cc');
+ctx.fillStyle = bodyGrad;
+ctx.fillRect(px, py, w, h);
+
+ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 2;
+ctx.shadowColor = '#00f0ff'; ctx.shadowBlur = 8 + pulse * 4;
+ctx.strokeRect(px, py, w, h);
+ctx.shadowBlur = 0;
+
+ctx.fillStyle = 'rgba(255,255,255,0.5)';
+ctx.fillRect(px + 4, py + 4, w - 8, 3);
+
+const cx = px + w/2, cy = py + h/2;
+const es = 5;
+let e1x, e1y, e2x, e2y;
+if(player.dir === 'up'){ e1x=cx-7; e1y=cy-6; e2x=cx+7; e2y=cy-6; }
+else if(player.dir === 'down'){ e1x=cx-7; e1y=cy+4; e2x=cx+7; e2y=cy+4; }
+else if(player.dir === 'left'){ e1x=cx-8; e1y=cy-4; e2x=cx-8; e2y=cy+4; }
+else { e1x=cx+8; e1y=cy-4; e2x=cx+8; e2y=cy+4; }
+
+ctx.fillStyle = '#050510';
+ctx.fillRect(e1x - es/2, e1y - es/2, es, es);
+ctx.fillRect(e2x - es/2, e2y - es/2, es, es);
+ctx.fillStyle = '#00f0ff';
+ctx.fillRect(e1x - es/4, e1y - es/4, 2, 2);
+ctx.fillRect(e2x - es/4, e2y - es/4, 2, 2);
+
+if(nearObject){
+const bx = nearObject.x + nearObject.w/2;
+const by = nearObject.y - 22;
+const bob = Math.sin(time * 5) * 4;
+ctx.fillStyle = '#ffdd00';
+ctx.font = 'bold 30px monospace';
+ctx.textAlign = 'center';
+ctx.shadowColor = '#ffdd00'; ctx.shadowBlur = 12;
+ctx.fillText('!', bx, by + bob);
+ctx.shadowBlur = 0;
+}
+}
+
+function drawDoorFx(){
+for(const fx of doorEntryFx){
+ctx.strokeStyle = fx.color;
+ctx.globalAlpha = fx.alpha * 0.6;
+ctx.lineWidth = 3;
+ctx.beginPath();
+ctx.arc(fx.x, fx.y, fx.r, 0, Math.PI * 2);
+ctx.stroke();
+}
+ctx.globalAlpha = 1;
+}
+
+function drawTransition(){
+if(screenTransition > 0){
+const a = screenTransition / 0.6;
+ctx.fillStyle = 'rgba(0,240,255,' + (a * 0.4) + ')';
+ctx.fillRect(0, 0, W, H);
+ctx.strokeStyle = 'rgba(0,240,255,' + (a * 0.6) + ')';
+ctx.lineWidth = 2;
+const scanY = (1 - a) * H;
+ctx.beginPath(); ctx.moveTo(0, scanY); ctx.lineTo(W, scanY); ctx.stroke();
+}
+}
+
+function drawFog(){
+// Radial darkness around the player
+const px = player.x + player.w/2;
+const py = player.y + player.h/2;
+const radius = 180;
+const vg = ctx.createRadialGradient(px, py, 30, px, py, radius);
+vg.addColorStop(0, 'rgba(0,0,0,0)');
+vg.addColorStop(0.55, 'rgba(0,0,0,0.35)');
+vg.addColorStop(0.85, 'rgba(0,0,0,0.75)');
+vg.addColorStop(1, 'rgba(0,0,0,0.9)');
+ctx.fillStyle = vg;
+ctx.fillRect(0, 0, W, H);
+}
+
+function draw(){
+const room = rooms[currentRoom];
+const theme = ROOM_THEMES[room.theme];
+
+ctx.save();
+if(shakeTime>0){
+const mag = shakeMag*(shakeTime/0.4);
+ctx.translate((Math.random()-.5)*mag, (Math.random()-.5)*mag);
+}
+
+drawFloor(theme);
+drawDataStreams(theme);
+drawAmbientParticles(theme);
+drawHologram(room);
+drawDoors(room, theme);
+drawTerminals(room, theme);
+drawWalls(room, theme);
+drawLasers(room);
+drawTrapAmbient(room);
+drawParticles();
+drawEnemies(room);
+drawDoorFx();
+drawPlayer();
+drawFog();
+drawTransition();
+
+ctx.restore();
+}
+
+let last=performance.now();
+function loop(t){
+const dt=Math.min((t-last)/1000,.05);
+last=t;
+if(gameActive && !paused) update(dt);
+try{ draw(); }catch(e){ console.error(e); }
+requestAnimationFrame(loop);
+}
+
+document.addEventListener('gesturestart',e=>e.preventDefault());
+document.addEventListener('contextmenu',e=>{
+if(e.target.closest('#dpad, #actionBtn, #dashBtn, #gameWrap')) e.preventDefault();
+});
+
+resizeCanvas();
+</script>
+</body>
+</html>
